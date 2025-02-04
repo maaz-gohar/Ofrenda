@@ -42,6 +42,8 @@ export default function BffForm() {
         });
     };
 
+    console.log(hobbies)
+
     return (
         <KeyboardAvoidingView
             style={styles.container}

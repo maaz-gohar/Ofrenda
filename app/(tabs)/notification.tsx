@@ -30,10 +30,11 @@ export default function Notisficaition() {
             <ScrollView contentContainerStyle={styles.scrollViewContainer}
                 bounces={false}>
                 <MainText
-                    title={'Notisfication'}
+                    title={'Notification'}
                     setting={true}
                     showIcon={true}
                 />
+
                 <View style={[styles.main, { height, width }]}>
 
                     <NotisficationContainer

@@ -13,6 +13,7 @@ import BucketListComponent from './components/bucketListComponent';
 import TabBar from '../components/tabBar';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Inputs from './components/inputs';
+import BottomIcons from './components/bottomIcons';
 
 const b1 = "rgba(188, 97, 213, 0.8)";
 const b2 = "rgba(249, 244, 251, 1)";
@@ -34,14 +35,15 @@ export default function BucketList() {
                     <Inputs />
 
                 </View>
-                <View style={styles.endView}>
+                {/* <View style={styles.endView}>
                     <View style={{ flexDirection: "row" }}>
                         <Image source={require('../../../assets/images/Frame.png')} style={{ marginRight: 10 }} />
                         <Image source={require('../../../assets/images/Frame1.png')} />
                     </View>
                     <Image source={require('../../../assets/images/dot.png')} />
 
-                </View>
+                </View> */}
+                <BottomIcons />
             </ScrollView>
             <TabBar />
         </View>

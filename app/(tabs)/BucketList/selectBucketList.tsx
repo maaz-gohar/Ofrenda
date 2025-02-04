@@ -138,14 +138,18 @@ const styles = StyleSheet.create({
     },
     bucketContainerText: {
         flexDirection: "row",
-        width: "100%",
+        // width: "100%",
         justifyContent: "space-between",
-        paddingBottom: 20
+        paddingBottom: 20,
+        alignItems: "center",
+        // paddingHorizontal: 50
     },
     BucketText: {
         fontWeight: "700",
         width: 120,
-        textAlign: "center"
+        textAlign: "center",
+        justifyContent: "center",
+        alignItems: "center"
     },
     premiumContainer: {
         zIndex: 10,

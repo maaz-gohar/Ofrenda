@@ -15,12 +15,15 @@ import MainButton from '../components/button';
 import DearlyDepartmentFormComponent from '../Dearly Department/components/dearlyDepartmentFormComponent';
 import TabBar from '../components/tabBar';
 import { useRouter } from 'expo-router';
+import SelectList from './components/selectList';
+import { AntDesign } from '@expo/vector-icons';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
 
 export default function SelectCollegeDesign() {
-    const [profession, setProfession] = useState('');
+    const [profession, setProfession] = useState([]);
+    const [food, setFood] = useState('');
     const [dob, setDob] = useState('Enter DOB');
     const [dynamicFields, setDynamicFields] = useState([]); // State to manage dynamic fields
 
@@ -28,6 +31,7 @@ export default function SelectCollegeDesign() {
         console.log({
             profession,
             dob,
+            food
         });
         // Add your save logic here
     };
@@ -64,7 +68,7 @@ export default function SelectCollegeDesign() {
                         iconType="AntDesign"
                         onPress={() => router.push('/BestFriendAndFamily/uploadFiles')}
                     />
-
+                    <SelectList value={setFood} />
                     <DatePickerComponent placeholder="Enter DOB" onDateChange={setDob} />
                     <DearlyDepartmentFormComponent
                         name="Profession"
@@ -81,7 +85,10 @@ export default function SelectCollegeDesign() {
                     ))}
 
                     <TouchableOpacity onPress={addAnotherField} style={styles.addFieldButton}>
-                        <Text style={styles.addFieldText}>Add Another Field</Text>
+                        <View style={styles.buttonContent}>
+                            <Text style={styles.addFieldText}>Add Another Field</Text>
+                            <AntDesign name='plus' size={14} color="#858383" />
+                        </View>
                     </TouchableOpacity>
                     <MainButton title={"Add BFF"} onPress={handleSave} gradientColor={[b1, b2]} shadowColor='rgba(94, 164, 253, 1)' />
                 </View>
@@ -116,14 +123,23 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     addFieldButton: {
-        marginVertical: 10,
+        marginTop: 20,
         padding: 10,
-        backgroundColor: b1,
-        borderRadius: 5,
+        borderRadius: 250,
+        width: "93%",
+        borderWidth: 1,
+        borderColor: "#b5b5b5",
+        height: 47,
+        justifyContent: "center",
+    },
+    buttonContent: {
+        flexDirection: 'row', // Align icon and text horizontally
+        alignItems: 'center', // Center items vertically
+        justifyContent: 'space-between', // Center items horizontally
     },
     addFieldText: {
-        color: "#fff",
+        color: "#9D9D9D", // Corrected color value
         fontWeight: "600",
-        textAlign: "center",
+        marginRight: 5, // Add spacing between text and icon
     },
 });

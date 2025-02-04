@@ -10,9 +10,7 @@ import MainText from '../components/topText';
 import { useSearchParams } from 'expo-router/build/hooks';
 import TabBar from '../components/tabBar';
 
-
 export default function DisplayData() {
-
     const searchParams = useSearchParams();
     const worked = searchParams.get('worked');
     const health = searchParams.get('health');
@@ -22,6 +20,9 @@ export default function DisplayData() {
     const dod = searchParams.get('dod');
 
     const parsedHobbies = hobbies ? JSON.parse(hobbies) : [];
+
+    // Join hobbies with commas
+    const hobbiesString = parsedHobbies.join(', ');
 
     return (
         <View style={styles.container}>
@@ -46,15 +47,9 @@ export default function DisplayData() {
                             </View>
 
                             <Text style={styles.boldText}>Favorite pastimes</Text>
-                            {parsedHobbies.length > 0 ? (
-                                parsedHobbies.map((hobby, index) => (
-                                    <Text key={index} style={styles.normalText}>
-                                        {hobby}
-                                    </Text>
-                                ))
-                            ) : (
-                                <Text style={styles.normalText}>No hobbies selected</Text>
-                            )}
+                            <Text style={styles.normalText}>
+                                {parsedHobbies.length > 0 ? hobbiesString : 'No hobbies selected'}
+                            </Text>
 
                             <Text style={styles.boldText}>Worked As</Text>
                             <Text style={styles.normalText}>{worked}</Text>
@@ -82,8 +77,6 @@ export default function DisplayData() {
     );
 }
 
-
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -110,7 +103,6 @@ const styles = StyleSheet.create({
         aspectRatio: 0.65,
         paddingTop: 25,
         alignItems: "center",
-        // justifyContent: "center"
     },
     granded: {
         fontSize: 40,
@@ -122,10 +114,9 @@ const styles = StyleSheet.create({
         fontFamily: "Cochin",
         fontWeight: "700",
         paddingTop: 10
-
     },
     normalText: {
-        fontWeight: 500,
+        fontWeight: "500",
         marginTop: 5,
         paddingHorizontal: 40,
         textAlign: "center"

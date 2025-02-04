@@ -46,7 +46,8 @@ export default function MainText({
                 </View>
                 {setting && (
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Settings')} // Navigate to the settings screen
+                        // onPress={() => navigation.navigate('Settings')} // Navigate to the settings screen
+                        onPress={() => router.push('/setting')}
                         style={styles.iconContainer2}
                         accessibilityLabel="Settings"
                     >

@@ -6,16 +6,12 @@ import {
     Image,
     TouchableOpacity,
     Modal,
-    Button,
+    TouchableWithoutFeedback,
 } from 'react-native';
 import { AntDesign, Fontisto } from '@expo/vector-icons';
 import { useRouter, usePathname } from 'expo-router';
-import LinearGradient from 'react-native-linear-gradient';
 
-const b1 = "#FFC70BE5";
-const b2 = "#ffe9a1";
-
-export default function AncestorsImage({ imagePath, showIcon = false, value }) {
+const AncestorsImage = ({ imagePath, showIcon = false }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
@@ -26,16 +22,15 @@ export default function AncestorsImage({ imagePath, showIcon = false, value }) {
         }
     };
 
-    const closeModal = () => {
-        setModalVisible(false);
-    };
-
-
     useEffect(() => {
         if (modalVisible) {
             setModalVisible(false);
         }
     }, [pathname]);
+
+    const closeModal = () => {
+        setModalVisible(false);
+    };
 
     return (
         <View style={styles.container}>
@@ -46,7 +41,6 @@ export default function AncestorsImage({ imagePath, showIcon = false, value }) {
                     </View>
                 )}
                 <Image source={imagePath} style={styles.image} />
-
             </TouchableOpacity>
 
             <Modal
@@ -55,36 +49,38 @@ export default function AncestorsImage({ imagePath, showIcon = false, value }) {
                 visible={modalVisible}
                 onRequestClose={closeModal}
             >
-                <View style={styles.modalOverlay}>
-                    <View style={styles.modalContent}>
-                        <Image source={imagePath} style={styles.modalImage} />
-                        <Text style={styles.modalText}>Add Dearly Departed</Text>
-                        <View style={styles.addDearly}>
-                            <TouchableOpacity
-                                onPress={() => router.push('/Dearly Department/dearlyDepartmentForm')}
-                            >
-                                <AntDesign name="pluscircleo" size={24} color="rgba(255, 199, 11, 1)" />
-                            </TouchableOpacity>
-                        </View>
-                        <Text style={styles.modalText}>Add Food On Table</Text>
-                        <View style={styles.addDearly}>
-                            {/* <LinearGradient colors={[b1, b2]}> */}
-                            <TouchableOpacity
-                                onPress={() => router.push('/Dearly Department/dearlyDepartmentForm')}
-                            >
-                                <View>
-                                    <AntDesign name="pluscircleo" size={24} color="rgba(255, 199, 11, 1)" />
+                <TouchableWithoutFeedback onPress={closeModal}>
+                    <View style={styles.modalOverlay}>
+                        <TouchableWithoutFeedback>
+                            <View style={styles.modalContent}>
+                                <Image source={imagePath} style={styles.modalImage} />
+                                <Text style={styles.modalText}>Add Dearly Departed</Text>
+                                <View style={styles.addDearly}>
+                                    <TouchableOpacity
+                                        onPress={() => router.push('/Dearly Department/dearlyDepartmentForm')}
+                                    >
+                                        <AntDesign name="pluscircleo" size={24} color="rgba(255, 199, 11, 1)" />
+                                    </TouchableOpacity>
                                 </View>
-                            </TouchableOpacity>
-                            {/* </LinearGradient> */}
-                        </View>
-                        <Button title="Close" onPress={closeModal} />
+                                <Text style={styles.modalText}>Add Food On Table</Text>
+                                <View style={styles.addDearly}>
+                                    <TouchableOpacity
+                                        onPress={() => router.push('/Dearly Department/dearlyDepartmentForm')}
+                                    >
+                                        <View>
+                                            <AntDesign name="pluscircleo" size={24} color="rgba(255, 199, 11, 1)" />
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </TouchableWithoutFeedback>
                     </View>
-                </View>
-            </Modal >
-        </View >
+                </TouchableWithoutFeedback>
+            </Modal>
+        </View>
     );
-}
+};
+
 
 const styles = StyleSheet.create({
     container: {
@@ -150,3 +146,5 @@ const styles = StyleSheet.create({
         alignSelf: "flex-start",
     },
 });
+
+export default AncestorsImage;

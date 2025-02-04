@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -12,9 +12,31 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { useRouter } from 'expo-router';
 
-export default function BffViewInformationLandScape() {
+export default function BffMainScreenLandScape() {
     const router = useRouter();
     const { height, width } = Dimensions.get('window');
+    const [isFullScreen, setIsFullScreen] = useState(false);
+
+    const toggleFullScreen = () => {
+        setIsFullScreen(!isFullScreen);
+    };
+
+    if (isFullScreen) {
+        return (
+            <View style={[styles.fullScreenContainer, { height, width }]}>
+                <Image
+                    source={require('../../../assets/images/BestFriend/college1.jpg')}
+                    style={styles.fullScreenImage}
+                />
+                <TouchableOpacity
+                    onPress={toggleFullScreen}
+                    style={[styles.icon, styles.fullScreenIcon]}
+                >
+                    <MaterialIcons name='fullscreen-exit' size={24} color={"#fff"} />
+                </TouchableOpacity>
+            </View>
+        );
+    }
 
     return (
         <View style={[styles.container, { height, width }]}>
@@ -23,10 +45,16 @@ export default function BffViewInformationLandScape() {
                     <View style={styles.imgcover}>
                         <Image source={require('../../../assets/images/BestFriend/college1.jpg')} style={styles.img} />
                         <TouchableOpacity
-                            onPress={() => router.push('/BestFriendAndFamily/bffViewInformation')}
-                            style={styles.icon}
+                            onPress={() => router.push('/Dearly Department/bffMainScreen')}
+                            style={[styles.icon, styles.rotateIcon]}
                         >
-                            <MaterialIcons name='crop-rotate' size={20} color={"#000"} />
+                            <MaterialIcons name='crop-rotate' size={20} color={"#fff"} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={toggleFullScreen}
+                            style={[styles.icon, styles.fullScreenButton]}
+                        >
+                            <MaterialIcons name='fullscreen' size={20} color={"#fff"} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.subbtn}>
@@ -70,7 +98,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: '#fff',
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         padding: 20,
@@ -91,14 +118,19 @@ const styles = StyleSheet.create({
     },
     icon: {
         position: 'absolute',
-        top: 10,
-        right: 10,
         zIndex: 1,
-        // borderWidth: 2,
-        // borderColor: '#000',
-        backgroundColor: "#fff",
+        borderWidth: 2,
+        borderColor: '#fff',
         borderRadius: 50,
         padding: 5,
+    },
+    rotateIcon: {
+        top: 10,
+        right: 10,
+    },
+    fullScreenButton: {
+        top: 10,
+        left: 10,
     },
     subbtn: {
         flexDirection: 'row',
@@ -111,5 +143,23 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 7,
         borderRadius: 50,
+    },
+    fullScreenContainer: {
+        flex: 1,
+        backgroundColor: '#000',
+    },
+    fullScreenImage: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        resizeMode: 'contain',
+        transform: [{ rotate: '90deg' }],
+
+    },
+    fullScreenIcon: {
+        top: 40,
+        right: 20,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        padding: 8,
     },
 });

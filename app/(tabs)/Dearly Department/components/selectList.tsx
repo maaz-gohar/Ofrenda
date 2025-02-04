@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
-import { useNavigation } from '@react-navigation/native';
 
-const SelectList = () => {
-    const [selected, setSelected] = useState([]);
-    const navigation = useNavigation();
-
+const SelectList = ({ setSelected }) => {
+    // Data for the multiple select list
     const data = [
         { key: 1, value: 'Hobby One' },
         { key: 2, value: 'Hobby Two' },
@@ -17,12 +14,22 @@ const SelectList = () => {
         { key: 7, value: 'Hobby Seven' },
     ];
 
+    // Handle selection of items
+    const handleSelect = (val) => {
+        console.log("Selected Values:", val); // Debugging log
+        if (Array.isArray(val)) {
+            setSelected(val); // Update the parent state
+        } else {
+            console.error("Invalid value received:", val);
+        }
+    };
 
     return (
         <View style={styles.container}>
             <MultipleSelectList
-                setSelected={(val) => setSelected(val)}
                 data={data}
+                setSelected={setSelected} // Pass the parent state setter
+                onSelect={handleSelect}   // Optional: Handle selection events
                 save="value"
                 placeholder="Select hobbies"
                 boxStyles={styles.boxStyles}
@@ -34,19 +41,15 @@ const SelectList = () => {
                 badgeTextStyles={styles.badgeTextStyles}
                 defaultOption={{ key: '', value: 'Select hobbies' }}
                 labelStyles={styles.hiddenLabel}
-                onSelect={() => { }}
                 search={false}
                 checkbox={true}
                 arrowicon={<View style={styles.arrow} />}
                 checkicon={<View style={styles.checkIcon} />}
                 disabledCheckBoxStyles={{ backgroundColor: "#000" }}
             />
-            {/* <Button title="Submit" onPress={handleNavigate} /> */}
         </View>
     );
 };
-
-
 
 const styles = StyleSheet.create({
     container: {
@@ -55,7 +58,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         zIndex: 1,
         marginBottom: -10,
-
     },
     boxStyles: {
         width: '100%',
@@ -110,9 +112,6 @@ const styles = StyleSheet.create({
     badgeStyles: {
         backgroundColor: '#e8e8e8',
         borderRadius: 15,
-        // paddingHorizontal: 8,
-        // paddingVertical: 4,
-        // margin: 2,
     },
     badgeTextStyles: {
         fontSize: 14,

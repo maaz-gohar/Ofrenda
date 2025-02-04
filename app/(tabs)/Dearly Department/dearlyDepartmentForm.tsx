@@ -28,6 +28,8 @@ export default function DearlyDepartmentForm() {
     const [dod, setDod] = useState('Enter DOD');
     const [hobbies, setHobbies] = useState([]);
 
+    console.log(hobbies, "navigating to Granded data ")
+
     const handleSave = () => {
         router.push({
             pathname: '/Dearly Department/displayData',
@@ -41,6 +43,8 @@ export default function DearlyDepartmentForm() {
             },
         });
     };
+
+    console.log(hobbies)
 
     return (
         <KeyboardAvoidingView

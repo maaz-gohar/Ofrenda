@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     },
     bucketContainerText: {
         flexDirection: "row",
-        width: "100%",
+        // width: "100%",
         justifyContent: "space-between",
         paddingBottom: 20
     },

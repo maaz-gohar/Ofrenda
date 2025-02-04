@@ -18,7 +18,7 @@ import { useRouter } from 'expo-router';
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
 
-export default function SelectFrames({ navigation }) {
+export default function Vinatge() {
     // export default function SelectFrames(props) {
     // console.log(props)
     const router = useRouter();
@@ -58,21 +58,17 @@ export default function SelectFrames({ navigation }) {
                     </View> */}
                     <ScrollView contentContainerStyle={{ paddingHorizontal: 20 }} bounces={false} >
                         <View style={{ flexDirection: "row", alignItems: "center", paddingVertical: 10 }}>
-                            <FrameComponent text="Classic" isGradient={true} onPress={() => router.push('/BestFriendAndFamily/selectFrames')} />
-                            <FrameComponent text="Vintage" onPress={() => router.push('/BestFriendAndFamily/vintage')} />
+                            <FrameComponent text="Classic" onPress={() => router.push('/BestFriendAndFamily/selectFrames')} />
+                            <FrameComponent text="Vintage" isGradient={true} onPress={() => router.push('/BestFriendAndFamily/vintage')} />
                             <FrameComponent text="Modern" onPress={() => router.push('/BestFriendAndFamily/modern')} />
-
-                            {/* <View style={styles.scrollContainer}>
-                            <Text style={{ fontWeight: "600", fontSize: 16 }}>More</Text>
-                        </View> */}
 
 
                         </View>
                     </ScrollView>
 
-                    {/* Collage Design Options */}
-                    <View style={styles.collageContainer}>
-                        {/* First Row */}
+                    <Text>Vintage Screen</Text>
+                    {/* <View style={styles.collageContainer}>
+
                         <View style={styles.collageRow}>
 
                             <CollegeDesignComponent
@@ -89,7 +85,7 @@ export default function SelectFrames({ navigation }) {
                             />
                         </View>
 
-                        {/* Second Row */}
+
                         <View style={styles.collageRow}>
                             <CollegeDesignComponent
                                 imagePath={require('../../../assets/images/BestFriend/college1.jpg')}
@@ -105,7 +101,7 @@ export default function SelectFrames({ navigation }) {
                             />
                         </View>
 
-                        {/* Third Row */}
+
                         <View style={styles.collageRow}>
                             <CollegeDesignComponent
                                 imagePath={require('../../../assets/images/BestFriend/college2.jpg')}
@@ -121,7 +117,7 @@ export default function SelectFrames({ navigation }) {
                             />
                         </View>
 
-                        {/* Fourth Row */}
+              
                         <View style={styles.collageRow}>
                             <CollegeDesignComponent
                                 imagePath={require('../../../assets/images/BestFriend/college2.jpg')}
@@ -136,7 +132,7 @@ export default function SelectFrames({ navigation }) {
                                 showIcon={true}
                             />
                         </View>
-                    </View>
+                    </View> */}
                 </View>
             </ScrollView>
             <TabBar />

@@ -45,54 +45,54 @@ export default function MainScreen() {
 
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
-                <Header
-                    title={"Home"}
-                    showIcon={true}
-                    setting={true}
-                    description={"Select One Free Option"}
-                    name={"Anna"}
-                />
-                <View style={styles.main}>
-                    <View>
-                        <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-                            <ImageBackground
-                                source={require('../../../assets/images/home.png')}
-                                style={styles.backgroundImage}
-                                resizeMode="cover"
-                            >
-                                <View style={styles.overlay}>
-                                    <TouchableOpacity onPress={() => router.push('/Dearly Department/ancestorsMainScreen')}>
-                                        <LinearGradient colors={[b1, b2]} style={styles.gradient}>
-                                            <Text style={styles.text} numberOfLines={2}>
-                                                Dearly Departed
-                                            </Text>
-                                        </LinearGradient>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => router.push('/BestFriendAndFamily/bffMainScreen')}>
-                                        <LinearGradient colors={[b1, b2]} style={styles.gradient}>
-                                            <Text style={styles.text} numberOfLines={2}>
-                                                Best Friends & Family
-                                            </Text>
-                                        </LinearGradient>
-                                    </TouchableOpacity>
+            {/* <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}> */}
+            <Header
+                title={"Home"}
+                showIcon={true}
+                setting={true}
+                description={"Select One Free Option"}
+                name={"Anna"}
+            />
+            <View style={styles.main}>
+                <View>
+                    <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+                        <ImageBackground
+                            source={require('../../../assets/images/home.png')}
+                            style={styles.backgroundImage}
+                            resizeMode="cover"
+                        >
+                            <View style={styles.overlay}>
+                                <TouchableOpacity onPress={() => router.push('/Dearly Department/ancestorsMainScreen')}>
+                                    <LinearGradient colors={[b1, b2]} style={styles.gradient}>
+                                        <Text style={styles.text} numberOfLines={2}>
+                                            Dearly Departed
+                                        </Text>
+                                    </LinearGradient>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => router.push('/BestFriendAndFamily/bffMainScreen')}>
+                                    <LinearGradient colors={[b1, b2]} style={styles.gradient}>
+                                        <Text style={styles.text} numberOfLines={2}>
+                                            Best Friends & Family
+                                        </Text>
+                                    </LinearGradient>
+                                </TouchableOpacity>
 
-                                </View>
+                            </View>
 
-                                <View style={styles.overlay2}>
-                                    <TouchableOpacity onPress={() => router.push('/BucketList/selectBucketList')}>
-                                        <LinearGradient colors={[b1, b2]} style={styles.gradient}>
-                                            <Text style={styles.text} numberOfLines={2}>
-                                                Bucket Lists & Memories
-                                            </Text>
-                                        </LinearGradient>
-                                    </TouchableOpacity>
-                                </View>
-                            </ImageBackground>
-                        </Animated.View>
-                    </View>
+                            <View style={styles.overlay2}>
+                                <TouchableOpacity onPress={() => router.push('/BucketList/selectBucketList')}>
+                                    <LinearGradient colors={[b1, b2]} style={styles.gradient}>
+                                        <Text style={styles.text} numberOfLines={2}>
+                                            Bucket Lists & Memories
+                                        </Text>
+                                    </LinearGradient>
+                                </TouchableOpacity>
+                            </View>
+                        </ImageBackground>
+                    </Animated.View>
                 </View>
-            </ScrollView>
+            </View>
+            {/* </ScrollView> */}
             <TabBar />
         </View>
     );
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
-        paddingHorizontal: 60,
+        paddingHorizontal: 50,
         marginBottom: 40,
         marginRight: 30
     },
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#000',
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: '600',
         textAlign: 'center',
         lineHeight: 20,

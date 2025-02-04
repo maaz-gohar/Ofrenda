@@ -7,6 +7,8 @@ import {
     TouchableOpacity,
     Modal,
     Button,
+    TouchableWithoutFeedback,
+
 } from 'react-native';
 import { AntDesign, Fontisto } from '@expo/vector-icons';
 import { useRouter, usePathname } from 'expo-router';
@@ -51,28 +53,32 @@ export default function CollegeDesignComponent({ imagePath, showIcon = false, va
                 visible={modalVisible}
                 onRequestClose={closeModal}
             >
-                <View style={styles.modalOverlay}>
-                    <View style={styles.modalContent}>
-                        <Image source={imagePath} style={styles.modalImage} />
-                        <Text style={styles.modalText}>Add Picture in Frame</Text>
-                        <View style={styles.addDearly}>
-                            <TouchableOpacity
-                                onPress={() => router.push('/BestFriendAndFamily/selectCollegeDesign')}
-                            >
-                                <AntDesign name="pluscircleo" size={24} color="#5ea4fd" />
-                            </TouchableOpacity>
-                        </View>
-                        {/* <Text style={styles.modalText}>Add Picture in Frame</Text> */}
-                        {/* <View style={styles.addDearly}>
+                <TouchableWithoutFeedback onPress={closeModal}>
+                    <View style={styles.modalOverlay}>
+                        <TouchableWithoutFeedback>
+                            <View style={styles.modalContent}>
+                                <Image source={imagePath} style={styles.modalImage} />
+                                <Text style={styles.modalText}>Add Picture in Frame</Text>
+                                <View style={styles.addDearly}>
+                                    <TouchableOpacity
+                                        onPress={() => router.push('/BestFriendAndFamily/selectCollegeDesign')}
+                                    >
+                                        <AntDesign name="pluscircleo" size={24} color="#5ea4fd" />
+                                    </TouchableOpacity>
+                                </View>
+                                {/* <Text style={styles.modalText}>Add Picture in Frame</Text> */}
+                                {/* <View style={styles.addDearly}>
                             <TouchableOpacity
                                 onPress={() => router.push('/Dearly Department/dearlyDepartmentForm')}
                             >
                                 <AntDesign name="pluscircleo" size={24} color="#5ea4fd" />
                             </TouchableOpacity>
                         </View> */}
-                        <Button title="Close" onPress={closeModal} />
+                                {/* <Button title="Close" onPress={closeModal} /> */}
+                            </View>
+                        </TouchableWithoutFeedback>
                     </View>
-                </View>
+                </TouchableWithoutFeedback>
             </Modal>
         </View>
     );

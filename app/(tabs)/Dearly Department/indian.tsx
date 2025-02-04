@@ -23,7 +23,7 @@ import FrameComponent from './components/frameComponent';
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
 
-export default function SelectOfredna() {
+export default function Indain() {
     // const { height, width } = Dimensions.get("window");
     const router = useRouter();
 
@@ -42,9 +42,9 @@ export default function SelectOfredna() {
                     <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 10 }}>Select Memory Boards</Text>
                     <ScrollView contentContainerStyle={{ paddingHorizontal: 20 }} bounces={false} >
                         <View style={{ flexDirection: "row", alignItems: "center", paddingVertical: 10 }}>
-                            <FrameComponent text="Ofrenda" isGradient={true} onPress={() => router.push('/Dearly Department/selectOfrenda')} />
+                            <FrameComponent text="Ofrenda" onPress={() => router.push('/Dearly Department/selectOfrenda')} />
                             <FrameComponent text="Elegant" onPress={() => router.push('/Dearly Department/elegant')} />
-                            <FrameComponent text="Indian" onPress={() => router.push('/Dearly Department/indian')} />
+                            <FrameComponent text="Indian" isGradient={true} onPress={() => router.push('/Dearly Department/indian')} />
                             <FrameComponent text="Scandinavian" />
                             <FrameComponent text="Chinese" />
                             <FrameComponent text="Japanese" />
@@ -61,7 +61,7 @@ export default function SelectOfredna() {
 
                         </View>
                     </ScrollView>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                    {/* <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                         <AncestorsImage
                             imagePath={require('../../../assets/images/SelectOfrenda/1.png')}
                         // onPress={() => router.push('/Dearly Department/selectOfrenda')}
@@ -120,7 +120,8 @@ export default function SelectOfredna() {
                             showIcon={true}
 
                         />
-                    </View>
+                    </View> */}
+                    <Text>Indian Screen</Text>
                 </View>
             </ScrollView>
             <TabBar />

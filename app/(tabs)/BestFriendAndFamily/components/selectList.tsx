@@ -3,7 +3,7 @@ import { View, StyleSheet, Button } from 'react-native';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
 import { useNavigation } from '@react-navigation/native';
 
-const SelectList = () => {
+const SelectList = (value) => {
     const [selected, setSelected] = useState([]);
     const navigation = useNavigation();
 
@@ -21,7 +21,7 @@ const SelectList = () => {
     return (
         <View style={styles.container}>
             <MultipleSelectList
-                setSelected={(val) => setSelected(val)}
+                setSelected={({ value }) => setSelected(value)}
                 data={data}
                 save="value"
                 placeholder="Favorite Food, Restaurants"

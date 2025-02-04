@@ -19,7 +19,7 @@ export default function Inputs() {
             <TextInput
                 placeholder='Title'
                 placeholderTextColor={"#000"}
-                style={styles.input}
+                style={styles.input1}
             />
             {/* Line between inputs */}
             <View style={styles.separator} />
@@ -43,6 +43,11 @@ const styles = StyleSheet.create({
         height: 50,
         paddingHorizontal: 10,
         fontSize: 16,
+    },
+    input1: {
+        height: 50,
+        paddingHorizontal: 10,
+        fontSize: 22,
     },
     separator: {
         height: 1,

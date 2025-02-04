@@ -31,6 +31,20 @@ const TabBar = () => {
         }
     }, [pathname]);
 
+    const getActiveColor = () => {
+        if (activeTab === 'mainScreen') {
+            switch (currentSection) {
+                case 'BestFriendAndFamily':
+                    return 'rgba(94, 164, 253, 1)';
+                case 'BucketList':
+                    return 'rgba(188, 97, 213, 0.8)';
+                default:
+                    return '#FFC70B';
+            }
+        }
+        return '#FFC70B'; // Default color for notification and profile tabs
+    };
+
     const getMainScreenPath = () => {
         switch (currentSection) {
             case 'DearlyDepartment':
@@ -52,10 +66,8 @@ const TabBar = () => {
             if (tab === 'mainScreen') {
                 await router.push(getMainScreenPath());
             } else if (tab === 'notification') {
-
                 await router.push('/notification');
             } else if (tab === 'profile') {
-
                 await router.push('/profile');
             }
         } catch (error) {
@@ -82,39 +94,56 @@ const TabBar = () => {
     return (
         <View style={styles.container}>
             <TouchableOpacity
-                style={styles.subContainer}
+                style={[styles.subContainer]}
                 onPress={() => handleTabPress('mainScreen')}>
-                <Ionicons
-                    name='home-outline'
-                    size={24}
-                // color={isTabActive('mainScreen') ? '#FFC70B' : '#484C52'}
-                />
-                <Text style={[styles.text]}>Home</Text>
-                {/* <Text style={[styles.text, isTabActive('mainScreen') && styles.activeText]}>Home</Text> */}
+                <View style={styles.tabContent}>
+                    <Ionicons
+                        name='home-outline'
+                        size={24}
+                        color={isTabActive('mainScreen') ? getActiveColor() : '#484C52'}
+                    />
+                    <Text style={[
+                        styles.text,
+                        isTabActive('mainScreen') && {
+                            ...styles.activeText,
+                            color: getActiveColor()
+                        }
+                    ]}>Home</Text>
+                    {isTabActive('mainScreen') && (
+                        <View style={[
+                            styles.activeIndicator,
+                            { backgroundColor: getActiveColor() }
+                        ]} />
+                    )}
+                </View>
             </TouchableOpacity>
 
             <TouchableOpacity
-                style={styles.subContainer}
+                style={[styles.subContainer]}
                 onPress={() => handleTabPress('notification')}>
-                <MaterialIcons
-                    name='notifications-active'
-                    size={24}
-                // color={isTabActive('notification') ? '#FFC70B' : '#484C52'}
-                />
-                <Text style={[styles.text]}>Notification</Text>
-                {/* <Text style={[styles.text, isTabActive('notification') && styles.activeText]}>Notification</Text> */}
+                <View style={styles.tabContent}>
+                    <MaterialIcons
+                        name='notifications-active'
+                        size={24}
+                        color={isTabActive('notification') ? '#FFC70B' : '#484C52'}
+                    />
+                    <Text style={[styles.text, isTabActive('notification') && styles.activeText]}>Notification</Text>
+                    {isTabActive('notification') && <View style={styles.activeIndicator} />}
+                </View>
             </TouchableOpacity>
 
             <TouchableOpacity
-                style={styles.subContainer}
+                style={[styles.subContainer]}
                 onPress={() => handleTabPress('profile')}>
-                <Ionicons
-                    name='person-outline'
-                    size={24}
-                // color={isTabActive('profile') ? '#FFC70B' : '#484C52'}
-                />
-                <Text style={[styles.text]}>Profile</Text>
-                {/* <Text style={[styles.text, isTabActive('profile') && styles.activeText]}>Profile</Text> */}
+                <View style={styles.tabContent}>
+                    <Ionicons
+                        name='person-outline'
+                        size={24}
+                        color={isTabActive('profile') ? '#FFC70B' : '#484C52'}
+                    />
+                    <Text style={[styles.text, isTabActive('profile') && styles.activeText]}>Profile</Text>
+                    {isTabActive('profile') && <View style={styles.activeIndicator} />}
+                </View>
             </TouchableOpacity>
         </View>
     );
@@ -134,14 +163,29 @@ const styles = StyleSheet.create({
     subContainer: {
         justifyContent: "center",
         alignItems: "center",
+        position: 'relative',
+    },
+    tabContent: {
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     text: {
         fontSize: 12,
         color: '#484C52',
+        marginTop: 4,
     },
     activeText: {
-        color: '#FFC70B',
         fontWeight: 'bold',
+        color: "rgba(255, 199, 11, 0.9)"
+    },
+    activeIndicator: {
+        position: 'absolute',
+        bottom: -15,
+        width: '100%',
+        height: 3,
+        backgroundColor: '#FFC70B',
+        borderRadius: 2,
+
     }
 });
 
