@@ -40,7 +40,7 @@ export default function Successful() {
         console.log("Forwarding params to DisplayData:", forwardParams);
 
         router.push({
-            pathname: '/BestFriendAndFamily/displayData',
+            pathname: '/BestFriendAndFamily/bffViewInformation',
             params: forwardParams
         });
     };

@@ -17,6 +17,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import DatePickerComponent from './components/datePicker';
 import MainButton from '../components/button';
 import FrameComponent from './components/frameComponent';
+import { AntDesign } from '@expo/vector-icons';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
@@ -41,6 +42,8 @@ export default function DearlyDepartmentForm() {
     const [dod, setDod] = useState('Enter DOD');
     const [hobbies, setHobbies] = useState([]);
     const [selectedImage, setSelectedImage] = useState('');
+    const [dynamicFields, setDynamicFields] = useState([]);
+
 
     console.log(hobbies, "navigating to Granded data ")
 
@@ -57,10 +60,28 @@ export default function DearlyDepartmentForm() {
                 dod,
                 noteableContribution,
                 movie,
-                food
+                food,
+                dynamicFields: JSON.stringify(dynamicFields)
+
             },
         });
     };
+
+
+    const addAnotherField = () => {
+        setDynamicFields([...dynamicFields, { id: dynamicFields.length, title: '', value: '' }]);
+    };
+
+    const handleFieldChange = (index, field, value) => {
+        const updatedFields = dynamicFields.map((item, idx) => {
+            if (idx === index) {
+                return { ...item, [field]: value };
+            }
+            return item;
+        });
+        setDynamicFields(updatedFields);
+    };
+
     console.log("sending end ", hobbies)
 
     // console.log(hobbies)
@@ -157,6 +178,30 @@ export default function DearlyDepartmentForm() {
                         iconName="plus"
                         iconType="AntDesign"
                     />
+                    {dynamicFields.map((field, index) => (
+                        <View key={field.id}>
+                            <DearlyDepartmentFormComponent
+                                name={`Title ${index + 1}`}
+                                value={field.title}
+                                setValue={(value) => handleFieldChange(index, 'title', value)}
+                                placeholder="Title"
+                                style={styles.titleField}
+                            />
+                            <DearlyDepartmentFormComponent
+                                name={`Value ${index + 1}`}
+                                value={field.value}
+                                setValue={(value) => handleFieldChange(index, 'value', value)}
+                                style={styles.valueField}
+                            />
+                        </View>
+                    ))}
+
+                    <TouchableOpacity onPress={addAnotherField} style={styles.addFieldButton}>
+                        <View style={styles.buttonContent}>
+                            <Text style={styles.addFieldText}>Add Another Field</Text>
+                            <AntDesign name='plus' size={14} color="#858383" />
+                        </View>
+                    </TouchableOpacity>
                     <MainButton title={"Add Ancestor"} onPress={handleSave} />
                 </View>
             </ScrollView>
@@ -216,5 +261,29 @@ const styles = StyleSheet.create({
     optionText: {
         fontWeight: "600",
         fontSize: 16,
+    },
+    addFieldText: {
+        color: "#9D9D9D",
+        fontWeight: "600",
+        marginRight: 5,
+    },
+    titleField: {
+        borderWidth: 0,
+        fontWeight: 'bold',
+    },
+    buttonContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    addFieldButton: {
+        marginTop: 20,
+        padding: 10,
+        borderRadius: 250,
+        width: "93%",
+        borderWidth: 1,
+        borderColor: "#b5b5b5",
+        height: 47,
+        justifyContent: "center",
     },
 });

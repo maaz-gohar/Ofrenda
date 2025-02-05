@@ -11,11 +11,38 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 
 import MainText from '../components/topText';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import MainButton from '../components/button';
 
 export default function BffMainScreen() {
     const router = useRouter();
+
+    const params = useLocalSearchParams();
+
+
+
+    const handleViewDetails = () => {
+        const forwardParams = {
+            worked: params.worked,
+            memory: params.memory,
+            health: params.health,
+            hobbies: params.hobbies,
+            dob: params.dob,
+            dod: params.dod,
+            noteableContribution: params.noteableContribution,
+            movie: params.movie,
+            food: params.food,
+            dynamicFields: params.dynamicFields,
+
+        }
+        console.log("success", forwardParams)
+
+        router.push({
+            pathname: '/Dearly Department/displayData',
+            params: forwardParams
+        })
+    }
+
 
     return (
         <View style={styles.container}>
@@ -54,10 +81,10 @@ export default function BffMainScreen() {
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={{ width: "55%" }}>
-                            <MainButton title={"View Information"} onPress={() => router.push('/Dearly Department/displayData')} />
+                            <MainButton title={"View Information"} onPress={handleViewDetails} />
                         </View>
                         <View style={{ width: "45%" }}>
-                            <MainButton title={"View Family Tree"} />
+                            <MainButton title={"View Family Tree"} onPress={() => router.push('/Dearly Department/addFamilyTree')} />
                         </View>
                     </View>
                 </View>

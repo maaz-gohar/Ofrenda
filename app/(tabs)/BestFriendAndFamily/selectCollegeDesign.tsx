@@ -42,17 +42,6 @@ export default function SelectCollegeDesign() {
     }, [params]);
 
     const handleSave = () => {
-        console.log({
-            profession,
-            dob,
-            food,
-            selectedImage,
-            noteableContribution,
-            movie,
-            favFood,
-            health,
-            dynamicFields
-        });
         router.push({
             pathname: '/BestFriendAndFamily/successful',
             params: {

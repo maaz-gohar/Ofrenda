@@ -25,6 +25,7 @@ export default function BFFMainScreen() {
     // const { height, width } = Dimensions.get("window");
     const router = useRouter();
 
+
     return (
         <View style={styles.container}>
 
@@ -45,7 +46,7 @@ export default function BFFMainScreen() {
 
                     <AncestorsComponent imagePath={require('../../../assets/images/ancestors3.png')}
                         text={"View Information"}
-                        onPress={() => router.push('/BestFriendAndFamily/bffInformation')} />
+                        onPress={() => router.push('/BestFriendAndFamily/information')} />
 
                 </View>
             </ScrollView>

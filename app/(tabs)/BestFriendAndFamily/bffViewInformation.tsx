@@ -11,7 +11,7 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 
 import MainText from '../components/topText';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import MainButton from '../components/button';
 
 const b1 = "rgba(94, 164, 253, 1)";
@@ -19,6 +19,31 @@ const b2 = "rgba(143, 184, 236, 1)";
 
 export default function BffViewInformation() {
     const router = useRouter();
+
+    const params = useLocalSearchParams();
+
+
+    const handleViewDetails = () => {
+        const forwardParams = {
+            profession: params.profession,
+            dob: params.dob,
+            food: params.food,
+            selectedImage: params.selectedImage,
+            friendName: params.friendName,
+            dynamicFields: params.dynamicFields,
+            noteableContribution: params.noteableContribution,
+            movie: params.movie,
+            favFood: params.favFood,
+            health: params.health
+        };
+
+        console.log("Forwarding params to DisplayData:", forwardParams);
+
+        router.push({
+            pathname: '/BestFriendAndFamily/displayData',
+            params: forwardParams
+        });
+    };
 
     return (
         <View style={styles.container}>
@@ -57,7 +82,7 @@ export default function BffViewInformation() {
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={{ width: "95%" }}>
-                            <MainButton title={"View Information"} onPress={() => router.push('/BestFriendAndFamily/displayData')} gradientColor={[b1, b2]} shadowColor='rgba(94, 164, 253, 1)' />
+                            <MainButton title={"View Information"} onPress={handleViewDetails} gradientColor={[b1, b2]} shadowColor='rgba(94, 164, 253, 1)' />
                         </View>
 
                     </View>

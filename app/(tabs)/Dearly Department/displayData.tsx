@@ -21,6 +21,8 @@ export default function DisplayData() {
     const noteableContribution = searchParams.get('noteableContribution');
     const movie = searchParams.get('movie');
     const food = searchParams.get('food');
+    const dynamicFields = searchParams.get('dynamicFields');
+    const parsedDynamicFields = dynamicFields ? JSON.parse(dynamicFields) : [];
 
     // noteableContribution,
     // movie,
@@ -58,46 +60,60 @@ export default function DisplayData() {
                 <MainText title={'Dearly Departed'} showIcon={true} setting={true} />
 
                 <View style={[styles.main]}>
-                    <ImageBackground
-                        source={require('../../../assets/images/Group 2092.png')}
-                        style={styles.bg}
-                        resizeMode="contain"
-                    >
-                        <View style={{ justifyContent: "center", alignItems: "center" }}>
-                            <Text style={styles.granded}>Grandad</Text>
-                            <View style={{ flexDirection: "row" }}>
-                                <Text style={{ paddingHorizontal: 4, fontWeight: "700" }}>BORN</Text>
-                                <Text>{dob}</Text>
+                    <View style={styles.bgContain}>
+
+                        <ImageBackground
+                            source={require('../../../assets/images/Group 2092.png')}
+                            style={styles.bg}
+                            resizeMode="contain"
+                        >
+                            <View style={{ justifyContent: "center", alignItems: "center" }}>
+                                <Text style={styles.granded}>Grandad</Text>
+                                <View style={{ flexDirection: "row" }}>
+                                    <Text style={{ paddingHorizontal: 4, fontWeight: "700" }}>BORN</Text>
+                                    <Text>{dob}</Text>
+                                </View>
+                                <View style={{ flexDirection: "row" }}>
+                                    <Text style={{ paddingHorizontal: 4, fontWeight: "700" }}>DIED</Text>
+                                    <Text>{dod}</Text>
+                                </View>
+
+                                <Text style={styles.boldText}>Favorite pastimes</Text>
+                                <Text style={styles.normalText}>
+                                    {parsedHobbies.length > 0 ? hobbiesString : 'No hobbies selected'}
+                                </Text>
+
+                                <Text style={styles.boldText}>Worked As</Text>
+                                <Text style={styles.normalText}>{worked}</Text>
+
+                                <Text style={styles.boldText}>Notable contributions</Text>
+                                <Text style={styles.normalText}>{noteableContribution}</Text>
+
+                                <Text style={styles.boldText}>Favorite food, restaurants</Text>
+                                <Text style={styles.normalText}>{food}.</Text>
+
+                                <Text style={styles.boldText}>Favorite movie, band, book, author</Text>
+                                <Text style={styles.normalText}>{movie}</Text>
+
+                                <Text style={styles.boldText}>Health Conditions</Text>
+                                <Text style={styles.normalText}>{health}</Text>
+
+                                <Text style={styles.boldText}>Favorite Memory</Text>
+                                <Text style={styles.normalText}>{memory}</Text>
+
+                                {parsedDynamicFields.length > 0 && (
+                                    <View>
+                                        {parsedDynamicFields.map((field, index) => (
+                                            <View key={index}>
+                                                <Text style={styles.boldText}>{field.title}</Text>
+                                                <Text style={styles.normalText}>{field.value}</Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                )}
                             </View>
-                            <View style={{ flexDirection: "row" }}>
-                                <Text style={{ paddingHorizontal: 4, fontWeight: "700" }}>DIED</Text>
-                                <Text>{dod}</Text>
-                            </View>
-
-                            <Text style={styles.boldText}>Favorite pastimes</Text>
-                            <Text style={styles.normalText}>
-                                {parsedHobbies.length > 0 ? hobbiesString : 'No hobbies selected'}
-                            </Text>
-
-                            <Text style={styles.boldText}>Worked As</Text>
-                            <Text style={styles.normalText}>{worked}</Text>
-
-                            <Text style={styles.boldText}>Notable contributions</Text>
-                            <Text style={styles.normalText}>{noteableContribution}</Text>
-
-                            <Text style={styles.boldText}>Favorite food, restaurants</Text>
-                            <Text style={styles.normalText}>{food}.</Text>
-
-                            <Text style={styles.boldText}>Favorite movie, band, book, author</Text>
-                            <Text style={styles.normalText}>{movie}</Text>
-
-                            <Text style={styles.boldText}>Health Conditions</Text>
-                            <Text style={styles.normalText}>{health}</Text>
-
-                            <Text style={styles.boldText}>Favorite Memory</Text>
-                            <Text style={styles.normalText}>{memory}</Text>
-                        </View>
-                    </ImageBackground>
+                        </ImageBackground>
+                    </View>
                 </View>
             </ScrollView>
             <TabBar />
@@ -115,7 +131,6 @@ const styles = StyleSheet.create({
     },
     main: {
         flex: 1,
-        paddingVertical: 20,
         backgroundColor: "#fff",
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
@@ -125,29 +140,40 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         paddingTop: 30,
         marginTop: -25,
+        width: "100%",
+
+    },
+    bgContain: {
+
+        width: "97%",
+        // marginVertical: 20, // Add vertical margin
     },
     bg: {
         width: "100%",
-        aspectRatio: 0.65,
-        paddingTop: 25,
+        minHeight: 500,
+        paddingVertical: 40,
         alignItems: "center",
+        alignSelf: "center",
+        // paddingHorizontal: 10
     },
     granded: {
         fontSize: 40,
         fontFamily: "Cochin",
-        fontWeight: "500"
+        fontWeight: "500",
+        // paddingTop: 40,
     },
     boldText: {
         fontSize: 25,
         fontFamily: "Cochin",
         fontWeight: "700",
         paddingTop: 10,
-        alignSelf: "center"
+        alignSelf: "center",
+        // paddingHorizontal: 10
     },
     normalText: {
-        fontWeight: "500",
+        fontWeight: 500,
         marginTop: 5,
-        paddingHorizontal: 40,
+        // paddingHorizontal: 30,
         textAlign: "center"
-    }
+    },
 });

@@ -49,12 +49,14 @@ export default function Successfully() {
             dod: params.dod,
             noteableContribution: params.noteableContribution,
             movie: params.movie,
-            food: params.food
+            food: params.food,
+            dynamicFields: params.dynamicFields,
+
         }
         console.log("success", forwardParams)
 
         router.push({
-            pathname: '/Dearly Department/displayData',
+            pathname: '/Dearly Department/bffMainScreen',
             params: forwardParams
         })
     }
@@ -78,7 +80,7 @@ export default function Successfully() {
                     >
                         <Ionicons name='checkmark-circle' size={97} color={"#fff"} />
                     </LinearGradient>
-                    <MainButton title={"View Family Tree"} onPress={handleViewDetails}
+                    <MainButton title={"Memory Board"} onPress={handleViewDetails}
                     />
                 </View>
             </ScrollView>
