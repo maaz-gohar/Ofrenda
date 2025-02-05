@@ -37,8 +37,8 @@ export default function HomeScreen() {
               <MainButton
                 title={'Get Started'}
                 // onPress={() => router.push('/signUp')}
-                // onPress={() => router.push('/Dearly Department/mainScreen')}
-                onPress={() => router.push('/BestFriendAndFamily/mainScreen')}
+                onPress={() => router.push('/Dearly Department/mainScreen')}
+              // onPress={() => router.push('/BestFriendAndFamily/mainScreen')}
               // onPress={() => router.push('/BucketList/selectBucketListPremium')}
               />
             </View>

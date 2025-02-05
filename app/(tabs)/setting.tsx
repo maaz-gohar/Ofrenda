@@ -41,7 +41,7 @@ export default function Setting() {
                     setting={true}
                     showIcon={true}
                 />
-                <View style={[styles.main, { height, width }]}>
+                <View style={[styles.main]}>
                     <View style={styles.searchContainer}>
                         <Ionicons name='search' size={17.33} color={"#FCC404"} style={{ paddingHorizontal: 20 }} />
                         <TextInput

@@ -20,17 +20,24 @@ export default function MainText({
     description,
     descriptioncondition = false,
     gradientColor = [b1, b2],
-    navigation // Accept navigation as a prop
+    onBackPress, // Add this prop for custom back handling
 }) {
-    // const { routes } = useRootNavigationState();
-    // console.log(JSON.stringify(routes[0].state.history, null, 2))
     const router = useRouter();
+
+    const handleBack = () => {
+        if (onBackPress) {
+            onBackPress();
+        } else {
+            router.back();
+        }
+    };
+
     return (
         <LinearGradient colors={gradientColor} style={styles.gradient}>
             <View style={styles.main}>
                 {showIcon && (
                     <TouchableOpacity
-                        onPress={() => router.back()} // Use the handleGoBack function here
+                        onPress={handleBack}
                         style={styles.iconContainer}
                         accessibilityLabel="Go back"
                     >

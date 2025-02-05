@@ -1,35 +1,39 @@
-import { Tabs } from 'expo-router';
+import { Stack } from 'expo-router';
 import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '.';
-import ExploreScreen from './explore';
-import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import SignUp from './signUp';
-
-const Stack = createNativeStackNavigator();
 
 export default function TabLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Tabs
+      <Stack
         screenOptions={{
-          tabBarStyle: { display: 'none' },
           headerShown: false
-        }}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Home"
-              component={HomeScreen}
+        }}
+      >
+        {/* Define your routes */}
+        <Stack.Screen name="index" /> {/* This is your home screen */}
+        <Stack.Screen name="basicPackages" />
+        <Stack.Screen name="congratulations" />
+        <Stack.Screen name="addCard" />
+        <Stack.Screen name="forgotPassword" />
+        <Stack.Screen name="profile" />
+        <Stack.Screen name="paymentMethod" />
+        <Stack.Screen name="notification" />
+        <Stack.Screen name="setting" />
+        <Stack.Screen name="signIn" />
+        <Stack.Screen name="signUp" />
+        <Stack.Screen name="summary" />
+        <Stack.Screen name="verifyOTP" />
 
-            />
-
-          </Stack.Navigator>
-        </NavigationContainer>
-        <StatusBar style="auto" />
-      </Tabs>
+        {/* Add your folder-based routes */}
+        <Stack.Screen name="BestFriendAndFamily" />
+        <Stack.Screen name="BffUser" />
+        <Stack.Screen name="Dearly Department" />
+        <Stack.Screen name="DearlyDepartmentUser" />
+        <Stack.Screen name="BucketList" />
+      </Stack>
+      <StatusBar style="auto" />
     </GestureHandlerRootView>
   );
 }

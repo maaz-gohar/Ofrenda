@@ -16,7 +16,7 @@ import MainText from './components/topText';
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
 
-export default function ForgotPassword() {
+export default function BasicPackage() {
     const { height, width } = Dimensions.get("window");
 
 

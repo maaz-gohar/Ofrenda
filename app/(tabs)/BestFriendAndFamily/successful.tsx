@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     StyleSheet,
     View,
@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import MainText from '../components/topText';
 import MainButton from '../components/button';
-import { useSearchParams } from 'expo-router/build/hooks';
+import { useLocalSearchParams } from 'expo-router';
 import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -15,16 +15,36 @@ const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
 
 export default function Successful() {
-    const searchParams = useSearchParams();
-    console.log("Search Params in Successful:", searchParams); // Check if params are received
+
+    const params = useLocalSearchParams();
+
+
+    useEffect(() => {
+        console.log("Received params in Successful screen:", params);
+    }, [params]);
 
     const handleViewDetails = () => {
-        console.log("Navigating to DisplayData with params:", searchParams);
+        const forwardParams = {
+            profession: params.profession,
+            dob: params.dob,
+            food: params.food,
+            selectedImage: params.selectedImage,
+            friendName: params.friendName,
+            dynamicFields: params.dynamicFields,
+            noteableContribution: params.noteableContribution,
+            movie: params.movie,
+            favFood: params.favFood,
+            health: params.health
+        };
+
+        console.log("Forwarding params to DisplayData:", forwardParams);
+
         router.push({
             pathname: '/BestFriendAndFamily/displayData',
-            params: searchParams // Forward all params
+            params: forwardParams
         });
     };
+
 
     return (
         <View style={styles.container}>
@@ -37,7 +57,18 @@ export default function Successful() {
                 <Text style={styles.description}>
                     Your BFF has been successfully added to your account.
                 </Text>
-                <MainButton title="View Details" onPress={handleViewDetails} gradientColor={[b1, b2]} shadowColor='rgba(94, 164, 253, 1)' />
+                {/* Optional: Display some of the data to confirm it's there */}
+                {params.friendName && (
+                    <Text style={styles.dataConfirmation}>
+                        Added {params.friendName} as BFF
+                    </Text>
+                )}
+                <MainButton
+                    title="View Details"
+                    onPress={handleViewDetails}
+                    gradientColor={[b1, b2]}
+                    shadowColor='rgba(94, 164, 253, 1)'
+                />
             </View>
         </View>
     );
@@ -60,6 +91,7 @@ const styles = StyleSheet.create({
     },
     gradient: {
         borderRadius: "50%",
+        // padding: 20,
         marginBottom: 40
     },
     title: {
@@ -74,4 +106,10 @@ const styles = StyleSheet.create({
         marginHorizontal: 40,
         marginBottom: 30,
     },
+    dataConfirmation: {
+        fontSize: 14,
+        color: '#444',
+        marginBottom: 20,
+        fontStyle: 'italic'
+    }
 });

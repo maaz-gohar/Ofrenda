@@ -45,11 +45,6 @@ export default function AncestorsMainScreen() {
                         text={"View Family Tree"}
                         onPress={() => router.push('/Dearly Department/memoryBoards')}
                     />
-                    <AncestorsComponent
-                        imagePath={require('../../../assets/images/ancestors3.png')}
-                        text={"View Memory Boards"}
-                    />
-
 
 
                 </View>

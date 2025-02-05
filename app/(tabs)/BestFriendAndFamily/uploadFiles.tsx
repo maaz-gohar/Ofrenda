@@ -3,11 +3,9 @@ import {
     StyleSheet,
     View,
     Text,
-    Dimensions,
     ScrollView,
-    Touchable,
     TouchableOpacity,
-
+    Image,
 } from 'react-native';
 import { FontAwesome, Ionicons, Entypo, FontAwesome6, FontAwesome5, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
@@ -21,37 +19,55 @@ const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
 
 export default function UploadFiles() {
-    // const { height, width } = Dimensions.get("window");
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-    // const [image, setImage] = useState<string | null>(null);
     const SelectImage = async () => {
+        try {
+            await ImagePicker.requestCameraPermissionsAsync();
 
-        await ImagePicker.requestCameraPermissionsAsync();
+            let result = await ImagePicker.launchCameraAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 1
+            });
 
-        let result = ImagePicker.launchCameraAsync({
-            mediaTypes: 'images',
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 1
-        })
-    }
+            if (!result.canceled) {
+                setSelectedImage(result.assets[0].uri);
+            }
+        } catch (error) {
+            console.log('Error taking photo:', error);
+        }
+    };
+
     const PickImage = async () => {
+        try {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 1
+            });
 
-        // await ImagePicker.requestCameraPermissionsAsync();
+            if (!result.canceled) {
+                setSelectedImage(result.assets[0].uri);
+            }
+        } catch (error) {
+            console.log('Error picking image:', error);
+        }
+    };
 
-        let result = ImagePicker.launchImageLibraryAsync({
-            mediaTypes: 'images',
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 1
-        })
-    }
-
-
+    const handleUploadComplete = () => {
+        if (selectedImage) {
+            router.push({
+                pathname: '/BestFriendAndFamily/selectCollegeDesign',
+                params: { selectedImage: selectedImage }
+            });
+        }
+    };
 
     return (
         <View style={styles.container}>
-
             <ScrollView contentContainerStyle={styles.scrollViewContainer}
                 bounces={false}>
                 <MainText
@@ -71,7 +87,7 @@ export default function UploadFiles() {
                         </TouchableOpacity>
                         <TouchableOpacity>
                             <View style={styles.TextContainer}>
-                                <Text style={{ fontWeight: "500" }}>Uplaod Photo</Text>
+                                <Text style={{ fontWeight: "500" }}>Upload Photo</Text>
                             </View>
                         </TouchableOpacity>
                         <View style={styles.uploadContainer}>
@@ -95,13 +111,27 @@ export default function UploadFiles() {
                                         >
                                             <Ionicons name='camera-outline' size={37} color={"rgba(86, 86, 86, 1)"} />
                                         </LinearGradient>
-                                        <Text style={{ alignSelf: "center", paddingTop: 10 }}>Select Photo</Text>
+                                        <Text style={{ alignSelf: "center", paddingTop: 10 }}>Take Photo</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
 
-                            <MainButton title={"Uploaded Photo"} onPress={() => router.push('/BestFriendAndFamily/bffViewInformation')} gradientColor={[b1, b2]} shadowColor='rgba(94, 164, 253, 1)' />
+                            {selectedImage && (
+                                <View style={styles.previewContainer}>
+                                    <Image
+                                        source={{ uri: selectedImage }}
+                                        style={styles.previewImage}
+                                    />
+                                </View>
+                            )}
 
+                            <MainButton
+                                title={selectedImage ? "Use This Photo" : "Select a Photo"}
+                                onPress={handleUploadComplete}
+                                gradientColor={[b1, b2]}
+                                shadowColor='rgba(94, 164, 253, 1)'
+                                disabled={!selectedImage}
+                            />
                         </View>
                     </View>
                 </View>
@@ -109,6 +139,7 @@ export default function UploadFiles() {
         </View>
     );
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -165,7 +196,16 @@ const styles = StyleSheet.create({
         padding: 30,
         borderRadius: 50,
     },
-
+    previewContainer: {
+        marginVertical: 20,
+        alignItems: 'center',
+    },
+    previewImage: {
+        width: 200,
+        height: 200,
+        borderRadius: 10,
+        marginBottom: 10,
+    },
 });
 
 

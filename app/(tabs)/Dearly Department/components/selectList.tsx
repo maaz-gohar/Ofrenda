@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
 
 const SelectList = ({ setSelected }) => {
-    // Data for the multiple select list
     const data = [
         { key: 1, value: 'Hobby One' },
         { key: 2, value: 'Hobby Two' },
@@ -14,11 +13,10 @@ const SelectList = ({ setSelected }) => {
         { key: 7, value: 'Hobby Seven' },
     ];
 
-    // Handle selection of items
     const handleSelect = (val) => {
-        console.log("Selected Values:", val); // Debugging log
+        console.log("Selected Values:", val);
         if (Array.isArray(val)) {
-            setSelected(val); // Update the parent state
+            setSelected(val);
         } else {
             console.error("Invalid value received:", val);
         }
@@ -28,8 +26,8 @@ const SelectList = ({ setSelected }) => {
         <View style={styles.container}>
             <MultipleSelectList
                 data={data}
-                setSelected={setSelected} // Pass the parent state setter
-                onSelect={handleSelect}   // Optional: Handle selection events
+                setSelected={setSelected}
+                onSelect={handleSelect}
                 save="value"
                 placeholder="Select hobbies"
                 boxStyles={styles.boxStyles}
@@ -67,6 +65,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 12,
         minHeight: 50,
+        backgroundColor: 'white',
     },
     dropdownStyles: {
         width: '100%',
@@ -78,11 +77,15 @@ const styles = StyleSheet.create({
         left: 0,
         backgroundColor: 'white',
         maxHeight: 200,
+        zIndex: 1000,
     },
     inputStyles: {
         fontSize: 16,
         color: '#999999',
         textAlign: 'left',
+        paddingVertical: 4,
+        width: '100%',
+        flex: 0,
     },
     checkBoxStyles: {
         borderColor: '#c2c2c2',
@@ -112,6 +115,8 @@ const styles = StyleSheet.create({
     badgeStyles: {
         backgroundColor: '#e8e8e8',
         borderRadius: 15,
+        marginRight: 5,
+        marginBottom: 5,
     },
     badgeTextStyles: {
         fontSize: 14,
@@ -128,11 +133,11 @@ const styles = StyleSheet.create({
         height: 8,
         borderRightWidth: 2,
         borderBottomWidth: 2,
-        justifyContent: "center",
-        alignSelf: "center",
         borderColor: '#c2c2c2',
         transform: [{ rotate: '45deg' }],
         marginTop: -5,
+        position: 'absolute',
+        right: 10,
     },
 });
 

@@ -70,8 +70,11 @@ export default function BucketListComponent({ showIcon = true, IconName, showTex
 
                     <TouchableOpacity
                         onPress={() => {
-                            router.push('/BucketList/memory');
+                            if (!showIcon) {
+                                router.push('/BucketList/memory');
+                            }
                         }}
+                        disabled={showIcon}
                     >
                         <View style={styles.itemContainer}>
                             <Image
@@ -84,9 +87,13 @@ export default function BucketListComponent({ showIcon = true, IconName, showTex
 
                     <TouchableOpacity
                         onPress={() => {
-                            router.push('/BucketList/thoughts');
+                            if (!showIcon) {
+                                router.push('/BucketList/thoughts');
+                            }
                         }}
+                        disabled={showIcon}
                     >
+
                         <View style={styles.itemContainer}>
                             <Image
                                 source={require('../../../../assets/images/Group 1508.png')}

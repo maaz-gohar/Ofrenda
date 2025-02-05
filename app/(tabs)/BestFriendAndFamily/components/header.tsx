@@ -63,8 +63,9 @@ export default function Header({ title, name, showIcon = false, setting = false,
 const styles = StyleSheet.create({
     gradient: {
         width: "100%",
-        height: 257,
-        justifyContent: "center",
+        height: 190,
+        // justifyContent: "center",
+        paddingTop: 40
     },
     main: {
         flexDirection: "row",

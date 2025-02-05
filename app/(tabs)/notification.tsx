@@ -21,7 +21,7 @@ const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
 
 
-export default function Notisficaition() {
+export default function Notificaition() {
     const { height, width } = Dimensions.get("window");
 
 

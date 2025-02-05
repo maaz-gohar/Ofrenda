@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -13,26 +13,41 @@ import MainText from '../components/topText';
 import DearlyDepartmentFormComponent from './components/dearlyDepartmentFormComponent';
 import DropdownComponent from '../components/dropdown';
 import SelectList from './components/selectList';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import DatePickerComponent from './components/datePicker';
 import MainButton from '../components/button';
+import FrameComponent from './components/frameComponent';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
 
 export default function DearlyDepartmentForm() {
+
+    const params = useLocalSearchParams();
+
+    useEffect(() => {
+        if (params.selectedImage) {
+            setSelectedImage(params.selectedImage.toString())
+        }
+    }, [params])
+
     const [worked, setWorked] = useState('');
     const [memory, setMemory] = useState('');
     const [health, setHealth] = useState('');
+    const [noteableContribution, setNoteableContribution] = useState('');
+    const [movie, setMovie] = useState('');
+    const [food, setFood] = useState('');
     const [dob, setDob] = useState('Enter DOB');
     const [dod, setDod] = useState('Enter DOD');
     const [hobbies, setHobbies] = useState([]);
+    const [selectedImage, setSelectedImage] = useState('');
 
     console.log(hobbies, "navigating to Granded data ")
 
+
     const handleSave = () => {
         router.push({
-            pathname: '/Dearly Department/displayData',
+            pathname: '/Dearly Department/successfully',
             params: {
                 worked,
                 memory,
@@ -40,11 +55,15 @@ export default function DearlyDepartmentForm() {
                 hobbies: JSON.stringify(hobbies),
                 dob,
                 dod,
+                noteableContribution,
+                movie,
+                food
             },
         });
     };
+    console.log("sending end ", hobbies)
 
-    console.log(hobbies)
+    // console.log(hobbies)
 
     return (
         <KeyboardAvoidingView
@@ -65,35 +84,34 @@ export default function DearlyDepartmentForm() {
                 <View style={styles.main}>
                     <Text style={styles.title}>Add dearly departed</Text>
 
-                    <View style={styles.scrollOptions}>
-                        <TouchableOpacity>
-                            <LinearGradient
-                                colors={[b1, b2]}
-                                style={styles.gradient}
-                            >
-                                <View style={styles.scrollContainer1}>
-                                    <Text style={styles.optionText}>Ofrenda</Text>
-                                </View>
-                            </LinearGradient>
-                        </TouchableOpacity>
+                    <ScrollView contentContainerStyle={{ paddingHorizontal: 20 }} bounces={false} >
+                        <View style={{ flexDirection: "row", alignItems: "center", paddingVertical: 10 }}>
+                            <FrameComponent text="Ofrenda" isGradient={true} onPress={() => router.push('/Dearly Department/selectOfrenda')} />
+                            <FrameComponent text="Elegant" onPress={() => router.push('/Dearly Department/elegant')} />
+                            <FrameComponent text="Indian" onPress={() => router.push('/Dearly Department/indian')} />
+                            <FrameComponent text="Scandinavian" />
+                            <FrameComponent text="Chinese" />
+                            <FrameComponent text="Japanese" />
+                            <FrameComponent text="Modernist" />
+                            <FrameComponent text="Another Mexican style" />
+                            <FrameComponent text="Glass photo frames " />
+                            <FrameComponent text="Classical Christian altar" />
+                            <FrameComponent text="Hebrew altar" />
+                            <FrameComponent text="Wall photo frames" />
+                            {/* <View style={styles.scrollContainer}>
+                            <Text style={{ fontWeight: "600", fontSize: 16 }}>More</Text>
+                        </View> */}
 
-                        <TouchableOpacity>
-                            <View style={styles.scrollContainer}>
-                                <Text style={styles.optionText}>Elegant</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style={styles.scrollContainer}>
-                                <Text style={styles.optionText}>Indian</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+
+                        </View>
+                    </ScrollView>
 
                     <DearlyDepartmentFormComponent name="Enter Name" />
                     <DearlyDepartmentFormComponent
                         name="Upload Picture"
                         iconName="upload"
                         iconType="AntDesign"
+                        value={selectedImage}
                         onPress={() => router.push('/Dearly Department/uploadFile')}
                     />
                     <DropdownComponent placeholder="Select Relation With Ancestor" />
@@ -108,6 +126,21 @@ export default function DearlyDepartmentForm() {
                         name="Favorite Memory"
                         value={memory}
                         setValue={setMemory}
+                    />
+                    <DearlyDepartmentFormComponent
+                        name="Notable contributions"
+                        value={noteableContribution}
+                        setValue={setNoteableContribution}
+                    />
+                    <DearlyDepartmentFormComponent
+                        name="Favorite food, restaurants"
+                        value={food}
+                        setValue={setFood}
+                    />
+                    <DearlyDepartmentFormComponent
+                        name="Favorite movie, band, book, author"
+                        value={movie}
+                        setValue={setMovie}
                     />
                     <DearlyDepartmentFormComponent
                         name="Worked as"

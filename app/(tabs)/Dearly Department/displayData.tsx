@@ -18,9 +18,37 @@ export default function DisplayData() {
     const hobbies = searchParams.get('hobbies');
     const dob = searchParams.get('dob');
     const dod = searchParams.get('dod');
+    const noteableContribution = searchParams.get('noteableContribution');
+    const movie = searchParams.get('movie');
+    const food = searchParams.get('food');
 
-    const parsedHobbies = hobbies ? JSON.parse(hobbies) : [];
+    // noteableContribution,
+    // movie,
+    // food
 
+    console.log(worked,
+        memory,
+        health,
+        hobbies,
+        dob,
+        dod,
+        noteableContribution,
+        movie,
+        food)
+
+    let parsedHobbies = [];
+    try {
+        if (hobbies) {
+            // Check if hobbies is already an array
+            if (Array.isArray(hobbies)) {
+                parsedHobbies = hobbies;
+            } else {
+                parsedHobbies = JSON.parse(hobbies);
+            }
+        }
+    } catch (error) {
+        console.error("Error parsing hobbies:", error);
+    }
     // Join hobbies with commas
     const hobbiesString = parsedHobbies.join(', ');
 
@@ -55,13 +83,13 @@ export default function DisplayData() {
                             <Text style={styles.normalText}>{worked}</Text>
 
                             <Text style={styles.boldText}>Notable contributions</Text>
-                            <Text style={styles.normalText}>Designed Seascape bridge, wrote Guidebook of California Birds</Text>
+                            <Text style={styles.normalText}>{noteableContribution}</Text>
 
                             <Text style={styles.boldText}>Favorite food, restaurants</Text>
-                            <Text style={styles.normalText}>Waygu burger, dark chocolates, Rhone wine, Citrus Sea Grill, Nobu Restaurant.</Text>
+                            <Text style={styles.normalText}>{food}.</Text>
 
                             <Text style={styles.boldText}>Favorite movie, band, book, author</Text>
-                            <Text style={styles.normalText}>Rolling Stones, The Godfather, Shakespeare.</Text>
+                            <Text style={styles.normalText}>{movie}</Text>
 
                             <Text style={styles.boldText}>Health Conditions</Text>
                             <Text style={styles.normalText}>{health}</Text>
@@ -113,7 +141,8 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontFamily: "Cochin",
         fontWeight: "700",
-        paddingTop: 10
+        paddingTop: 10,
+        alignSelf: "center"
     },
     normalText: {
         fontWeight: "500",

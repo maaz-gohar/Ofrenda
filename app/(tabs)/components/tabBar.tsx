@@ -5,19 +5,17 @@ import { useRouter, usePathname } from 'expo-router';
 
 const TabBar = () => {
     const [activeTab, setActiveTab] = useState('mainScreen');
-    const [currentSection, setCurrentSection] = useState('BucketList');
+    const [currentSection, setCurrentSection] = useState('');
     const router = useRouter();
     const pathname = usePathname();
 
     useEffect(() => {
         // Determine which section we're in based on the pathname
         if (pathname.includes('Dearly Department')) {
-            setCurrentSection('DearlyDepartment');
+            setCurrentSection('Dearly Department');
         } else if (pathname.includes('BestFriendAndFamily')) {
             setCurrentSection('BestFriendAndFamily');
         } else if (pathname.includes('BucketList')) {
-            setCurrentSection('BucketList');
-        } else if (pathname === '/') {
             setCurrentSection('BucketList');
         }
 
@@ -42,19 +40,18 @@ const TabBar = () => {
                     return '#FFC70B';
             }
         }
-        return '#FFC70B'; // Default color for notification and profile tabs
+        return '#FFC70B';
     };
 
     const getMainScreenPath = () => {
-        switch (currentSection) {
-            case 'DearlyDepartment':
-                return '../Dearly Department/mainScreen';
-            case 'BestFriendAndFamily':
-                return '../BestFriendAndFamily/mainScreen';
-            case 'BucketList':
-                return '../BucketList/mainScreen';
-            default:
-                return '../BucketList/mainScreen';
+        if (currentSection === 'Dearly Department') {
+            return '../Dearly Department/mainScreen';
+        } else if (currentSection === 'BestFriendAndFamily') {
+            return '../BestFriendAndFamily/mainScreen';
+        } else if (currentSection === 'BucketList') {
+            return '../BucketList/mainScreen';
+        } else {
+            return '../Dearly Department/mainScreen'; // Default path
         }
     };
 

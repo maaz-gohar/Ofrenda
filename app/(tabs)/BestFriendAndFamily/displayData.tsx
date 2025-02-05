@@ -18,8 +18,18 @@ export default function DisplayData() {
     const searchParams = useSearchParams();
     const Profession = searchParams.get('profession') || 'Not provided';
     const dob = searchParams.get('dob') || 'Not provided';
-    const hobbies = searchParams.get('hobbies');
-    const parsedHobbies = hobbies ? JSON.parse(hobbies) : [];
+    const food = searchParams.get('food');
+    const noteableContribution = searchParams.get('noteableContribution');
+    const movie = searchParams.get('movie');
+    const favFood = searchParams.get('favFood');
+    const health = searchParams.get('health');
+    const parsedFood = food ? JSON.parse(food) : [];
+    const dynamicFields = searchParams.get('dynamicFields');
+    const parsedDynamicFields = dynamicFields ? JSON.parse(dynamicFields) : [];
+
+
+    const foodString = parsedFood.join(', ');
+
 
     return (
         <View style={styles.container}>
@@ -40,31 +50,43 @@ export default function DisplayData() {
                             </View>
 
                             <Text style={styles.boldText}>Favorite pastimes</Text>
-                            {parsedHobbies.length > 0 ? (
-                                parsedHobbies.map((hobby, index) => (
+                            {/* {parsedFood.length > 0 ? (
+                                parsedFood.map((food, index) => (
                                     <Text key={index} style={styles.normalText}>
-                                        {hobby}
+                                        {food}
                                     </Text>
                                 ))
                             ) : (
                                 <Text style={styles.normalText}>No hobbies selected</Text>
-                            )}
+                            )} */}
+
+                            <Text style={styles.normalText}>{parsedFood.length > 0 ? foodString : 'No Food Selected'}</Text>
 
                             <Text style={styles.boldText}>Profession</Text>
                             <Text style={styles.normalText}>{Profession}</Text>
 
                             <Text style={styles.boldText}>Notable Contributions</Text>
-                            <Text style={styles.normalText}>Designed Seascape bridge, wrote Guidebook of California Birds.</Text>
+                            <Text style={styles.normalText}>{noteableContribution}</Text>
 
                             <Text style={styles.boldText}>Favorite food, restaurants</Text>
-                            <Text style={styles.normalText}>Waygu burger, dark chocolates, Rhone wine, Citrus Sea Grill, Nobu Restaurant.</Text>
+                            <Text style={styles.normalText}>{favFood}</Text>
 
                             <Text style={styles.boldText}>Favorite movie, band, book, author</Text>
-                            <Text style={styles.normalText}>Rolling Stones, The Godfather, Shakespeare.</Text>
+                            <Text style={styles.normalText}>{movie}</Text>
 
                             <Text style={styles.boldText}>Health conditions</Text>
-                            <Text style={styles.normalText}>Diabetes, Asthma.</Text>
+                            <Text style={styles.normalText}>{health}</Text>
 
+                            {parsedDynamicFields.length > 0 && (
+                                <View>
+                                    {parsedDynamicFields.map((field, index) => (
+                                        <View key={index}>
+                                            <Text style={styles.boldText}>{field.title}</Text>
+                                            <Text style={styles.normalText}>{field.value}</Text>
+                                        </View>
+                                    ))}
+                                </View>
+                            )}
                             <Text style={styles.boldText}>Social media</Text>
                             <View style={styles.social}>
                                 <View style={styles.greybg}>
@@ -141,7 +163,8 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontFamily: "Cochin",
         fontWeight: "700",
-        paddingTop: 10
+        paddingTop: 10,
+        alignSelf: "center"
 
     },
     normalText: {

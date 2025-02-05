@@ -14,7 +14,7 @@ import { FontAwesome, Ionicons, Entypo, FontAwesome6, FontAwesome5, MaterialComm
 import { LinearGradient } from "expo-linear-gradient";
 import MainText from '../components/topText';
 import MainButton from '../components/button';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
@@ -22,6 +22,43 @@ const b2 = "#ffe9a1";
 export default function Successfully() {
     // const { height, width } = Dimensions.get("window");
     const router = useRouter();
+
+    const params = useLocalSearchParams();
+
+
+
+    // worked:
+    // memory:
+    // health:
+    // hobbies: 
+    // dob:
+    // dod:
+    // noteableContribution:
+    // movie:
+    // food:
+
+
+
+    const handleViewDetails = () => {
+        const forwardParams = {
+            worked: params.worked,
+            memory: params.memory,
+            health: params.health,
+            hobbies: params.hobbies,
+            dob: params.dob,
+            dod: params.dod,
+            noteableContribution: params.noteableContribution,
+            movie: params.movie,
+            food: params.food
+        }
+        console.log("success", forwardParams)
+
+        router.push({
+            pathname: '/Dearly Department/displayData',
+            params: forwardParams
+        })
+    }
+
 
     return (
         <View style={styles.container}>
@@ -41,7 +78,7 @@ export default function Successfully() {
                     >
                         <Ionicons name='checkmark-circle' size={97} color={"#fff"} />
                     </LinearGradient>
-                    <MainButton title={"View Family Tree"} onPress={() => router.push('/Dearly Department/bffMainScreen')}
+                    <MainButton title={"View Family Tree"} onPress={handleViewDetails}
                     />
                 </View>
             </ScrollView>

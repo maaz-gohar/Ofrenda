@@ -28,13 +28,13 @@ export default function Search() {
 
 const styles = StyleSheet.create({
     searchContainer: {
-        width: "100%",
+        width: "95%",
         backgroundColor: "#F7F5FA",
         borderColor: "#C2C2C2",
         borderWidth: 1,
         borderRadius: 40,
         paddingVertical: 12,
         flexDirection: "row",
-        marginBottom: 15 // Add some bottom margin if needed
+        marginBottom: 15
     }
 });
