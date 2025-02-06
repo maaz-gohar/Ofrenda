@@ -10,6 +10,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import TabBar from '../components/tabBar';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
@@ -64,12 +65,13 @@ export default function Successful() {
                     </Text>
                 )}
                 <MainButton
-                    title="View Details"
+                    title="View Collage"
                     onPress={handleViewDetails}
                     gradientColor={[b1, b2]}
                     shadowColor='rgba(94, 164, 253, 1)'
                 />
             </View>
+            <TabBar />
         </View>
     );
 }

@@ -18,11 +18,7 @@ export default function Header({ title, name, showIcon = false, setting = false,
     const navigation = useNavigation();
 
     const handleGoBack = () => {
-        if (navigation.canGoBack()) {
-            navigation.goBack();
-        } else {
-            navigation.navigate('PreviousPage');
-        }
+        router.push('/profile')
     };
 
     return (

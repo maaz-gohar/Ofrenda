@@ -88,7 +88,7 @@ export default function Summary() {
                 <View style={styles.endView}>
                     <MainButton
                         title="Make Payment"
-                        onPress={() => router.push('/congratulations')}
+                        onPress={() => router.push('/BucketList/selectBucketListPremium')}
                         gradientColor={[b1, b2]}
                         shadowColor='#f8deff'
                     />

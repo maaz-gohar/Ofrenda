@@ -45,7 +45,7 @@ export default function BffMainScreenLandScape() {
                     <View style={styles.imgcover}>
                         <Image source={require('../../../assets/images/SelectOfrenda/3.png')} style={styles.img} />
                         <TouchableOpacity
-                            onPress={() => router.push('/BestFriendAndFamily/bffMainScreen')}
+                            onPress={() => router.push('/Dearly Department/bffMainScreen')}
                             style={[styles.icon, styles.rotateIcon]}
                         >
                             <MaterialIcons name='crop-rotate' size={20} color={"#fff"} />
@@ -153,6 +153,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         resizeMode: 'contain',
+        transform: [{ rotate: '90deg' }],
     },
     fullScreenIcon: {
         top: 40,

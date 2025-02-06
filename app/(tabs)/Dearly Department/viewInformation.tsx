@@ -14,6 +14,7 @@ import MainText from '../components/topText';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import MainButton from '../components/button';
 import InfoComponent from './components/infoComponent';
+import TabBar from '../components/tabBar';
 // import InfoComponent from '../components/infoComponent';
 
 export default function ViewInformation() {
@@ -48,6 +49,7 @@ export default function ViewInformation() {
                     </View> */}
                 </View>
             </ScrollView >
+            <TabBar />
         </View >
     );
 }

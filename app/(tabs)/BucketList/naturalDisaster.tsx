@@ -121,7 +121,7 @@ export default function NaturalDisaster() {
                             ))}
                         </View>
                     </View>
-                    <MainButton title='Submit' gradientColor={[b1, b2]} shadowColor='#f8deff' />
+                    <MainButton title='Submit' onPress={() => router.push('/BucketList/selectBucketListPremium')} gradientColor={[b1, b2]} shadowColor='#f8deff' />
                 </View>
             </ScrollView>
         </KeyboardAvoidingView>

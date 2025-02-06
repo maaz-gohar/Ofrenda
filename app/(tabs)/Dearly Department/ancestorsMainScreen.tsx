@@ -30,7 +30,7 @@ export default function AncestorsMainScreen() {
                 bounces={false}>
 
                 <MainText
-                    title={'Dearly Deaprtment'}
+                    title={'Dearly Departed'}
                     showIcon={true}
                     setting={true}
                 />
@@ -43,7 +43,7 @@ export default function AncestorsMainScreen() {
                     <AncestorsComponent
                         imagePath={require('../../../assets/images/ancestors2.png')}
                         text={"View Family Tree"}
-                        onPress={() => router.push('/Dearly Department/memoryBoards')}
+                        onPress={() => router.push('/Dearly Department/familyTreeBoard')}
                     />
                     <AncestorsComponent
                         imagePath={require('../../../assets/images/ancestors3.png')}

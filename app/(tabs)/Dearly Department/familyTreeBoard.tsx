@@ -20,7 +20,7 @@ import { useRouter } from 'expo-router';
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
 
-export default function MemoryBoards() {
+export default function FamilyTreeBoard() {
     // const { height, width } = Dimensions.get("window");
     const router = useRouter();
 
@@ -31,16 +31,16 @@ export default function MemoryBoards() {
                 bounces={false}>
 
                 <MainText
-                    title={'Memory Board'}
+                    title={'Family Tree'}
                     showIcon={true}
                     setting={true}
                 />
                 <View style={[styles.main]}>
                     <MaterialCommunityIcons name='family-tree' size={40} color={'#7d7d7d'} />
-                    <Text style={styles.text}>Your Memory Boards Appear Here</Text>
+                    <Text style={styles.text}>Your Family Tree Boards Appear Here</Text>
                 </View>
                 <View style={styles.endView}>
-                    <MainButton title={"Add Memory Board"} onPress={() => router.push('/Dearly Department/selectOfrenda')} />
+                    <MainButton title={"Add Family Tree"} onPress={() => router.push('/Dearly Department/selectOfrenda')} />
 
                 </View>
             </ScrollView>
