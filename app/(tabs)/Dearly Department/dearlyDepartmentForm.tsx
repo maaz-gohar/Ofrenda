@@ -18,6 +18,7 @@ import DatePickerComponent from './components/datePicker';
 import MainButton from '../components/button';
 import FrameComponent from './components/frameComponent';
 import { AntDesign } from '@expo/vector-icons';
+import TabBar from '../components/tabBar';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
@@ -48,6 +49,19 @@ export default function DearlyDepartmentForm() {
     console.log(hobbies, "navigating to Granded data ")
 
 
+    const [selectedFoodImage, setSelectedFoodImage] = useState('');
+
+    // Update useEffect to handle food image selection from params
+    useEffect(() => {
+        if (params.selectedImage) {
+            setSelectedImage(params.selectedImage.toString());
+        }
+        if (params.selectedFoodImage) {
+            setSelectedFoodImage(params.selectedFoodImage.toString());
+        }
+    }, [params]);
+
+    // Update handleSave to include selectedFoodImage
     const handleSave = () => {
         router.push({
             pathname: '/Dearly Department/successfully',
@@ -61,11 +75,12 @@ export default function DearlyDepartmentForm() {
                 noteableContribution,
                 movie,
                 food,
-                dynamicFields: JSON.stringify(dynamicFields)
-
+                dynamicFields: JSON.stringify(dynamicFields),
+                selectedFoodImage, // Add this to save the selected food image
             },
         });
     };
+
 
 
     const addAnotherField = () => {
@@ -177,6 +192,8 @@ export default function DearlyDepartmentForm() {
                         name="Upload Food Picture"
                         iconName="plus"
                         iconType="AntDesign"
+                        value={selectedFoodImage} // Add state for this: const [selectedFoodImage, setSelectedFoodImage] = useState('');
+                        onPress={() => router.push('/Dearly Department/selectFood')}
                     />
                     {dynamicFields.map((field, index) => (
                         <View key={field.id}>
@@ -205,6 +222,7 @@ export default function DearlyDepartmentForm() {
                     <MainButton title={"Add Ancestor"} onPress={handleSave} />
                 </View>
             </ScrollView>
+            <TabBar />
         </KeyboardAvoidingView>
     );
 }

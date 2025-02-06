@@ -15,6 +15,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import MainText from '../components/topText';
 import MainButton from '../components/button';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import TabBar from '../components/tabBar';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
@@ -69,6 +70,8 @@ export default function Successfully() {
                 bounces={false}>
                 <MainText
                     title={'Successfully'}
+                    showIcon={true}
+                    setting={true}
                 />
 
                 <View style={[styles.main]}>
@@ -84,6 +87,7 @@ export default function Successfully() {
                     />
                 </View>
             </ScrollView>
+            <TabBar />
         </View>
     );
 }

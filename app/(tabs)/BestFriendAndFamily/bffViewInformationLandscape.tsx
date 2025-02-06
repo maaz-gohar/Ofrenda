@@ -45,7 +45,7 @@ export default function BffMainScreenLandScape() {
                     <View style={styles.imgcover}>
                         <Image source={require('../../../assets/images/BestFriend/college1.jpg')} style={styles.img} />
                         <TouchableOpacity
-                            onPress={() => router.push('/Dearly Department/bffMainScreen')}
+                            onPress={() => router.push('/BestFriendAndFamily/bffViewInformation')}
                             style={[styles.icon, styles.rotateIcon]}
                         >
                             <MaterialIcons name='crop-rotate' size={20} color={"#fff"} />

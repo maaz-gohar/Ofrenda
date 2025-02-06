@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     StyleSheet,
     View,
@@ -7,17 +7,11 @@ import {
 } from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
 
-export default function AddDearlyDepartmentComponent({ imagePath }) {
-    const [showIcon, setShowIcon] = useState(false);
-
-    const toggleIcon = () => {
-        setShowIcon((prev) => !prev);
-    };
-
+export default function AddDearlyDepartmentComponent({ imagePath, isSelected, onSelect }) {
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.main} onPress={toggleIcon}>
-                {showIcon && (
+            <TouchableOpacity style={styles.main} onPress={onSelect}>
+                {isSelected && (
                     <Fontisto name="check" size={5} color={"#fff"} style={styles.icon} />
                 )}
                 <Image source={imagePath} style={styles.image} />

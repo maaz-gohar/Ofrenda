@@ -1,190 +1,64 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     View,
-    Text,
-    Dimensions,
     ScrollView,
-
 } from 'react-native';
-import { FontAwesome, Ionicons, Entypo, FontAwesome6, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
-
-import { LinearGradient } from "expo-linear-gradient";
+import { router } from 'expo-router';
 import MainText from '../components/topText';
-import AddDearlyDepartmentComponent from './components/dearlyDepartmentImage';
 import MainButton from '../components/button';
-
-
-// import MainText from './components/topText';
+import ParentComponent from './components/parentComponent';
+import TabBar from '../components/tabBar';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
 
 export default function SelectFood() {
-    // const { height, width } = Dimensions.get("window");
+    const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
+    const handleImageSelect = (index) => {
+        setSelectedImageIndex(index);
+    };
+
+    const handleConfirmSelection = () => {
+        if (selectedImageIndex !== null) {
+            // Create the image name based on the selected index
+            const selectedImageName = `${selectedImageIndex + 1}.png`;
+
+            // Navigate back to the form with the selected image
+            router.push({
+                pathname: '/Dearly Department/dearlyDepartmentForm',
+                params: {
+                    selectedFoodImage: selectedImageName
+                }
+            });
+        }
+    };
 
     return (
         <View style={styles.container}>
-
             <ScrollView contentContainerStyle={styles.scrollViewContainer}
                 bounces={false}>
                 <MainText
                     title={'Select Image'}
                     showIcon={true}
+                    setting={true}
                 />
 
                 <View style={[styles.main]}>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/1.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/2.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/3.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/4.png')}
-
-                        />
-
-
-                    </View>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/5.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/6.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/7.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/8.png')}
-
-                        />
-
-
-                    </View>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/9.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/10.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/1.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/4.png')}
-
-                        />
-
-
-                    </View>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/1.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/2.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/10.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/7.png')}
-
-                        />
-
-
-                    </View>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/6.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/9.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/8.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/3.png')}
-
-                        />
-
-
-                    </View>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/5.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/6.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/7.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/8.png')}
-
-                        />
-
-
-                    </View>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/1.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/3.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/4.png')}
-
-                        />
-                        <AddDearlyDepartmentComponent
-                            imagePath={require('../../../assets/images/food/10.png')}
-
-                        />
-
-
-                    </View>
-                    <MainButton title={"Select"} />
+                    <ParentComponent
+                        onImageSelect={handleImageSelect}
+                        selectedImageIndex={selectedImageIndex}
+                    />
+                    <MainButton
+                        title={"Select"}
+                        onPress={handleConfirmSelection}
+                        gradientColor={[b1, b2]}
+                        disabled={selectedImageIndex === null}
+                    />
                 </View>
             </ScrollView>
+            <TabBar />
         </View>
     );
 }
@@ -203,7 +77,8 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         alignItems: "center",
+        justifyContent: "center",
         paddingTop: 30,
-        marginTop: -25,
+        marginTop: -35,
     },
 });

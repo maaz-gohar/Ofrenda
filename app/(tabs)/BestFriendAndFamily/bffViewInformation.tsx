@@ -13,6 +13,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import MainText from '../components/topText';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import MainButton from '../components/button';
+import TabBar from '../components/tabBar';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
@@ -88,6 +89,7 @@ export default function BffViewInformation() {
                     </View>
                 </View>
             </ScrollView >
+            <TabBar />
         </View >
     );
 }

@@ -4,6 +4,7 @@ import {
     View,
     Text,
     ScrollView,
+    TouchableOpacity,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import MainText from '../components/topText';
@@ -44,25 +45,27 @@ export default function SelectBucketList() {
                         <BucketListComponent IconName={"locked"} />
                         <BucketListComponent IconName={"locked"} />
                     </View>
-                    <View style={styles.bucketContainer2}>
-                        <View style={styles.overlay}>
-                            <View style={styles.icon}>
-                                <FontAwesome5 name={"crown"} size={16} color="rgba(255, 255, 0, 1)" />
+                    <TouchableOpacity onPress={() => router.push('/BucketList/paymentMethod')}>
+                        <View style={styles.bucketContainer2}>
+                            <View style={styles.overlay}>
+                                <View style={styles.icon}>
+                                    <FontAwesome5 name={"crown"} size={16} color="rgba(255, 255, 0, 1)" />
+                                </View>
+                                <Text style={styles.premium}>Premium</Text>
                             </View>
-                            <Text style={styles.premium}>Premium</Text>
+                            <Text style={styles.textBig}>Tool Kit Lists</Text>
+                            <View style={styles.premiumContainer}>
+                            </View>
+                            <BucketListComponent />
+                            <BucketListComponent />
+                            <BucketListComponent />
+                            <BucketListComponent />
+                            <BucketListComponent />
+                            <BucketListComponent />
+                            <BucketListComponent />
+                            <BucketListComponent />
                         </View>
-                        <Text style={styles.textBig}>Tool Kit Lists</Text>
-                        <View style={styles.premiumContainer}>
-                        </View>
-                        <BucketListComponent />
-                        <BucketListComponent />
-                        <BucketListComponent />
-                        <BucketListComponent />
-                        <BucketListComponent />
-                        <BucketListComponent />
-                        <BucketListComponent />
-                        <BucketListComponent />
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
             <TabBar />

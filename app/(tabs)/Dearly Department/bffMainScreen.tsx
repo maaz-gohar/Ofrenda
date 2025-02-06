@@ -13,6 +13,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import MainText from '../components/topText';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import MainButton from '../components/button';
+import TabBar from '../components/tabBar';
 
 export default function BffMainScreen() {
     const router = useRouter();
@@ -89,6 +90,7 @@ export default function BffMainScreen() {
                     </View>
                 </View>
             </ScrollView >
+            <TabBar />
         </View >
     );
 }

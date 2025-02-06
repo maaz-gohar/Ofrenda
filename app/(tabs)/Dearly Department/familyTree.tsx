@@ -39,7 +39,7 @@ export default function FamilyTree() {
                     setting={true}
                 />
                 <View style={[styles.main]}>
-                    <Text style={styles.seeAll}>See All</Text>
+                    {/* <Text style={styles.seeAll}>See All</Text> */}
 
                     <View style={styles.btns}>
                         <View style={styles.inactive}>

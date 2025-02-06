@@ -11,13 +11,13 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 interface DatePickerComponentProps {
     placeholder: string;
-    onDateChange: (date: string) => void; // New prop for handling date change
+    onDateChange: (date: string) => void;
 }
 
 const DatePickerComponent: React.FC<DatePickerComponentProps> = ({ placeholder, onDateChange }) => {
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(new Date()); // Initialize with the current date
     const [show, setShow] = useState(false);
-    const [displayText, setDisplayText] = useState(placeholder);
+    const [displayText, setDisplayText] = useState(placeholder); // Start with placeholder
 
     const onChange = (event, selectedDate) => {
         if (event.type === 'dismissed') {
@@ -35,12 +35,12 @@ const DatePickerComponent: React.FC<DatePickerComponentProps> = ({ placeholder, 
             const year = selectedDate.getFullYear();
             const formattedDate = `${day}-${month}-${year}`;
             setDisplayText(formattedDate);
-            onDateChange(formattedDate); // Call the new prop to pass the date back
+            onDateChange(formattedDate);
         }
     };
 
     const showDatepicker = () => {
-        setShow(true);
+        setShow(true); // Show the date picker directly on click
     };
 
     return (
@@ -55,6 +55,18 @@ const DatePickerComponent: React.FC<DatePickerComponentProps> = ({ placeholder, 
                 ]}>
                     {displayText}
                 </Text>
+                {show && (
+                    <DateTimePicker
+                        value={date} // Display the current date
+                        mode="date"
+                        is24Hour={true}
+                        display={Platform.OS === 'ios' ? 'default' : 'calendar'}
+                        onChange={onChange}
+                        style={styles.datePicker}
+                        minimumDate={new Date(1900, 0, 1)}
+                        maximumDate={new Date(2100, 11, 31)}
+                    />
+                )}
                 <MaterialIcons
                     name="date-range"
                     size={24}
@@ -63,22 +75,9 @@ const DatePickerComponent: React.FC<DatePickerComponentProps> = ({ placeholder, 
                 />
             </TouchableOpacity>
 
-            {show && (
-                <DateTimePicker
-                    value={date}
-                    mode="date"
-                    is24Hour={true}
-                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                    onChange={onChange}
-                    style={styles.datePicker}
-                    minimumDate={new Date(1900, 0, 1)}
-                    maximumDate={new Date(2100, 11, 31)}
-                />
-            )}
         </View>
     );
 };
-
 
 const styles = StyleSheet.create({
     container: {
@@ -94,20 +93,18 @@ const styles = StyleSheet.create({
         height: 47,
         paddingVertical: 5,
         flexDirection: "row",
-        justifyContent: 'space-between',
         alignItems: 'center',
     },
     name: {
         color: '#333333',
         fontSize: 16,
-        // paddingLeft: 10,
+        flex: 1, // Allow text to take available space
     },
     placeholder: {
         color: '#999999',
     },
     icon: {
-        alignSelf: "center",
-        // paddingRight: 3
+        marginLeft: 10,
     },
     datePicker: {
         width: '100%',

@@ -7,7 +7,8 @@ import {
     ScrollView,
     KeyboardAvoidingView,
     Platform,
-    Image
+    Image,
+    TouchableOpacity
 } from 'react-native';
 import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import { LinearGradient } from "expo-linear-gradient";
@@ -33,12 +34,14 @@ export default function PaymentMethod() {
                 />
                 <View style={styles.main}>
                     <View style={styles.addNewCard}>
-                        <LinearGradient
-                            colors={[b1, b2]}
-                            style={styles.gradient}
-                        >
-                            <FontAwesome6 name='plus' color="#000" size={16} />
-                        </LinearGradient>
+                        <TouchableOpacity onPress={() => router.push('/BucketList/addCard')}>
+                            <LinearGradient
+                                colors={[b1, b2]}
+                                style={styles.gradient}
+                            >
+                                <FontAwesome6 name='plus' color="#000" size={16} />
+                            </LinearGradient>
+                        </TouchableOpacity>
                         <Text>Add New Card</Text>
                     </View>
 
@@ -57,9 +60,11 @@ export default function PaymentMethod() {
                                 <Text>Debit Card **** 6518</Text>
                             </View>
                         </View>
-                        <View style={styles.backicon}>
-                            <FontAwesome name='angle-right' color="#000" size={16} />
-                        </View>
+                        <TouchableOpacity onPress={() => router.push('/BucketList/summary')}>
+                            <View style={styles.backicon}>
+                                <FontAwesome name='angle-right' color="#000" size={16} />
+                            </View>
+                        </TouchableOpacity>
                     </LinearGradient>
 
                     <LinearGradient
@@ -76,9 +81,11 @@ export default function PaymentMethod() {
                                 <Text>Debit Card **** 1234</Text>
                             </View>
                         </View>
-                        <View style={styles.backicon}>
-                            <FontAwesome name='angle-right' color="#000" size={16} />
-                        </View>
+                        <TouchableOpacity onPress={() => router.push('/BucketList/summary')}>
+                            <View style={styles.backicon}>
+                                <FontAwesome name='angle-right' color="#000" size={16} />
+                            </View>
+                        </TouchableOpacity>
                     </LinearGradient>
 
 

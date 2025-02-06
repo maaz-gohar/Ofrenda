@@ -38,7 +38,7 @@ export default function AddFamilyTree() {
                     setting={true}
                 />
                 <View style={[styles.main]}>
-                    <Text style={styles.seeAll}>See All</Text>
+                    {/* <Text style={styles.seeAll}>See All</Text> */}
                     <View style={styles.btns}>
                         <LinearGradient
                             colors={[b1, b2]}
