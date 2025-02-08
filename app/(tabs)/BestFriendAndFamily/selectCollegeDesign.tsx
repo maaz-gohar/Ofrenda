@@ -17,6 +17,7 @@ import TabBar from '../components/tabBar';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import SelectList from './components/selectList';
 import { AntDesign } from '@expo/vector-icons';
+// import SocialMultipleSelectList from './components/socialMultipleSelectList';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
@@ -24,6 +25,7 @@ const b2 = "rgba(143, 184, 236, 1)";
 export default function SelectCollegeDesign() {
     const [profession, setProfession] = useState('');
     const [food, setFood] = useState([]);
+    // const [socialIcons, setsocialIcons] = useState([]);
     const [noteableContribution, setNoteableContribution] = useState('');
     const [movie, setMovie] = useState('');
     const [favFood, setFavFood] = useState('');
@@ -31,6 +33,10 @@ export default function SelectCollegeDesign() {
     const [dob, setDob] = useState('Enter DOB');
     const [dynamicFields, setDynamicFields] = useState([]);
     const [selectedImage, setSelectedImage] = useState('');
+    const [facebook, setFacebook] = useState('');
+    const [instagram, setInstagram] = useState('');
+    const [twitter, setTwitter] = useState('');
+    const [tiktok, setTiktok] = useState('');
 
     const router = useRouter();
     const params = useLocalSearchParams();
@@ -52,8 +58,13 @@ export default function SelectCollegeDesign() {
                 favFood,
                 health,
                 food: JSON.stringify(food),
+                // socialIcons: JSON.stringify(socialIcons),
                 selectedImage,
-                dynamicFields: JSON.stringify(dynamicFields)
+                dynamicFields: JSON.stringify(dynamicFields),
+                facebook,
+                instagram,
+                twitter,
+                tiktok,
             }
         });
     };
@@ -126,7 +137,13 @@ export default function SelectCollegeDesign() {
                         value={health}
                         setValue={setHealth}
                     />
-                    <DearlyDepartmentFormComponent name="Add Social Media URL" iconName={'link'} />
+                    <DearlyDepartmentFormComponent name="Add Facebook URL" iconName={'link'} value={facebook} setValue={setFacebook} />
+                    <DearlyDepartmentFormComponent name="Add Instagram URL" iconName={'link'} value={instagram} setValue={setInstagram} />
+                    <DearlyDepartmentFormComponent name="Add Twitter URL" iconName={'link'} value={twitter} setValue={setTwitter} />
+                    <DearlyDepartmentFormComponent name="Add Tiktok URL" iconName={'link'} value={tiktok} setValue={setTiktok} />
+
+
+                    {/* <SocialMultipleSelectList setSelected={setsocialIcons} /> */}
 
                     {dynamicFields.map((field, index) => (
                         <View key={field.id}>

@@ -14,6 +14,7 @@ import MainButton from '../components/button';
 import MainText from '../components/topText';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import TabBar from '../components/tabBar';
 
 const b1 = "rgba(188, 97, 213, 0.8)";
 const b2 = "rgba(249, 244, 251, 1)";
@@ -94,6 +95,7 @@ export default function Summary() {
                     />
                 </View>
             </ScrollView>
+            <TabBar />
         </KeyboardAvoidingView>
     );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -19,10 +19,36 @@ const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
 
 export default function BffViewInformation() {
-    const router = useRouter();
 
+    const { height, width } = Dimensions.get('window')
+
+    const router = useRouter();
     const params = useLocalSearchParams();
 
+    const [fullScreen, setFullScreen] = useState(false)
+
+    const ToggleFullScreen = () => {
+        setFullScreen(!fullScreen)
+    }
+
+    if (fullScreen) {
+        return (
+            <View style={[styles.fullScreenContainer, { height, width }]}>
+                <Image
+                    source={require('../../../assets/images/BestFriend/college1.jpg')}
+                    style={styles.fullScreenImage}
+                />
+                <TouchableOpacity
+                    onPress={ToggleFullScreen}
+                    style={[styles.icon, styles.fullScreenIcon]}
+                >
+                    <MaterialIcons name='fullscreen-exit' size={24} color={"#fff"} />
+                </TouchableOpacity>
+            </View>
+        );
+
+
+    }
 
     const handleViewDetails = () => {
         const forwardParams = {
@@ -35,7 +61,11 @@ export default function BffViewInformation() {
             noteableContribution: params.noteableContribution,
             movie: params.movie,
             favFood: params.favFood,
-            health: params.health
+            health: params.health,
+            facebook: params.facebook,
+            instagram: params.instagram,
+            twitter: params.twitter,
+            tiktok: params.tiktok
         };
 
         console.log("Forwarding params to DisplayData:", forwardParams);
@@ -59,6 +89,9 @@ export default function BffViewInformation() {
                             style={styles.icon}
                         >
                             <MaterialIcons name='crop-rotate' size={20} color={"#fff"} />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={ToggleFullScreen} style={[styles.icon, styles.fullScreenButton]}>
+                            <MaterialIcons name='fullscreen' size={20} color={"#fff"} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.subbtn}>
@@ -146,5 +179,35 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 7,
         borderRadius: 250
-    }
+    },
+    fullScreenContainer: {
+        flex: 1,
+        backgroundColor: '#000',
+    },
+    fullScreenImage: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        resizeMode: 'contain',
+        transform: [{ rotate: '90deg' }],
+
+    },
+    fullScreenIcon: {
+        top: 40,
+        right: 20,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        padding: 8,
+    },
+    rotateIcon: {
+        top: 10,
+        right: 10,
+    },
+    fullScreenButton: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        padding: 5,
+        borderRadius: 50,
+        width: 35
+    },
 });

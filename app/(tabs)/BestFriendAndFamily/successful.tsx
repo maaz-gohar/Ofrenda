@@ -35,7 +35,11 @@ export default function Successful() {
             noteableContribution: params.noteableContribution,
             movie: params.movie,
             favFood: params.favFood,
-            health: params.health
+            health: params.health,
+            facebook: params.facebook,
+            instagram: params.instagram,
+            twitter: params.twitter,
+            tiktok: params.tiktok
         };
 
         console.log("Forwarding params to DisplayData:", forwardParams);

@@ -109,32 +109,33 @@ export default function Profile() {
             >
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContainer}>
-                        <TouchableOpacity onPress={PickImage}>
-                            <View style={styles.modalOption}>
-                                <LinearGradient colors={[b1, b2]} style={styles.optionGradient}>
-                                    <MaterialIcons name="photo-library" size={37} color={"rgba(86, 86, 86, 1)"} />
-                                </LinearGradient>
-                                <Text style={styles.optionText}>Select Photo</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={SelectImage}>
-                            <View style={styles.modalOption}>
-                                <LinearGradient colors={[b1, b2]} style={styles.optionGradient}>
-                                    <Ionicons name="camera-outline" size={37} color={"rgba(86, 86, 86, 1)"} />
-                                </LinearGradient>
-                                <Text style={styles.optionText}>Take Photo</Text>
-                            </View>
-                        </TouchableOpacity>
+                        <View style={{ flexDirection: "row" }}>
+                            <TouchableOpacity onPress={PickImage}>
+                                <View style={styles.modalOption}>
+                                    <LinearGradient colors={[b1, b2]} style={styles.optionGradient}>
+                                        <MaterialIcons name="photo-library" size={37} color={"rgba(86, 86, 86, 1)"} />
+                                    </LinearGradient>
+                                    <Text style={styles.optionText}>Select Photo</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={SelectImage}>
+                                <View style={styles.modalOption}>
+                                    <LinearGradient colors={[b1, b2]} style={styles.optionGradient}>
+                                        <Ionicons name="camera-outline" size={37} color={"rgba(86, 86, 86, 1)"} />
+                                    </LinearGradient>
+                                    <Text style={styles.optionText}>Take Photo</Text>
+                                </View>
+                            </TouchableOpacity>
 
-                        <TouchableOpacity onPress={RemoveImage}>
-                            <View style={styles.modalOption}>
-                                <LinearGradient colors={[b1, b2]} style={styles.optionGradient}>
-                                    <MaterialIcons name="delete" size={37} color={"rgba(86, 86, 86, 1)"} />
-                                </LinearGradient>
-                                <Text style={styles.optionText}>Remove Photo</Text>
-                            </View>
-                        </TouchableOpacity>
-
+                            <TouchableOpacity onPress={RemoveImage}>
+                                <View style={styles.modalOption}>
+                                    <LinearGradient colors={[b1, b2]} style={styles.optionGradient}>
+                                        <MaterialIcons name="delete" size={37} color={"rgba(86, 86, 86, 1)"} />
+                                    </LinearGradient>
+                                    <Text style={styles.optionText}>Remove Photo</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                         <TouchableOpacity
                             style={styles.closeButton}
                             onPress={CloseModal}
@@ -197,6 +198,7 @@ const styles = StyleSheet.create({
     modalOption: {
         alignItems: "center",
         marginBottom: 20,
+        paddingHorizontal: 15
     },
     optionGradient: {
         padding: 15,

@@ -17,6 +17,7 @@ import MainText from '../components/topText';
 import { useRouter } from 'expo-router';
 import Search from './components/search';
 import MainButton from '../components/button';
+import TabBar from '../components/tabBar';
 
 const b1 = "rgba(188, 97, 213, 0.8)";
 const b2 = "rgba(249, 244, 251, 1)";
@@ -124,6 +125,7 @@ export default function NaturalDisaster() {
                     <MainButton title='Submit' onPress={() => router.push('/BucketList/selectBucketListPremium')} gradientColor={[b1, b2]} shadowColor='#f8deff' />
                 </View>
             </ScrollView>
+            <TabBar />
         </KeyboardAvoidingView>
     );
 }

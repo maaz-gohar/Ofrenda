@@ -26,7 +26,10 @@ export default function DisplayData() {
     const parsedFood = food ? JSON.parse(food) : [];
     const dynamicFields = searchParams.get('dynamicFields');
     const parsedDynamicFields = dynamicFields ? JSON.parse(dynamicFields) : [];
-
+    const facebook = searchParams.get('facebook');
+    const instagram = searchParams.get('instagram');
+    const twitter = searchParams.get('twitter');
+    const tiktok = searchParams.get('tiktok');
 
     const foodString = parsedFood.join(', ');
 
@@ -96,13 +99,39 @@ export default function DisplayData() {
                                 )}
                                 <Text style={styles.boldText}>Social media</Text>
                                 <View style={styles.social}>
-                                    <View style={styles.greybg}>
-                                        <Image
-                                            source={require('../../../assets/images/Group.png')}
+                                    {facebook && (
+                                        <View style={styles.greybg}>
+                                            <Image
+                                                source={require('../../../assets/images/logos_facebook.png')}
 
-                                        />
-                                    </View>
-                                    <View style={styles.greybg}>
+                                            />
+                                        </View>
+                                    )}
+                                    {instagram && (
+                                        <View style={styles.greybg}>
+                                            <Image
+                                                source={require('../../../assets/images/Group.png')}
+
+                                            />
+                                        </View>
+                                    )}
+                                    {twitter && (
+                                        <View style={styles.greybg}>
+                                            <Image
+                                                source={require('../../../assets/images/prime_twitter.png')}
+
+                                            />
+                                        </View>
+                                    )}
+                                    {tiktok && (
+                                        <View style={styles.greybg}>
+                                            <Image
+                                                source={require('../../../assets/images/logos_tiktok-icon.png')}
+
+                                            />
+                                        </View>
+                                    )}
+                                    {/* <View style={styles.greybg}>
 
                                         <Image
                                             source={require('../../../assets/images/logos_tiktok-icon.png')}
@@ -122,7 +151,7 @@ export default function DisplayData() {
                                             source={require('../../../assets/images/prime_twitter.png')}
 
                                         />
-                                    </View>
+                                    </View> */}
                                 </View>
                                 {/* </View> */}
                             </View>
@@ -162,7 +191,7 @@ const styles = StyleSheet.create({
     bgContain: {
 
         width: "100%",
-        // marginVertical: 20, // Add vertical margin
+
     },
     bg: {
         width: "100%",

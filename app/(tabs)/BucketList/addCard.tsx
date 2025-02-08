@@ -9,6 +9,7 @@ import PaymentInput from '../components/paymentInput';
 import DropdownComponent from '../components/dropdown';
 import MainButton from '../components/button';
 import MainText from '../components/topText';
+import TabBar from '../components/tabBar';
 
 const b1 = "rgba(188, 97, 213, 0.8)";
 const b2 = "rgba(249, 244, 251, 1)";
@@ -61,6 +62,7 @@ export default function AddCard() {
                     <MainButton title="Add Card" onPress={() => router.push('/BucketList/paymentMethod')} gradientColor={[b1, b2]} shadowColor='#f8deff' />
                 </View>
             </ScrollView>
+            <TabBar />
         </KeyboardAvoidingView>
     );
 }

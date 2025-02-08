@@ -24,9 +24,7 @@ export default function DisplayData() {
     const dynamicFields = searchParams.get('dynamicFields');
     const parsedDynamicFields = dynamicFields ? JSON.parse(dynamicFields) : [];
 
-    // noteableContribution,
-    // movie,
-    // food
+
 
     console.log(worked,
         memory,
@@ -145,13 +143,13 @@ const styles = StyleSheet.create({
     },
     bgContain: {
 
-        width: "97%",
+        width: "100%",
         // marginVertical: 20, // Add vertical margin
     },
     bg: {
         width: "100%",
         minHeight: 500,
-        paddingVertical: 40,
+        paddingVertical: 90,
         alignItems: "center",
         alignSelf: "center",
         // paddingHorizontal: 10
@@ -173,7 +171,23 @@ const styles = StyleSheet.create({
     normalText: {
         fontWeight: 500,
         marginTop: 5,
-        // paddingHorizontal: 30,
+        paddingHorizontal: 30,
         textAlign: "center"
+    },
+    social: {
+        flexDirection: "row",
+        paddingTop: 10,
+        // marginBottom: 50,
+    },
+    greybg: {
+        margin: 4,
+        backgroundColor: "rgba(228, 228, 228, 1)",
+        height: 30,
+        width: 30,
+        borderRadius: 4,
+        justifyContent: "center",
+        alignItems: "center",
+        // marginBottom: 10
+        // paddingBottom: 10
     },
 });
