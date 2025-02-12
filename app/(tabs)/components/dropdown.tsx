@@ -1,0 +1,74 @@
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
+
+const data = [
+    { label: 'Ancestors', value: '1' },
+    { label: 'Friends', value: '2' },
+    { label: 'Pets', value: '3' },
+];
+
+const DropdownComponent = ({ placeholder = 'Select item', onSelect }) => {
+    const [value, setValue] = useState(null);
+    const [isFocus, setIsFocus] = useState(false);
+
+    return (
+        <View style={styles.container}>
+            <Dropdown
+                style={[styles.dropdown, isFocus && { borderColor: '#c2c2c2' }]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={data}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={!isFocus ? placeholder : '...'}
+                searchPlaceholder="Search..."
+                value={value}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                onChange={(item) => {
+                    setValue(item.value);
+                    setIsFocus(false);
+                    onSelect(item.label); // Pass the selected label to the parent
+                }}
+            />
+        </View>
+    );
+};
+
+const styles = StyleSheet.create({
+    container: {
+        width: '100%',
+        paddingTop: 15,
+    },
+    dropdown: {
+        height: 50,
+        borderColor: '#c2c2c2',
+        borderWidth: 1,
+        borderRadius: 25,
+        paddingHorizontal: 10,
+        width: '93%',
+        alignSelf: 'center',
+    },
+    placeholderStyle: {
+        fontSize: 16,
+        color: '#999999',
+    },
+    selectedTextStyle: {
+        fontSize: 16,
+    },
+    iconStyle: {
+        width: 20,
+        height: 20,
+    },
+    inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
+    },
+});
+
+export default DropdownComponent;

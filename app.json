@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "9f8997b0-83d0-4cd8-b6ab-8f0c2fb18add"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.ofrenda.app",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    }
+  }
+}
