@@ -9,10 +9,14 @@ const MainButton = ({
     showIcon = false,
     gradientColor = ["#FFC70BE5", "#ffe9a1"],
     shadowColor = "#FFC70BE5",
+    fontSize = 18, // Default font size
 }) => {
     return (
         <View style={styles.btn_view}>
-            <TouchableOpacity style={[styles.button, { shadowColor }]} onPress={onPress}>
+            <TouchableOpacity
+                style={[styles.button, { shadowColor }]}
+                onPress={onPress}
+            >
                 <LinearGradient colors={gradientColor} style={styles.gradient}>
                     {showIcon && (
                         <Ionicons
@@ -22,7 +26,7 @@ const MainButton = ({
                             style={styles.icon}
                         />
                     )}
-                    <Text style={styles.text}>{title}</Text>
+                    <Text style={[styles.text, { fontSize }]}>{title}</Text>
                 </LinearGradient>
             </TouchableOpacity>
         </View>
@@ -56,7 +60,6 @@ const styles = StyleSheet.create({
     text: {
         color: "#000",
         fontWeight: "600",
-        fontSize: 18,
         textAlign: "center",
     },
     icon: {

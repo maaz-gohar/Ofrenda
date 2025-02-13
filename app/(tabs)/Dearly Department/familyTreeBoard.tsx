@@ -31,7 +31,7 @@ export default function FamilyTreeBoard() {
                 bounces={false}>
 
                 <MainText
-                    title={'Family Tree'}
+                    title={'Relationship Tree'}
                     showIcon={true}
                     setting={true}
                 />
@@ -40,7 +40,7 @@ export default function FamilyTreeBoard() {
                     <Text style={styles.text}>Your Family Tree Boards Appear Here</Text>
                 </View>
                 <View style={styles.endView}>
-                    <MainButton title={"Add Family Tree"} onPress={() => router.push('/Dearly Department/selectOfrenda')} />
+                    <MainButton title={"Add Relationship Tree"} onPress={() => router.push('/Dearly Department/selectOfrenda')} />
 
                 </View>
             </ScrollView>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingTop: 30,
         zIndex: 10,
-        marginTop: -25,
+        marginTop: -35,
         justifyContent: "center"
     },
     text: {

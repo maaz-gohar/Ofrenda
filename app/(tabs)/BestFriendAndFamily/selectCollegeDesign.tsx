@@ -94,7 +94,7 @@ export default function SelectCollegeDesign() {
                 keyboardShouldPersistTaps="handled"
             >
                 <MainText
-                    title={'BFF'}
+                    title={'Best Friends and Family'}
                     showIcon={true}
                     setting={true}
                     gradientColor={[b1, b2]}
@@ -110,8 +110,18 @@ export default function SelectCollegeDesign() {
                         value={selectedImage}
                         onPress={() => router.push('/BestFriendAndFamily/uploadFiles')}
                     />
-                    <SelectList setSelected={setFood} />
+                    {/* <SelectList setSelected={setFood} /> */}
                     <DatePickerComponent placeholder="Enter DOB" onDateChange={setDob} />
+                    <DearlyDepartmentFormComponent
+                        name="Favoraite Pastimes"
+                        value={food}
+                        setValue={setFood}
+                    />
+                    {/* <DearlyDepartmentFormComponent
+                        name="Favoraite"
+                        value={profession}
+                        setValue={setProfession}
+                    /> */}
                     <DearlyDepartmentFormComponent
                         name="Profession"
                         value={profession}
@@ -133,14 +143,14 @@ export default function SelectCollegeDesign() {
                         setValue={setMovie}
                     />
                     <DearlyDepartmentFormComponent
-                        name="Health"
+                        name="Favourite Bands"
                         value={health}
                         setValue={setHealth}
                     />
-                    <DearlyDepartmentFormComponent name="Add Facebook URL" iconName={'link'} value={facebook} setValue={setFacebook} />
-                    <DearlyDepartmentFormComponent name="Add Instagram URL" iconName={'link'} value={instagram} setValue={setInstagram} />
-                    <DearlyDepartmentFormComponent name="Add Twitter URL" iconName={'link'} value={twitter} setValue={setTwitter} />
-                    <DearlyDepartmentFormComponent name="Add Tiktok URL" iconName={'link'} value={tiktok} setValue={setTiktok} />
+                    <DearlyDepartmentFormComponent name="Paste Facebook URL" iconName={'link'} value={facebook} setValue={setFacebook} />
+                    <DearlyDepartmentFormComponent name="Paste Instagram URL" iconName={'link'} value={instagram} setValue={setInstagram} />
+                    <DearlyDepartmentFormComponent name="Paste Twitter URL" iconName={'link'} value={twitter} setValue={setTwitter} />
+                    <DearlyDepartmentFormComponent name="Paste Tiktok URL" iconName={'link'} value={tiktok} setValue={setTiktok} />
 
 
                     {/* <SocialMultipleSelectList setSelected={setsocialIcons} /> */}
@@ -195,7 +205,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 40,
         alignItems: "center",
         paddingTop: 30,
-        marginTop: -25,
+        marginTop: -35,
     },
     title: {
         fontSize: 20,

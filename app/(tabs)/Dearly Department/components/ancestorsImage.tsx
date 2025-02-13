@@ -65,7 +65,7 @@ const AncestorsImage = ({ imagePath, showIcon = false }) => {
                                 <Text style={styles.modalText}>Add Food On Table</Text>
                                 <View style={styles.addDearly}>
                                     <TouchableOpacity
-                                        onPress={() => router.push('/Dearly Department/dearlyDepartmentForm')}
+                                        onPress={() => router.push('/Dearly Department/selectFood')}
                                     >
                                         <View>
                                             <AntDesign name="pluscircleo" size={24} color="rgba(255, 199, 11, 1)" />

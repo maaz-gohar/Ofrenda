@@ -33,7 +33,7 @@ export default function BFFMainScreen() {
                 bounces={false}>
 
                 <MainText
-                    title={'BFF'}
+                    title={'Best Friends and Family'}
                     showIcon={true}
                     setting={true}
                     gradientColor={[b1, b2]}
@@ -44,7 +44,7 @@ export default function BFFMainScreen() {
                         text={"View Collage"}
                         onPress={() => router.push('/BestFriendAndFamily/selectFrames')} />
 
-                    <AncestorsComponent imagePath={require('../../../assets/images/ancestors3.png')}
+                    <AncestorsComponent imagePath={require('../../../assets/images/bff.jpg')}
                         text={"View Information"}
                         onPress={() => router.push('/BestFriendAndFamily/information')} />
 

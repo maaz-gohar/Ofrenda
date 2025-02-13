@@ -41,9 +41,11 @@ export default function DearlyDepartmentForm() {
     const [food, setFood] = useState('');
     const [dob, setDob] = useState('Enter DOB');
     const [dod, setDod] = useState('Enter DOD');
-    const [hobbies, setHobbies] = useState([]);
+    const [hobbies, setHobbies] = useState('');
     const [selectedImage, setSelectedImage] = useState('');
     const [dynamicFields, setDynamicFields] = useState([]);
+    const [relationship, setRelationship] = useState(''); // State for selected relationship
+    const [ancestorRelationship, setAncestorRelationship] = useState('');
 
 
     console.log(hobbies, "navigating to Granded data ")
@@ -77,6 +79,8 @@ export default function DearlyDepartmentForm() {
                 food,
                 dynamicFields: JSON.stringify(dynamicFields),
                 selectedFoodImage, // Add this to save the selected food image
+                relationship,
+                ancestorRelationship,
             },
         });
     };
@@ -150,14 +154,33 @@ export default function DearlyDepartmentForm() {
                         value={selectedImage}
                         onPress={() => router.push('/Dearly Department/uploadFile')}
                     />
-                    <DropdownComponent placeholder="Select Relation With Ancestor" />
+
+<DropdownComponent
+                        placeholder="Select Relationship"
+                        onSelect={(value) => setRelationship(value)} // Update the selected relationship
+                    />
+
+                    {/* Conditionally render "Relationship with Ancestors" field */}
+                    {relationship === 'Ancestors' && (
+                        <DearlyDepartmentFormComponent
+                            name="Relationship with Ancestors"
+                            value={ancestorRelationship}
+                            setValue={setAncestorRelationship}
+                        />
+                    )}
+
                     <DatePickerComponent placeholder="Enter DOB" onDateChange={setDob} />
                     <DatePickerComponent placeholder="Enter DOD" onDateChange={setDod} />
 
 
                     {/* Pass setHobbies to SelectList */}
-                    <SelectList setSelected={setHobbies} />
+                    {/* <SelectList setSelected={setHobbies} /> */}
 
+                    <DearlyDepartmentFormComponent
+                        name="Select Hobbies"
+                        value={hobbies}
+                        setValue={setHobbies}
+                    />
                     <DearlyDepartmentFormComponent
                         name="Favorite Memory"
                         value={memory}
@@ -184,7 +207,7 @@ export default function DearlyDepartmentForm() {
                         setValue={setWorked}
                     />
                     <DearlyDepartmentFormComponent
-                        name="Health"
+                        name="Health Condition"
                         value={health}
                         setValue={setHealth}
                     />
@@ -244,7 +267,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 40,
         alignItems: "center",
         paddingTop: 30,
-        marginTop: -25,
+        marginTop: -35,
     },
     title: {
         fontSize: 20,

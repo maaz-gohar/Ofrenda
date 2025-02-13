@@ -15,6 +15,7 @@ import MainButton from './components/button';
 import { LinearGradient } from "expo-linear-gradient";
 import MainText from './components/topText';
 import { useRouter } from 'expo-router';
+import TabBar from './components/tabBar';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
@@ -77,6 +78,7 @@ export default function PaymentMethod() {
                     {/* <Text style={styles.otherMethod}>Other Method</Text> */}
                 </View>
             </ScrollView>
+            <TabBar/>
         </KeyboardAvoidingView>
     );
 }

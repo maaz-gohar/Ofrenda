@@ -60,6 +60,8 @@ export default function BffMainScreen() {
             noteableContribution: params.noteableContribution,
             movie: params.movie,
             food: params.food,
+            relationship: params.relationship,
+            ancestorRelationship: params.ancestorRelationship,
             dynamicFields: params.dynamicFields,
 
         }
@@ -80,12 +82,12 @@ export default function BffMainScreen() {
                 <View style={[styles.main]}>
                     <View style={styles.imgcover}>
                         <Image source={require('../../../assets/images/SelectOfrenda/3.png')} style={styles.img} />
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                             onPress={() => router.push('/Dearly Department/bffMainScreenLandScape')}
                             style={styles.icon}
                         >
                             <MaterialIcons name='crop-rotate' size={20} color={"#fff"} />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                         <TouchableOpacity onPress={ToggleFullScreen} style={[styles.icon, styles.fullScreenButton]}>
                             <MaterialIcons name='fullscreen' size={20} color={"#fff"} />
                         </TouchableOpacity>
@@ -110,12 +112,12 @@ export default function BffMainScreen() {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <View style={{ width: "55%" }}>
-                            <MainButton title={"View Information"} onPress={handleViewDetails} />
+                    <View style={{ flexDirection: 'row' , width:"95%", }}>
+                        <View style={{width:"50%"}}>
+                            <MainButton title={"View Information"} fontSize={12} onPress={handleViewDetails} />
                         </View>
-                        <View style={{ width: "45%" }}>
-                            <MainButton title={"View Family Tree"} onPress={() => router.push('/Dearly Department/addFamilyTree')} />
+                        <View style={{width:"50%"}}>
+                            <MainButton title={"View Relationship Tree"} fontSize={12} onPress={() => router.push('/Dearly Department/addFamilyTree')} />
                         </View>
                     </View>
                 </View>
@@ -142,7 +144,7 @@ const styles = StyleSheet.create({
         // justifyContent: "center",
         alignItems: "center",
         paddingTop: 30,
-        marginTop: -25,
+        marginTop: -35,
     },
     imgcover: {
         width: "90%",

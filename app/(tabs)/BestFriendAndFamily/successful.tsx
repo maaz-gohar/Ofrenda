@@ -53,7 +53,7 @@ export default function Successful() {
 
     return (
         <View style={styles.container}>
-            <MainText title={'BFF'} showIcon={true} setting={true} gradientColor={[b1, b2]} />
+            <MainText title={'Best Friends and Family'} showIcon={true} setting={true} gradientColor={[b1, b2]} />
             <View style={styles.main}>
                 <LinearGradient colors={[b1, b2]} style={styles.gradient}>
                     <Ionicons name='checkmark-circle' size={97} color={"#fff"} />
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         paddingTop: 50,
-        marginTop: -25,
+        marginTop: -35,
     },
     gradient: {
         borderRadius: "50%",

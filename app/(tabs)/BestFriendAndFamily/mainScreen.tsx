@@ -72,7 +72,7 @@ export default function MainScreen() {
                                 <TouchableOpacity onPress={() => router.push('/BestFriendAndFamily/bffMainScreen')}>
                                     <LinearGradient colors={[b1, b2]} style={styles.gradient}>
                                         <Text style={styles.text} numberOfLines={2}>
-                                            Best Friends & Family
+                                            Best Friends
                                         </Text>
                                     </LinearGradient>
                                 </TouchableOpacity>
@@ -83,7 +83,7 @@ export default function MainScreen() {
                                 <TouchableOpacity onPress={() => router.push('/BucketList/selectBucketList')}>
                                     <LinearGradient colors={[b1, b2]} style={styles.gradient}>
                                         <Text style={styles.text} numberOfLines={2}>
-                                            Bucket Lists & Memories
+                                            Lists & Memories
                                         </Text>
                                     </LinearGradient>
                                 </TouchableOpacity>
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         overflow: 'hidden',
         backgroundColor: '#fff',
-        marginTop: -25
+        marginTop: -35
     },
     backgroundImage: {
         width: '100%',

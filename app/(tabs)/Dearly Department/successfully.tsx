@@ -51,6 +51,8 @@ export default function Successfully() {
             noteableContribution: params.noteableContribution,
             movie: params.movie,
             food: params.food,
+            relationship: params.relationship,
+            ancestorRelationship: params.ancestorRelationship,
             dynamicFields: params.dynamicFields,
 
         }
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         paddingTop: 30,
-        marginTop: -25,
+        marginTop: -35,
     },
     successText: {
         fontSize: 24,

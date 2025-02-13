@@ -79,7 +79,7 @@ export default function BffViewInformation() {
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
-                <MainText title={'BFF'} showIcon={true} setting={true} gradientColor={[b1, b2]} />
+                <MainText title={'Best Friends and Family'} showIcon={true} setting={true} gradientColor={[b1, b2]} />
 
                 <View style={[styles.main]}>
                     <View style={styles.imgcover}>
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         // justifyContent: "center",
         alignItems: "center",
         paddingTop: 30,
-        marginTop: -25,
+        marginTop: -35,
     },
     imgcover: {
         width: "90%",

@@ -23,7 +23,7 @@ export default function DisplayData() {
     const movie = searchParams.get('movie');
     const favFood = searchParams.get('favFood');
     const health = searchParams.get('health');
-    const parsedFood = food ? JSON.parse(food) : [];
+    // const parsedFood = food ? JSON.parse(food) : [];
     const dynamicFields = searchParams.get('dynamicFields');
     const parsedDynamicFields = dynamicFields ? JSON.parse(dynamicFields) : [];
     const facebook = searchParams.get('facebook');
@@ -31,13 +31,13 @@ export default function DisplayData() {
     const twitter = searchParams.get('twitter');
     const tiktok = searchParams.get('tiktok');
 
-    const foodString = parsedFood.join(', ');
+    // const foodString = parsedFood.join(', ');
 
 
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
-                <MainText title={'BFF'} showIcon={true} setting={true} gradientColor={[b1, b2]} />
+                <MainText title={'Best Friends and Family'} showIcon={true} setting={true} gradientColor={[b1, b2]} />
 
                 <View style={[styles.main]}>
                     <View style={styles.bgContain}>
@@ -70,7 +70,7 @@ export default function DisplayData() {
                                 <Text style={styles.normalText}>No hobbies selected</Text>
                             )} */}
 
-                                <Text style={styles.normalText}>{parsedFood.length > 0 ? foodString : 'No Food Selected'}</Text>
+                                <Text style={styles.normalText}>{food}</Text>
 
                                 <Text style={styles.boldText}>Profession</Text>
                                 <Text style={styles.normalText}>{Profession}</Text>
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
         alignContent: "center",
         alignSelf: "center",
         paddingTop: 30,
-        marginTop: -25,
+        marginTop: -35,
         width: "100%",
 
     },
@@ -213,6 +213,8 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         paddingTop: 10,
         alignSelf: "center",
+        width : 300,
+        textAlign:"center"
         // paddingHorizontal: 10
     },
     normalText: {

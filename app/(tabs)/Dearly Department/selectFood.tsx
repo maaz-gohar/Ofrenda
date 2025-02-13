@@ -16,24 +16,24 @@ const b2 = "#ffe9a1";
 export default function SelectFood() {
     const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
-    const handleImageSelect = (index) => {
-        setSelectedImageIndex(index);
-    };
+    // const handleImageSelect = (index) => {
+    //     setSelectedImageIndex(index);
+    // };
 
-    const handleConfirmSelection = () => {
-        if (selectedImageIndex !== null) {
-            // Create the image name based on the selected index
-            const selectedImageName = `${selectedImageIndex + 1}.png`;
+    // const handleConfirmSelection = () => {
+    //     if (selectedImageIndex !== null) {
+    //         // Create the image name based on the selected index
+    //         const selectedImageName = `${selectedImageIndex + 1}.png`;
 
-            // Navigate back to the form with the selected image
-            router.push({
-                pathname: '/Dearly Department/dearlyDepartmentForm',
-                params: {
-                    selectedFoodImage: selectedImageName
-                }
-            });
-        }
-    };
+    //         // Navigate back to the form with the selected image
+    //         router.push({
+    //             pathname: '/paymentMethod',
+    //             params: {
+    //                 selectedFoodImage: selectedImageName
+    //             }
+    //         });
+    //     }
+    // };
 
     return (
         <View style={styles.container}>
@@ -47,15 +47,15 @@ export default function SelectFood() {
 
                 <View style={[styles.main]}>
                     <ParentComponent
-                        onImageSelect={handleImageSelect}
-                        selectedImageIndex={selectedImageIndex}
+                        // onImageSelect={handleImageSelect}
+                        // selectedImageIndex={selectedImageIndex}
                     />
-                    <MainButton
+                    {/* <MainButton
                         title={"Select"}
                         onPress={handleConfirmSelection}
                         gradientColor={[b1, b2]}
                         disabled={selectedImageIndex === null}
-                    />
+                    /> */}
                 </View>
             </ScrollView>
             <TabBar />

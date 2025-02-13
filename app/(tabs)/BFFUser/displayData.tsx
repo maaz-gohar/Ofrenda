@@ -25,7 +25,7 @@ export default function DisplayData() {
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
-                <MainText title={'BFF'} showIcon={true} setting={true} gradientColor={[b1, b2]} />
+                <MainText title={'Best Friends and Family'} showIcon={true} setting={true} gradientColor={[b1, b2]} />
 
                 <View style={[styles.main]}>
                     <ImageBackground
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         alignContent: "center",
         alignSelf: "center",
         paddingTop: 30,
-        marginTop: -25,
+        marginTop: -35,
     },
     bg: {
         width: "100%",

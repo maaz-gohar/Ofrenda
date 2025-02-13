@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
         // justifyContent: "center",
         alignItems: "center",
         paddingTop: 30,
-        marginTop: -25,
+        marginTop: -35,
     },
     img: {
         height: 173,

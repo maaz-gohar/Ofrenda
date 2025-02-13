@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
-import { StyleSheet, Dimensions, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 
 const data = [
-    { label: 'Item 1', value: '1' },
-    { label: 'Item 2', value: '2' },
-    { label: 'Item 3', value: '3' },
-    { label: 'Item 4', value: '4' },
-    { label: 'Item 5', value: '5' },
-    { label: 'Item 6', value: '6' },
-    { label: 'Item 7', value: '7' },
-    { label: 'Item 8', value: '8' },
+    { label: 'Ancestors', value: '1' },
+    { label: 'Friends', value: '2' },
+    { label: 'Pets', value: '3' },
 ];
 
-const DropdownComponent = ({ placeholder = 'Select item' }) => {
+const DropdownComponent = ({ placeholder = 'Select item', onSelect }) => {
     const [value, setValue] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
 
@@ -35,16 +30,15 @@ const DropdownComponent = ({ placeholder = 'Select item' }) => {
                 value={value}
                 onFocus={() => setIsFocus(true)}
                 onBlur={() => setIsFocus(false)}
-                onChange={item => {
+                onChange={(item) => {
                     setValue(item.value);
                     setIsFocus(false);
+                    onSelect(item.label); // Pass the selected label to the parent
                 }}
             />
         </View>
     );
 };
-
-export default DropdownComponent;
 
 const styles = StyleSheet.create({
     container: {
@@ -76,3 +70,5 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
 });
+
+export default DropdownComponent;

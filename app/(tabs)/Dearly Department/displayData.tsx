@@ -22,6 +22,8 @@ export default function DisplayData() {
     const movie = searchParams.get('movie');
     const food = searchParams.get('food');
     const dynamicFields = searchParams.get('dynamicFields');
+    const relationship = searchParams.get('relationship');
+    const ancestorRelationship = searchParams.get('ancestorRelationship');
     const parsedDynamicFields = dynamicFields ? JSON.parse(dynamicFields) : [];
 
 
@@ -36,21 +38,21 @@ export default function DisplayData() {
         movie,
         food)
 
-    let parsedHobbies = [];
-    try {
-        if (hobbies) {
-            // Check if hobbies is already an array
-            if (Array.isArray(hobbies)) {
-                parsedHobbies = hobbies;
-            } else {
-                parsedHobbies = JSON.parse(hobbies);
-            }
-        }
-    } catch (error) {
-        console.error("Error parsing hobbies:", error);
-    }
+    // let parsedHobbies = [];
+    // try {
+    //     if (hobbies) {
+    //         // Check if hobbies is already an array
+    //         if (Array.isArray(hobbies)) {
+    //             parsedHobbies = hobbies;
+    //         } else {
+    //             parsedHobbies = JSON.parse(hobbies);
+    //         }
+    //     }
+    // } catch (error) {
+    //     console.error("Error parsing hobbies:", error);
+    // }
     // Join hobbies with commas
-    const hobbiesString = parsedHobbies.join(', ');
+    // const hobbiesString = parsedHobbies.join(', ');
 
     return (
         <View style={styles.container}>
@@ -75,10 +77,29 @@ export default function DisplayData() {
                                     <Text style={{ paddingHorizontal: 4, fontWeight: "700" }}>DIED</Text>
                                     <Text>{dod}</Text>
                                 </View>
+                                <View style={{ justifyContent: "center", alignItems: "center" }}>
+                                {/* Display Relationship */}
+                                {relationship && (
+                                    <>
+                                        <Text style={styles.boldText}>Relationship</Text>
+                                        <Text style={styles.normalText}>{relationship}</Text>
+                                    </>
+                                )}
 
+                                {/* Display Relationship with Ancestors */}
+                                {ancestorRelationship && (
+                                    <>
+                                        <Text style={styles.boldText}>Relationship with Ancestors</Text>
+                                        <Text style={styles.normalText}>{ancestorRelationship}</Text>
+                                    </>
+                                )}
+
+                                {/* Other fields */}
+                            </View>
                                 <Text style={styles.boldText}>Favorite pastimes</Text>
                                 <Text style={styles.normalText}>
-                                    {parsedHobbies.length > 0 ? hobbiesString : 'No hobbies selected'}
+                                    {hobbies}
+                                    {/* {parsedHobbies.length > 0 ? hobbiesString : 'No hobbies selected'} */}
                                 </Text>
 
                                 <Text style={styles.boldText}>Worked As</Text>
@@ -137,7 +158,7 @@ const styles = StyleSheet.create({
         alignContent: "center",
         alignSelf: "center",
         paddingTop: 30,
-        marginTop: -25,
+        marginTop: -35,
         width: "100%",
 
     },
@@ -167,6 +188,8 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         alignSelf: "center",
         // paddingHorizontal: 10
+        width: 300,
+        textAlign:"center"
     },
     normalText: {
         fontWeight: 500,

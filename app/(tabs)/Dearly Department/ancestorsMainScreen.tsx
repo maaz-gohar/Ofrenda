@@ -42,11 +42,11 @@ export default function AncestorsMainScreen() {
                     />
                     <AncestorsComponent
                         imagePath={require('../../../assets/images/ancestors2.png')}
-                        text={"View Family Tree"}
+                        text={"View Relationship Tree"}
                         onPress={() => router.push('/Dearly Department/familyTreeBoard')}
                     />
                     <AncestorsComponent
-                        imagePath={require('../../../assets/images/ancestors3.png')}
+                        imagePath={require('../../../assets/images/info.jpg')}
                         text={"View Information"}
                         onPress={() => router.push('/Dearly Department/viewInformation')}
                     />

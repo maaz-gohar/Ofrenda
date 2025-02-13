@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 40,
         alignItems: "center",
         paddingTop: 30,
-        marginTop: -25,
+        marginTop: -35,
     },
     contentStyle: {
         borderRadius: 10,

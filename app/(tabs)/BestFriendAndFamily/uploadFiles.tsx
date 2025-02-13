@@ -71,7 +71,7 @@ export default function UploadFiles() {
             <ScrollView contentContainerStyle={styles.scrollViewContainer}
                 bounces={false}>
                 <MainText
-                    title={'BFF'}
+                    title={'Best Friends and Family'}
                     showIcon={true}
                     setting={true}
                     gradientColor={[b1, b2]}
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 40,
         alignItems: "center",
         paddingTop: 30,
-        marginTop: -25,
+        marginTop: -35,
     },
     contentStyle: {
         borderRadius: 10,
