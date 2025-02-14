@@ -42,9 +42,10 @@ export default function DearlyDepartmentForm() {
     const [dob, setDob] = useState('Enter DOB');
     const [dod, setDod] = useState('Enter DOD');
     const [hobbies, setHobbies] = useState('');
+    // const [ancestors, setAncestors] = useState('');
     const [selectedImage, setSelectedImage] = useState('');
     const [dynamicFields, setDynamicFields] = useState([]);
-    const [relationship, setRelationship] = useState(''); // State for selected relationship
+    const [relationship, setRelationship] = useState('');
     const [ancestorRelationship, setAncestorRelationship] = useState('');
 
 
@@ -155,9 +156,9 @@ export default function DearlyDepartmentForm() {
                         onPress={() => router.push('/Dearly Department/uploadFile')}
                     />
 
-<DropdownComponent
+                    <DropdownComponent
                         placeholder="Select Relationship"
-                        onSelect={(value) => setRelationship(value)} // Update the selected relationship
+                        onSelect={(value) => setRelationship(value)}
                     />
 
                     {/* Conditionally render "Relationship with Ancestors" field */}
@@ -207,7 +208,7 @@ export default function DearlyDepartmentForm() {
                         setValue={setWorked}
                     />
                     <DearlyDepartmentFormComponent
-                        name="Health Condition"
+                        name="Health Conditions"
                         value={health}
                         setValue={setHealth}
                     />
