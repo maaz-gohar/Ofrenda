@@ -178,7 +178,7 @@ export default function DearlyDepartmentForm() {
                     {/* <SelectList setSelected={setHobbies} /> */}
 
                     <DearlyDepartmentFormComponent
-                        name="Select Hobbies"
+                        name="Select Hobbies (Separated by ,)"
                         value={hobbies}
                         setValue={setHobbies}
                     />

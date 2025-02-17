@@ -113,7 +113,7 @@ export default function SelectCollegeDesign() {
                     {/* <SelectList setSelected={setFood} /> */}
                     <DatePickerComponent placeholder="Enter DOB" onDateChange={setDob} />
                     <DearlyDepartmentFormComponent
-                        name="Favoraite Pastimes"
+                        name="Favoraite Pastimes (Separated by ,)"
                         value={food}
                         setValue={setFood}
                     />
@@ -133,12 +133,12 @@ export default function SelectCollegeDesign() {
                         setValue={setNoteableContribution}
                     />
                     <DearlyDepartmentFormComponent
-                        name="Favorite food, restaurants"
+                        name="Favorite food, restaurants (Separated by ,)"
                         value={favFood}
                         setValue={setFavFood}
                     />
                     <DearlyDepartmentFormComponent
-                        name="Favorite movie, band, book, author"
+                        name="Favorite movie, band, book, author "
                         value={movie}
                         setValue={setMovie}
                     />
