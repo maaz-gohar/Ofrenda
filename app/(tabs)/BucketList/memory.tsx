@@ -4,7 +4,9 @@ import {
     View,
     Text,
     ScrollView,
-    Image
+    Image,
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import MainText from '../components/topText';
@@ -23,21 +25,24 @@ export default function Memory() {
 
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
-                <MainText
-                    gradientColor={[b1, b2]}
-                    title={'Memories'}
-                    showIcon={true}
-                    setting={true}
-                />
-                <View style={[styles.main]}>
-                    <Search />
+            <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
-                    <Inputs />
-                </View>
-            </ScrollView>
-            {/* <BottomIcons /> */}
-            <TabBar />
+                <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
+                    <MainText
+                        gradientColor={[b1, b2]}
+                        title={'Memories'}
+                        showIcon={true}
+                        setting={true}
+                    />
+                    <View style={[styles.main]}>
+                        <Search />
+
+                        <Inputs />
+                    </View>
+                </ScrollView>
+                {/* <BottomIcons /> */}
+                <TabBar />
+            </KeyboardAvoidingView>
         </View>
     );
 }

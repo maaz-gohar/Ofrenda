@@ -5,6 +5,8 @@ import {
     Text,
     ScrollView,
     Image,
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import MainText from '../components/topText';
@@ -23,22 +25,25 @@ export default function BucketList() {
 
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
-                <MainText
-                    gradientColor={[b1, b2]}
-                    title={'Bucket Lists'}
-                    showIcon={true}
-                    setting={true}
-                />
-                <View style={[styles.main]}>
-                    <Search />
+            <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
-                    <Inputs />
-                </View>
-                {/* <BottomIcons /> */}
+                <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
+                    <MainText
+                        gradientColor={[b1, b2]}
+                        title={'Bucket Lists'}
+                        showIcon={true}
+                        setting={true}
+                    />
+                    <View style={[styles.main]}>
+                        <Search />
 
-            </ScrollView>
-            <TabBar />
+                        <Inputs />
+                    </View>
+                    {/* <BottomIcons /> */}
+
+                </ScrollView>
+                <TabBar />
+            </KeyboardAvoidingView>
         </View>
     );
 }

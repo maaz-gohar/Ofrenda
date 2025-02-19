@@ -28,7 +28,7 @@ export default function Inputs() {
         selection.current = event.nativeEvent.selection;
     };
 
-    const handleNoteChange = (text: string) => {
+    const handleNoteChange = (text) => {
         const lines = text.split('\n');
         const currentLine = lines[lines.length - 1] || '';
 
@@ -52,6 +52,10 @@ export default function Inputs() {
                     setListType('none');
                     setCurrentNumber(1);
                     setLastLineWasEmpty(false);
+
+                    // Remove the extra number if it exists
+                    const newLines = lines.slice(0, -2); // Remove the last two empty lines
+                    setNoteText(newLines.join('\n') + '\n');
                     return;
                 }
                 setLastLineWasEmpty(true);
@@ -106,7 +110,7 @@ export default function Inputs() {
         setNoteText(text);
     };
 
-    const convertSelectedTextToList = (type: 'bullet' | 'number') => {
+    const convertSelectedTextToList = (type) => {
         const start = selection.current.start;
         const end = selection.current.end;
 
