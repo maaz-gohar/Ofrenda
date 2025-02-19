@@ -19,6 +19,7 @@ export default function DisplayData() {
     const Profession = searchParams.get('profession') || 'Not provided';
     const dob = searchParams.get('dob') || 'Not provided';
     const food = searchParams.get('food');
+    const name = searchParams.get('name');
     const noteableContribution = searchParams.get('noteableContribution');
     const movie = searchParams.get('movie');
     const favFood = searchParams.get('favFood');
@@ -58,6 +59,9 @@ export default function DisplayData() {
                                     <Text style={{ paddingHorizontal: 4, fontWeight: "700" }}>BORN</Text>
                                     <Text>{dob}</Text>
                                 </View>
+
+                                <Text style={styles.boldText}>Name</Text>
+                                <Text style={styles.normalText}>{name}</Text>
 
                                 <Text style={styles.boldText}>Favorite pastimes</Text>
                                 {/* {parsedFood.length > 0 ? (
@@ -196,7 +200,7 @@ const styles = StyleSheet.create({
     bg: {
         width: "100%",
         minHeight: 500,
-        paddingVertical: 90,
+        paddingVertical: 50,
         alignItems: "center",
         alignSelf: "center",
         // paddingHorizontal: 10

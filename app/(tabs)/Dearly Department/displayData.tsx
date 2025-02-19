@@ -13,6 +13,7 @@ import TabBar from '../components/tabBar';
 export default function DisplayData() {
     const searchParams = useSearchParams();
     const worked = searchParams.get('worked');
+    const name = searchParams.get('name');
     const health = searchParams.get('health');
     const memory = searchParams.get('memory');
     const hobbies = searchParams.get('hobbies');
@@ -77,6 +78,9 @@ export default function DisplayData() {
                                     <Text style={{ paddingHorizontal: 4, fontWeight: "700" }}>DIED</Text>
                                     <Text>{dod}</Text>
                                 </View>
+
+                                <Text style={styles.boldText}>Name</Text>
+                                <Text style={styles.normalText}>{name}</Text>
                                 <View style={{ justifyContent: "center", alignItems: "center" }}>
                                     {/* Display Relationship */}
                                     {relationship && (
@@ -96,7 +100,7 @@ export default function DisplayData() {
 
                                     {/* Other fields */}
                                 </View>
-                                <Text style={styles.boldText}>Favorite pastimes</Text>
+                                <Text style={styles.boldText}>Hobbies</Text>
                                 <Text style={styles.normalText}>
                                     {hobbies}
                                     {/* {parsedHobbies.length > 0 ? hobbiesString : 'No hobbies selected'} */}
@@ -170,7 +174,7 @@ const styles = StyleSheet.create({
     bg: {
         width: "100%",
         minHeight: 500,
-        paddingVertical: 90,
+        paddingVertical: 50,
         alignItems: "center",
         alignSelf: "center",
         // paddingHorizontal: 10

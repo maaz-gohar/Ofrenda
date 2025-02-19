@@ -59,13 +59,35 @@ export default function Inputs() {
                 setLastLineWasEmpty(false);
             }
 
-            // Add new list item
+            // Add new list item only if the current line has text
             if (listType !== 'none' && !lastLineWasEmpty) {
+                if (listType === 'number' && currentLine.match(/^\d+\.\s*$/)) {
+                    // If the current line is just a number (e.g., "5. "), skip adding the next number
+                    setNoteText(text);
+                    return;
+                }
+
                 const newLine = listType === 'bullet' ? '• ' : `${currentNumber}. `;
                 setNoteText(text + newLine);
                 if (listType === 'number') {
                     setCurrentNumber(prev => prev + 1);
                 }
+                return;
+            }
+
+            // Handle the transition back to normal text
+            if (listType === 'number' && currentLine.match(/^\d+\.\s.*$/)) {
+                // Remove the number and go back to normal text
+                const newText = lines.slice(0, -1).join('\n') + '\n';
+                setNoteText(newText);
+                setListType('none');
+                setCurrentNumber(1);
+                return;
+            } else if (listType === 'bullet' && currentLine.startsWith('• ')) {
+                // Remove the bullet and go back to normal text
+                const newText = lines.slice(0, -1).join('\n') + '\n';
+                setNoteText(newText);
+                setListType('none');
                 return;
             }
         } else {
@@ -90,9 +112,9 @@ export default function Inputs() {
 
         if (start === end) {
             if (type === 'bullet') {
-                convertToBullets();
+                handleBulletList();
             } else {
-                convertToNumbers();
+                handleNumberedList();
             }
             return;
         }
@@ -119,7 +141,7 @@ export default function Inputs() {
         setNoteText(newText);
     };
 
-    const convertToBullets = () => {
+    const handleBulletList = () => {
         setListType('bullet');
         setCurrentNumber(1);
         setVisibleModal(false);
@@ -139,7 +161,7 @@ export default function Inputs() {
         }
     };
 
-    const convertToNumbers = () => {
+    const handleNumberedList = () => {
         setListType('number');
         setCurrentNumber(1);
         setVisibleModal(false);
@@ -199,11 +221,11 @@ export default function Inputs() {
                         <TouchableWithoutFeedback>
                             <View style={styles.modalContent}>
                                 <Text style={styles.modalTitle}>Select List Type</Text>
-                                <TouchableOpacity style={styles.option} onPress={convertToBullets}>
+                                <TouchableOpacity style={styles.option} onPress={handleBulletList}>
                                     <Ionicons name="ellipse" size={24} color="black" />
                                     <Text style={styles.optionText}>Bullet Points</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.option} onPress={convertToNumbers}>
+                                <TouchableOpacity style={styles.option} onPress={handleNumberedList}>
                                     <Ionicons name="list" size={24} color="black" />
                                     <Text style={styles.optionText}>Numbered List</Text>
                                 </TouchableOpacity>

@@ -17,7 +17,6 @@ import TabBar from '../components/tabBar';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import SelectList from './components/selectList';
 import { AntDesign } from '@expo/vector-icons';
-// import SocialMultipleSelectList from './components/socialMultipleSelectList';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
@@ -26,7 +25,6 @@ export default function SelectCollegeDesign() {
     const [profession, setProfession] = useState('');
     const [name, setName] = useState('');
     const [food, setFood] = useState([]);
-    // const [socialIcons, setsocialIcons] = useState([]);
     const [noteableContribution, setNoteableContribution] = useState('');
     const [movie, setMovie] = useState('');
     const [favFood, setFavFood] = useState('');
@@ -42,16 +40,29 @@ export default function SelectCollegeDesign() {
     const router = useRouter();
     const params = useLocalSearchParams();
 
+    // Restore state from params when the component mounts or params change
     useEffect(() => {
-        if (params.selectedImage) {
-            setSelectedImage(params.selectedImage.toString());
-        }
+        if (params.name) setName(params.name.toString());
+        if (params.profession) setProfession(params.profession.toString());
+        if (params.dob) setDob(params.dob.toString());
+        if (params.noteableContribution) setNoteableContribution(params.noteableContribution.toString());
+        if (params.movie) setMovie(params.movie.toString());
+        if (params.favFood) setFavFood(params.favFood.toString());
+        if (params.health) setHealth(params.health.toString());
+        if (params.food) setFood(JSON.parse(params.food.toString()));
+        if (params.selectedImage) setSelectedImage(params.selectedImage.toString());
+        if (params.dynamicFields) setDynamicFields(JSON.parse(params.dynamicFields.toString()));
+        if (params.facebook) setFacebook(params.facebook.toString());
+        if (params.instagram) setInstagram(params.instagram.toString());
+        if (params.twitter) setTwitter(params.twitter.toString());
+        if (params.tiktok) setTiktok(params.tiktok.toString());
     }, [params]);
 
     const handleSave = () => {
         router.push({
             pathname: '/BestFriendAndFamily/successful',
             params: {
+                name,
                 profession,
                 dob,
                 noteableContribution,
@@ -59,7 +70,29 @@ export default function SelectCollegeDesign() {
                 favFood,
                 health,
                 food: JSON.stringify(food),
-                // socialIcons: JSON.stringify(socialIcons),
+                selectedImage,
+                dynamicFields: JSON.stringify(dynamicFields),
+                facebook,
+                instagram,
+                twitter,
+                tiktok,
+            }
+        });
+    };
+
+    const handleUploadImage = () => {
+        // Pass all current state as params when navigating to uploadFiles
+        router.push({
+            pathname: '/BestFriendAndFamily/uploadFiles',
+            params: {
+                name,
+                profession,
+                dob,
+                noteableContribution,
+                movie,
+                favFood,
+                health,
+                food: JSON.stringify(food),
                 selectedImage,
                 dynamicFields: JSON.stringify(dynamicFields),
                 facebook,
@@ -109,20 +142,14 @@ export default function SelectCollegeDesign() {
                         iconName="upload"
                         iconType="AntDesign"
                         value={selectedImage}
-                        onPress={() => router.push('/BestFriendAndFamily/uploadFiles')}
+                        onPress={handleUploadImage} // Use handleUploadImage instead of inline function
                     />
-                    {/* <SelectList setSelected={setFood} /> */}
                     <DatePickerComponent placeholder="Enter DOB" onDateChange={setDob} />
                     <DearlyDepartmentFormComponent
                         name="Favoraite Pastimes (Separated by ,)"
                         value={food}
                         setValue={setFood}
                     />
-                    {/* <DearlyDepartmentFormComponent
-                        name="Favoraite"
-                        value={profession}
-                        setValue={setProfession}
-                    /> */}
                     <DearlyDepartmentFormComponent
                         name="Profession"
                         value={profession}
@@ -152,9 +179,6 @@ export default function SelectCollegeDesign() {
                     <DearlyDepartmentFormComponent name="Paste Instagram URL" iconName={'link'} value={instagram} setValue={setInstagram} />
                     <DearlyDepartmentFormComponent name="Paste Twitter URL" iconName={'link'} value={twitter} setValue={setTwitter} />
                     <DearlyDepartmentFormComponent name="Paste Tiktok URL" iconName={'link'} value={tiktok} setValue={setTiktok} />
-
-
-                    {/* <SocialMultipleSelectList setSelected={setsocialIcons} /> */}
 
                     {dynamicFields.map((field, index) => (
                         <View key={field.id}>
@@ -237,5 +261,4 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         fontWeight: 'bold',
     },
-
 });

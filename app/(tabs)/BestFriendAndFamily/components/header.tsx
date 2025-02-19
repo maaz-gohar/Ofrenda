@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: 240,
         // justifyContent: "center",
-        paddingTop: 40
+        paddingTop: 60
     },
     main: {
         flexDirection: "row",

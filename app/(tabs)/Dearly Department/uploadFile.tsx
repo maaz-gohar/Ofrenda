@@ -7,23 +7,28 @@ import {
     TouchableOpacity,
     Image,
 } from 'react-native';
-import { FontAwesome, Ionicons, Entypo, FontAwesome6, FontAwesome5, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { LinearGradient } from "expo-linear-gradient";
 import MainText from '../components/topText';
 import MainButton from '../components/button';
-import { router } from 'expo-router';
-import TabBar from '../components/tabBar';
+import { router, useLocalSearchParams } from 'expo-router';
 
 const b1 = "#FFC70B";
 const b2 = "#ffe9a1";
 
 export default function UploadFile() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const params = useLocalSearchParams();
 
+    // Request camera permissions and launch camera
     const SelectImage = async () => {
         try {
-            await ImagePicker.requestCameraPermissionsAsync();
+            const { status } = await ImagePicker.requestCameraPermissionsAsync();
+            if (status !== 'granted') {
+                alert('Camera permission is required to take a photo.');
+                return;
+            }
 
             let result = await ImagePicker.launchCameraAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -40,6 +45,7 @@ export default function UploadFile() {
         }
     };
 
+    // Launch image library
     const PickImage = async () => {
         try {
             let result = await ImagePicker.launchImageLibraryAsync({
@@ -57,19 +63,39 @@ export default function UploadFile() {
         }
     };
 
+    // Handle upload completion and navigate with parameters
     const handleUploadComplete = () => {
         if (selectedImage) {
+            const forwardParams = {
+                worked: params.worked,
+                name: params.name,
+                memory: params.memory,
+                health: params.health,
+                hobbies: params.hobbies,
+                dob: params.dob,
+                dod: params.dod,
+                noteableContribution: params.noteableContribution,
+                movie: params.movie,
+                food: params.food,
+                relationship: params.relationship,
+                ancestorRelationship: params.ancestorRelationship,
+                dynamicFields: params.dynamicFields,
+                selectedImage: selectedImage, // Use the selected image here
+                selectedFoodImage: params.selectedFoodImage // Pass the food image if needed
+            };
+
+            // Navigate back to the form with updated parameters
             router.push({
                 pathname: '/Dearly Department/dearlyDepartmentForm',
-                params: { selectedImage: selectedImage }
+                params: forwardParams
             });
         }
     };
 
+
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollViewContainer}
-                bounces={false}>
+            <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
                 <MainText
                     title={'Dearly Departed'}
                     showIcon={true}
@@ -77,51 +103,42 @@ export default function UploadFile() {
                     gradientColor={[b1, b2]}
                 />
 
-                <View style={[styles.main]}>
-                    <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 10 }}>Upload File Or Take Photos</Text>
+                <View style={styles.main}>
+                    <Text style={styles.headerText}>Upload File Or Take Photos</Text>
                     <View style={styles.contentStyle}>
                         <TouchableOpacity>
                             <View style={styles.TextContainer}>
-                                <Text style={{ fontWeight: "500" }}>View Photo</Text>
+                                <Text style={styles.text}>View Photo</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity>
                             <View style={styles.TextContainer}>
-                                <Text style={{ fontWeight: "500" }}>Upload Photo</Text>
+                                <Text style={styles.text}>Upload Photo</Text>
                             </View>
                         </TouchableOpacity>
                         <View style={styles.uploadContainer}>
                             <View style={styles.SelectPhoto}>
                                 <TouchableOpacity onPress={PickImage}>
                                     <View>
-                                        <LinearGradient
-                                            colors={[b1, b2]}
-                                            style={styles.gradient}
-                                        >
+                                        <LinearGradient colors={[b1, b2]} style={styles.gradient}>
                                             <MaterialIcons name='photo-library' size={37} color={"rgba(86, 86, 86, 1)"} />
                                         </LinearGradient>
-                                        <Text style={{ alignSelf: "center", paddingTop: 10 }}>Select Photo</Text>
+                                        <Text style={styles.selectText}>Select Photo</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={SelectImage}>
                                     <View>
-                                        <LinearGradient
-                                            colors={[b1, b2]}
-                                            style={styles.gradient}
-                                        >
+                                        <LinearGradient colors={[b1, b2]} style={styles.gradient}>
                                             <Ionicons name='camera-outline' size={37} color={"rgba(86, 86, 86, 1)"} />
                                         </LinearGradient>
-                                        <Text style={{ alignSelf: "center", paddingTop: 10 }}>Take Photo</Text>
+                                        <Text style={styles.selectText}>Take Photo</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
 
                             {selectedImage && (
                                 <View style={styles.previewContainer}>
-                                    <Image
-                                        source={{ uri: selectedImage }}
-                                        style={styles.previewImage}
-                                    />
+                                    <Image source={{ uri: selectedImage }} style={styles.previewImage} />
                                 </View>
                             )}
 
@@ -139,7 +156,6 @@ export default function UploadFile() {
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -159,6 +175,11 @@ const styles = StyleSheet.create({
         paddingTop: 30,
         marginTop: -35,
     },
+    headerText: {
+        fontSize: 20,
+        fontWeight: "700",
+        marginBottom: 10,
+    },
     contentStyle: {
         borderRadius: 10,
         width: "90%",
@@ -176,6 +197,9 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         justifyContent: "center",
         alignItems: "center",
+    },
+    text: {
+        fontWeight: "500",
     },
     uploadContainer: {
         padding: 30,
@@ -196,6 +220,10 @@ const styles = StyleSheet.create({
         padding: 30,
         borderRadius: 50,
     },
+    selectText: {
+        alignSelf: "center",
+        paddingTop: 10,
+    },
     previewContainer: {
         marginVertical: 20,
         alignItems: 'center',
@@ -207,5 +235,3 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
 });
-
-

@@ -25,18 +25,32 @@ export default function BffViewInformation() {
     const [isLandscape, setIsLandscape] = useState(false);
 
     useEffect(() => {
+        // Check initial orientation and set isLandscape state
+        const initialOrientation = screenDimensions.width > screenDimensions.height;
+        setIsLandscape(initialOrientation);
+
+        // Add listener for orientation changes
         const subscription = Dimensions.addEventListener('change', ({ window }) => {
             setScreenDimensions(window);
             setIsLandscape(window.width > window.height);
         });
 
-        return () => subscription?.remove();
+        // Unlock orientation when the component mounts to allow manual rotation
+        ScreenOrientation.unlockAsync();
+
+        // Cleanup listener on unmount
+        return () => {
+            subscription?.remove();
+            // Lock back to portrait mode when the component unmounts (optional)
+            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+        };
     }, []);
 
     const handleViewDetails = () => {
         const forwardParams = {
             profession: params.profession,
             dob: params.dob,
+            name: params.name,
             food: params.food,
             selectedImage: params.selectedImage,
             friendName: params.friendName,
@@ -59,6 +73,18 @@ export default function BffViewInformation() {
         });
     };
 
+    const enterFullScreen = async () => {
+        // Lock the screen to landscape mode when entering full-screen
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+        setIsLandscape(true);
+    };
+
+    const exitFullScreen = async () => {
+        // Lock the screen back to portrait mode when exiting full-screen
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+        setIsLandscape(false);
+    };
+
     // Display full-screen image view in landscape mode
     if (isLandscape) {
         return (
@@ -75,7 +101,7 @@ export default function BffViewInformation() {
                     resizeMode="contain" // Use "contain" to fit the image within the screen
                 />
                 <TouchableOpacity
-                    onPress={() => setIsLandscape(false)} // Exit landscape mode
+                    onPress={exitFullScreen} // Exit landscape mode and return to portrait
                     style={[styles.icon, styles.fullScreenIcon]}
                 >
                     <MaterialIcons name='fullscreen-exit' size={24} color={"#fff"} />
@@ -103,7 +129,7 @@ export default function BffViewInformation() {
                             resizeMode="cover"
                         />
                         <TouchableOpacity
-                            onPress={() => setIsLandscape(true)} // Enter landscape mode
+                            onPress={enterFullScreen} // Enter landscape mode
                             style={[styles.icon, styles.fullScreenButton]}
                         >
                             <MaterialIcons name='fullscreen' size={20} color={"#fff"} />

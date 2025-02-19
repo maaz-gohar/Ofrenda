@@ -43,6 +43,7 @@ export default function Successfully() {
     const handleViewDetails = () => {
         const forwardParams = {
             worked: params.worked,
+            name: params.name,
             memory: params.memory,
             health: params.health,
             hobbies: params.hobbies,

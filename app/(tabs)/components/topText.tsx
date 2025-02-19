@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontWeight: "800",
-        fontSize: 24,
+        fontSize: 20,
         fontFamily: "Manrope",
         marginTop: 15,
         width: 200,

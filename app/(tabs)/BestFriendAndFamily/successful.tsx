@@ -27,6 +27,7 @@ export default function Successful() {
     const handleViewDetails = () => {
         const forwardParams = {
             profession: params.profession,
+            name: params.name,
             dob: params.dob,
             food: params.food,
             selectedImage: params.selectedImage,

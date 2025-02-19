@@ -7,19 +7,23 @@ import {
     TouchableOpacity,
     Image,
 } from 'react-native';
-import { FontAwesome, Ionicons, Entypo, FontAwesome6, FontAwesome5, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { LinearGradient } from "expo-linear-gradient";
 import MainText from '../components/topText';
 import MainButton from '../components/button';
-import { router } from 'expo-router';
-import TabBar from '../components/tabBar';
+import { router, useLocalSearchParams } from 'expo-router';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
 
 export default function UploadFiles() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const params = useLocalSearchParams();
+
+    useEffect(() => {
+        console.log("Received params in UploadFiles screen:", params);
+    }, [params]);
 
     const SelectImage = async () => {
         try {
@@ -59,17 +63,35 @@ export default function UploadFiles() {
 
     const handleUploadComplete = () => {
         if (selectedImage) {
+            const forwardParams = {
+                profession: params.profession,
+                name: params.name,
+                dob: params.dob,
+                food: params.food,
+                selectedImage: selectedImage, // Use the selected image here
+                friendName: params.friendName,
+                dynamicFields: params.dynamicFields,
+                noteableContribution: params.noteableContribution,
+                movie: params.movie,
+                favFood: params.favFood,
+                health: params.health,
+                facebook: params.facebook,
+                instagram: params.instagram,
+                twitter: params.twitter,
+                tiktok: params.tiktok
+            };
+
+            // Navigate to the next screen with the parameters
             router.push({
                 pathname: '/BestFriendAndFamily/selectCollegeDesign',
-                params: { selectedImage: selectedImage }
+                params: forwardParams
             });
         }
     };
 
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollViewContainer}
-                bounces={false}>
+            <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
                 <MainText
                     title={'Best Friends and Family'}
                     showIcon={true}
@@ -77,7 +99,7 @@ export default function UploadFiles() {
                     gradientColor={[b1, b2]}
                 />
 
-                <View style={[styles.main]}>
+                <View style={styles.main}>
                     <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 10 }}>Upload File Or Take Photos</Text>
                     <View style={styles.contentStyle}>
                         <TouchableOpacity>
@@ -139,7 +161,6 @@ export default function UploadFiles() {
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -207,5 +228,3 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
 });
-
-

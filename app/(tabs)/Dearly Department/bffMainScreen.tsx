@@ -15,40 +15,53 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import MainButton from '../components/button';
 import TabBar from '../components/tabBar';
 
+
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
+
 
 export default function BffMainScreen() {
     const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
     const router = useRouter();
     const params = useLocalSearchParams();
-    const [isLandscape, setIsLandscape] = useState(false);
+    const [isLandscape, setIsLandscape] = useState(screenDimensions.width > screenDimensions.height);
 
     useEffect(() => {
-        const subscription = Dimensions.addEventListener('change', ({ window }) => {
+        // Check initial orientation and set isLandscape state
+        const updateOrientation = ({ window }) => {
             setScreenDimensions(window);
             setIsLandscape(window.width > window.height);
-        });
+        };
 
-        return () => subscription?.remove();
+        // Add listener for orientation changes
+        const subscription = Dimensions.addEventListener('change', updateOrientation);
+
+        // Unlock orientation when the component mounts to allow manual rotation
+        ScreenOrientation.unlockAsync();
+
+        // Cleanup listener on unmount
+        return () => {
+            subscription?.remove();
+            // Lock back to portrait mode when the component unmounts (optional)
+            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+        };
     }, []);
 
     const handleViewDetails = () => {
         const forwardParams = {
-            profession: params.profession,
+            worked: params.worked,
+            name: params.name,
+            memory: params.memory,
+            health: params.health,
+            hobbies: params.hobbies,
             dob: params.dob,
-            food: params.food,
-            selectedImage: params.selectedImage,
-            friendName: params.friendName,
-            dynamicFields: params.dynamicFields,
+            dod: params.dod,
             noteableContribution: params.noteableContribution,
             movie: params.movie,
-            favFood: params.favFood,
-            health: params.health,
-            facebook: params.facebook,
-            instagram: params.instagram,
-            twitter: params.twitter,
-            tiktok: params.tiktok
+            food: params.food,
+            relationship: params.relationship,
+            ancestorRelationship: params.ancestorRelationship,
+            dynamicFields: params.dynamicFields,
         };
 
         console.log("Forwarding params to DisplayData:", forwardParams);
@@ -57,6 +70,18 @@ export default function BffMainScreen() {
             pathname: '/Dearly Department/displayData',
             params: forwardParams
         });
+    };
+
+    const enterFullScreen = async () => {
+        // Lock the screen to landscape mode when entering full-screen
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+        setIsLandscape(true);
+    };
+
+    const exitFullScreen = async () => {
+        // Lock the screen back to portrait mode when exiting full-screen
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+        setIsLandscape(false);
     };
 
     // Display full-screen image view in landscape mode
@@ -75,7 +100,7 @@ export default function BffMainScreen() {
                     resizeMode="contain" // Use "contain" to fit the image within the screen
                 />
                 <TouchableOpacity
-                    onPress={() => setIsLandscape(false)} // Exit landscape mode
+                    onPress={exitFullScreen} // Exit landscape mode and return to portrait
                     style={[styles.icon, styles.fullScreenIcon]}
                 >
                     <MaterialIcons name='fullscreen-exit' size={24} color={"#fff"} />
@@ -103,7 +128,7 @@ export default function BffMainScreen() {
                             resizeMode="cover"
                         />
                         <TouchableOpacity
-                            onPress={() => setIsLandscape(true)} // Enter landscape mode
+                            onPress={enterFullScreen} // Enter landscape mode
                             style={[styles.icon, styles.fullScreenButton]}
                         >
                             <MaterialIcons name='fullscreen' size={20} color={"#fff"} />
@@ -133,6 +158,7 @@ export default function BffMainScreen() {
                                 title={"View Information"}
                                 onPress={handleViewDetails}
                                 gradientColor={[b1, b2]}
+                            // shadowColor='rgba(94, 164, 253, 1)'
                             />
                         </View>
                     </View>
@@ -196,7 +222,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
     bg: {
-        backgroundColor: "#FFC70B",
+        backgroundColor: b1,
         paddingHorizontal: 20,
         paddingVertical: 7,
         borderRadius: 250,
