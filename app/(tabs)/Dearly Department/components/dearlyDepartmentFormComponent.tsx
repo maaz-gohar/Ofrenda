@@ -13,7 +13,7 @@ const DearlyDepartmentFormComponent = ({ name, onPress, iconType = 'Ionicons', i
     const handleHobbyChange = (text) => {
         // Split hobbies by comma and filter empty strings
         const hobbies = text.split(',').map(h => h.trim()).filter(h => h);
-        
+
         if (hobbies.length > 6) {
             // If exceeding limit, keep first 6 hobbies
             const limitedHobbies = hobbies.slice(0, 6).join(', ');
@@ -21,7 +21,7 @@ const DearlyDepartmentFormComponent = ({ name, onPress, iconType = 'Ionicons', i
             setError('Maximum 6 Values allowed');
             return;
         }
-        
+
         // Check if last character is comma
         const lastChar = text.slice(-1);
         if (hobbies.length === 6 && lastChar === ',') {
@@ -43,7 +43,7 @@ const DearlyDepartmentFormComponent = ({ name, onPress, iconType = 'Ionicons', i
                 style={[styles.textInput, error && styles.errorInput]}
                 onPress={onPress}
                 multiline
-                maxLength={100} // Optional character limit
+                maxLength={1000} // Optional character limit
             />
             {iconType === 'Ionicons' ? (
                 <Ionicons name={iconName} size={14} color="#858383" style={styles.icon} />
@@ -54,7 +54,7 @@ const DearlyDepartmentFormComponent = ({ name, onPress, iconType = 'Ionicons', i
             ) : iconType === 'AntDesign' ? (
                 <AntDesign name={iconName} size={14} color="#858383" style={styles.icon} />
             ) : null}
-            
+
             {error && (
                 <Text style={styles.errorText}>
                     {error}
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         height: 47,
         justifyContent: 'space-between',
         alignItems: 'center',
-        alignContent:"center",
+        alignContent: "center",
         width: "93%",
         flexDirection: "row",
     },
@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
         textAlign: 'left',         // Left alignment
         textAlignVertical: 'center', // Vertical center
         // alignSelf:""
-        alignContent:"center"
-    
+        alignContent: "center"
+
     },
     icon: {
         alignSelf: "center",

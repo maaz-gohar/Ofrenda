@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     View,
@@ -6,101 +6,116 @@ import {
     Dimensions,
     ScrollView,
     TouchableOpacity,
-    Image
+    Image,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-
+import * as ScreenOrientation from 'expo-screen-orientation';
 import MainText from '../components/topText';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import MainButton from '../components/button';
 import TabBar from '../components/tabBar';
 
+const b1 = "#FFC70BE5";
+const b2 = "#ffe9a1";
+
 export default function BffMainScreen() {
-
-    const { width, height } = Dimensions.get('window')
-
+    const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
     const router = useRouter();
-
     const params = useLocalSearchParams();
+    const [isLandscape, setIsLandscape] = useState(false);
 
-    const [fullScreen, setFullScreen] = useState(false)
+    useEffect(() => {
+        const subscription = Dimensions.addEventListener('change', ({ window }) => {
+            setScreenDimensions(window);
+            setIsLandscape(window.width > window.height);
+        });
 
-    const ToggleFullScreen = () => {
-        setFullScreen(!fullScreen)
-    }
+        return () => subscription?.remove();
+    }, []);
 
-    if (fullScreen) {
+    const handleViewDetails = () => {
+        const forwardParams = {
+            profession: params.profession,
+            dob: params.dob,
+            food: params.food,
+            selectedImage: params.selectedImage,
+            friendName: params.friendName,
+            dynamicFields: params.dynamicFields,
+            noteableContribution: params.noteableContribution,
+            movie: params.movie,
+            favFood: params.favFood,
+            health: params.health,
+            facebook: params.facebook,
+            instagram: params.instagram,
+            twitter: params.twitter,
+            tiktok: params.tiktok
+        };
+
+        console.log("Forwarding params to DisplayData:", forwardParams);
+
+        router.push({
+            pathname: '/Dearly Department/displayData',
+            params: forwardParams
+        });
+    };
+
+    // Display full-screen image view in landscape mode
+    if (isLandscape) {
         return (
-            <View style={[styles.fullScreenContainer, { height, width }]}>
+            <View style={[styles.fullScreenContainer, { height: screenDimensions.height, width: screenDimensions.width }]}>
                 <Image
                     source={require('../../../assets/images/SelectOfrenda/3.png')}
-                    style={styles.fullScreenImage}
+                    style={[
+                        styles.fullScreenImage,
+                        {
+                            width: screenDimensions.width,
+                            height: screenDimensions.height,
+                        }
+                    ]}
+                    resizeMode="contain" // Use "contain" to fit the image within the screen
                 />
                 <TouchableOpacity
-                    onPress={ToggleFullScreen}
+                    onPress={() => setIsLandscape(false)} // Exit landscape mode
                     style={[styles.icon, styles.fullScreenIcon]}
                 >
                     <MaterialIcons name='fullscreen-exit' size={24} color={"#fff"} />
                 </TouchableOpacity>
             </View>
         );
-
-
     }
 
-
-    const handleViewDetails = () => {
-        const forwardParams = {
-            worked: params.worked,
-            memory: params.memory,
-            health: params.health,
-            hobbies: params.hobbies,
-            dob: params.dob,
-            dod: params.dod,
-            noteableContribution: params.noteableContribution,
-            movie: params.movie,
-            food: params.food,
-            relationship: params.relationship,
-            ancestorRelationship: params.ancestorRelationship,
-            dynamicFields: params.dynamicFields,
-
-        }
-        console.log("success", forwardParams)
-
-        router.push({
-            pathname: '/Dearly Department/displayData',
-            params: forwardParams
-        })
-    }
-
-
+    // Display normal page in portrait mode
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
-                <MainText title={'Memory Boards'} showIcon={true} setting={true} />
+                <MainText
+                    title={'Dearly Departed'}
+                    showIcon={true}
+                    setting={true}
+                    gradientColor={[b1, b2]}
+                />
 
                 <View style={[styles.main]}>
                     <View style={styles.imgcover}>
-                        <Image source={require('../../../assets/images/SelectOfrenda/3.png')} style={styles.img} />
-                        {/* <TouchableOpacity
-                            onPress={() => router.push('/Dearly Department/bffMainScreenLandScape')}
-                            style={styles.icon}
+                        <Image
+                            source={require('../../../assets/images/SelectOfrenda/3.png')}
+                            style={styles.img}
+                            resizeMode="cover"
+                        />
+                        <TouchableOpacity
+                            onPress={() => setIsLandscape(true)} // Enter landscape mode
+                            style={[styles.icon, styles.fullScreenButton]}
                         >
-                            <MaterialIcons name='crop-rotate' size={20} color={"#fff"} />
-                        </TouchableOpacity> */}
-                        <TouchableOpacity onPress={ToggleFullScreen} style={[styles.icon, styles.fullScreenButton]}>
                             <MaterialIcons name='fullscreen' size={20} color={"#fff"} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.subbtn}>
                         <View>
-                            <TouchableOpacity
-
-                                style={styles.bg}>
+                            <TouchableOpacity style={styles.bg}>
                                 <Text>Edit</Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={{ flexDirection: "row", width: "60%", justifyContent: "space-between" }}>
+                        <View style={styles.actionButtonsContainer}>
                             <TouchableOpacity style={styles.bg}>
                                 <Text>Share</Text>
                             </TouchableOpacity>
@@ -112,18 +127,19 @@ export default function BffMainScreen() {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ flexDirection: 'row' , width:"95%", }}>
-                        <View style={{width:"50%"}}>
-                            <MainButton title={"View Information"} fontSize={12} onPress={handleViewDetails} />
-                        </View>
-                        <View style={{width:"50%"}}>
-                            <MainButton title={"View Relationship Tree"} fontSize={12} onPress={() => router.push('/Dearly Department/addFamilyTree')} />
+                    <View style={styles.viewInfoContainer}>
+                        <View style={styles.buttonWrapper}>
+                            <MainButton
+                                title={"View Information"}
+                                onPress={handleViewDetails}
+                                gradientColor={[b1, b2]}
+                            />
                         </View>
                     </View>
                 </View>
-            </ScrollView >
+            </ScrollView>
             <TabBar />
-        </View >
+        </View>
     );
 }
 
@@ -141,7 +157,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
-        // justifyContent: "center",
         alignItems: "center",
         paddingTop: 30,
         marginTop: -35,
@@ -152,10 +167,12 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 3,
         position: 'relative',
+        overflow: 'hidden',
     },
     img: {
         flex: 1,
         width: "100%",
+        borderRadius: 4,
     },
     icon: {
         position: "absolute",
@@ -164,42 +181,45 @@ const styles = StyleSheet.create({
         zIndex: 1,
         borderWidth: 2,
         borderColor: "#fff",
-        borderRadius: "50%",
-        padding: 5
+        borderRadius: 50,
+        padding: 5,
     },
     subbtn: {
         flexDirection: "row",
         justifyContent: "space-between",
         width: "100%",
-        padding: 20
+        padding: 20,
+    },
+    actionButtonsContainer: {
+        flexDirection: "row",
+        width: "60%",
+        justifyContent: "space-between",
     },
     bg: {
-        backgroundColor: "rgba(255, 199, 11, 1)",
+        backgroundColor: "#FFC70B",
         paddingHorizontal: 20,
         paddingVertical: 7,
-        borderRadius: 250
+        borderRadius: 250,
     },
     fullScreenContainer: {
         flex: 1,
         backgroundColor: '#000',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     fullScreenImage: {
         flex: 1,
         width: '100%',
         height: '100%',
-        resizeMode: 'contain',
-        transform: [{ rotate: '90deg' }],
-
+        position: 'absolute',
     },
     fullScreenIcon: {
+        position: 'absolute',
         top: 40,
         right: 20,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         padding: 8,
-    },
-    rotateIcon: {
-        top: 10,
-        right: 10,
+        zIndex: 2,
     },
     fullScreenButton: {
         position: 'absolute',
@@ -207,6 +227,12 @@ const styles = StyleSheet.create({
         left: 10,
         padding: 5,
         borderRadius: 50,
-        width: 35
+        width: 35,
+    },
+    viewInfoContainer: {
+        flexDirection: 'row',
+    },
+    buttonWrapper: {
+        width: "95%",
     },
 });

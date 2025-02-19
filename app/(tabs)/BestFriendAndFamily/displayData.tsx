@@ -44,7 +44,7 @@ export default function DisplayData() {
                         <ImageBackground
                             source={require('../../../assets/images/Group 2093.png')}
                             style={styles.bg}
-                            resizeMode="contain"
+                            resizeMode="stretch"
                         >
                             {/* <View style={{
                                 justifyContent: "center",
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     },
     bgContain: {
 
-        width: "100%",
+        width: "90%",
 
     },
     bg: {
@@ -213,8 +213,8 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         paddingTop: 10,
         alignSelf: "center",
-        width : 300,
-        textAlign:"center"
+        width: 300,
+        textAlign: "center"
         // paddingHorizontal: 10
     },
     normalText: {

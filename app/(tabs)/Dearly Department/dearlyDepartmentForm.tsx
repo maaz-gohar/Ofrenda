@@ -33,6 +33,7 @@ export default function DearlyDepartmentForm() {
         }
     }, [params])
 
+    const [name, setName] = useState('');
     const [worked, setWorked] = useState('');
     const [memory, setMemory] = useState('');
     const [health, setHealth] = useState('');
@@ -69,6 +70,7 @@ export default function DearlyDepartmentForm() {
         router.push({
             pathname: '/Dearly Department/successfully',
             params: {
+                name,
                 worked,
                 memory,
                 health,
@@ -147,7 +149,7 @@ export default function DearlyDepartmentForm() {
                         </View>
                     </ScrollView>
 
-                    <DearlyDepartmentFormComponent name="Enter Name" />
+                    <DearlyDepartmentFormComponent name="Enter Name" value={name} setValue={setName} />
                     <DearlyDepartmentFormComponent
                         name="Upload Picture"
                         iconName="upload"

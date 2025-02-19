@@ -11,26 +11,13 @@ import {
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function BottomIcons() {
+interface BottomIconsProps {
+    onListTypeSelect?: (type: 'bullet' | 'number') => void;
+}
+
+export default function BottomIcons({ onListTypeSelect }: BottomIconsProps) {
     const [visibleModal, setVisibleModal] = useState(false);
-
-    const openCamera = async () => {
-        const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-        if (!permissionResult.granted) {
-            alert('Permission to access camera is required!');
-            return;
-        }
-        let result = await ImagePicker.launchCameraAsync({
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
-
-        if (!result.canceled) {
-            console.log('Photo Taken:', result.assets[0].uri);
-        }
-        setVisibleModal(false);
-    };
+    const [visibleListModal, setVisibleListModal] = useState(false);
 
     const pickImage = async () => {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -50,14 +37,21 @@ export default function BottomIcons() {
         setVisibleModal(false);
     };
 
+    const handleListTypeSelect = (type: 'bullet' | 'number') => {
+        if (onListTypeSelect) {
+            onListTypeSelect(type);
+        }
+        setVisibleListModal(false);
+    };
+
     return (
         <View style={styles.endView}>
             {/* Bottom Icons */}
             <View style={{ flexDirection: "row" }}>
-                <TouchableOpacity onPress={() => setVisibleModal(true)}>
+                {/* <TouchableOpacity onPress={() => setVisibleModal(true)}>
                     <Image source={require('../../../../assets/images/Frame.png')} style={{ marginRight: 10 }} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setVisibleModal(true)}>
+                </TouchableOpacity> */}
+                <TouchableOpacity onPress={() => setVisibleListModal(true)}>
                     <Image source={require('../../../../assets/images/Frame1.png')} />
                 </TouchableOpacity>
             </View>
@@ -74,15 +68,42 @@ export default function BottomIcons() {
                         <TouchableWithoutFeedback>
                             <View style={styles.modalContent}>
                                 <Text style={styles.modalTitle}>Select Image</Text>
-                                <TouchableOpacity style={styles.option} onPress={openCamera}>
-                                    <Ionicons name="camera" size={24} color="black" />
-                                    <Text style={styles.optionText}>Take Photo</Text>
-                                </TouchableOpacity>
                                 <TouchableOpacity style={styles.option} onPress={pickImage}>
                                     <Ionicons name="images" size={24} color="black" />
-                                    <Text style={styles.optionText}>Choose Image</Text>
+                                    <Text style={styles.optionText}>Choose from Gallery</Text>
                                 </TouchableOpacity>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+                </TouchableWithoutFeedback>
+            </Modal>
 
+            {/* Modal for List Options */}
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={visibleListModal}
+                onRequestClose={() => setVisibleListModal(false)}
+            >
+                <TouchableWithoutFeedback onPress={() => setVisibleListModal(false)}>
+                    <View style={styles.modalContainer}>
+                        <TouchableWithoutFeedback>
+                            <View style={styles.modalContent}>
+                                <Text style={styles.modalTitle}>Select List Type</Text>
+                                <TouchableOpacity
+                                    style={styles.option}
+                                    onPress={() => handleListTypeSelect('bullet')}
+                                >
+                                    <Ionicons name="ellipse" size={24} color="black" />
+                                    <Text style={styles.optionText}>Bullet Points</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.option}
+                                    onPress={() => handleListTypeSelect('number')}
+                                >
+                                    <Ionicons name="list" size={24} color="black" />
+                                    <Text style={styles.optionText}>Numbered List</Text>
+                                </TouchableOpacity>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
@@ -122,21 +143,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingVertical: 10,
         width: "100%",
+        paddingLeft: 20,
     },
     optionText: {
         fontSize: 16,
         marginLeft: 10,
-    },
-    closeButton: {
-        marginTop: 10,
-        backgroundColor: "#FF3B30",
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-    },
-    closeText: {
-        color: "#fff",
-        fontWeight: "bold",
-    },
+    }
 });
-

@@ -65,7 +65,7 @@ export default function DisplayData() {
                         <ImageBackground
                             source={require('../../../assets/images/Group 2092.png')}
                             style={styles.bg}
-                            resizeMode="contain"
+                            resizeMode="stretch"
                         >
                             <View style={{ justifyContent: "center", alignItems: "center" }}>
                                 <Text style={styles.granded}>Grandad</Text>
@@ -78,24 +78,24 @@ export default function DisplayData() {
                                     <Text>{dod}</Text>
                                 </View>
                                 <View style={{ justifyContent: "center", alignItems: "center" }}>
-                                {/* Display Relationship */}
-                                {relationship && (
-                                    <>
-                                        <Text style={styles.boldText}>Relationship</Text>
-                                        <Text style={styles.normalText}>{relationship}</Text>
-                                    </>
-                                )}
+                                    {/* Display Relationship */}
+                                    {relationship && (
+                                        <>
+                                            <Text style={styles.boldText}>Relationship</Text>
+                                            <Text style={styles.normalText}>{relationship}</Text>
+                                        </>
+                                    )}
 
-                                {/* Display Relationship with Ancestors */}
-                                {ancestorRelationship && (
-                                    <>
-                                        <Text style={styles.boldText}>Relationship with Ancestors</Text>
-                                        <Text style={styles.normalText}>{ancestorRelationship}</Text>
-                                    </>
-                                )}
+                                    {/* Display Relationship with Ancestors */}
+                                    {ancestorRelationship && (
+                                        <>
+                                            <Text style={styles.boldText}>Relationship with Ancestors</Text>
+                                            <Text style={styles.normalText}>{ancestorRelationship}</Text>
+                                        </>
+                                    )}
 
-                                {/* Other fields */}
-                            </View>
+                                    {/* Other fields */}
+                                </View>
                                 <Text style={styles.boldText}>Favorite pastimes</Text>
                                 <Text style={styles.normalText}>
                                     {hobbies}
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     },
     bgContain: {
 
-        width: "100%",
+        width: "90%",
         // marginVertical: 20, // Add vertical margin
     },
     bg: {
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         // paddingHorizontal: 10
         width: 300,
-        textAlign:"center"
+        textAlign: "center"
     },
     normalText: {
         fontWeight: 500,

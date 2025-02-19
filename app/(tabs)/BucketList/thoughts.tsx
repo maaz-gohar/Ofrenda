@@ -4,7 +4,9 @@ import {
     View,
     Text,
     ScrollView,
-    Image
+    Image,
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import MainText from '../components/topText';
@@ -23,19 +25,21 @@ export default function Thoughts() {
 
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
-                <MainText
-                    gradientColor={[b1, b2]}
-                    title={'Thoughts & Notes'}
-                    showIcon={true}
-                    setting={true}
-                />
-                <View style={[styles.main]}>
-                    <Search />
-                    <Inputs />
+            <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
-                </View>
-                {/* <View style={styles.endView}>
+                <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
+                    <MainText
+                        gradientColor={[b1, b2]}
+                        title={'Thoughts & Notes'}
+                        showIcon={true}
+                        setting={true}
+                    />
+                    <View style={[styles.main]}>
+                        <Search />
+                        <Inputs />
+
+                    </View>
+                    {/* <View style={styles.endView}>
                     <View style={{ flexDirection: "row" }}>
                         <Image source={require('../../../assets/images/Frame.png')} style={{ marginRight: 10 }} />
                         <Image source={require('../../../assets/images/Frame1.png')} />
@@ -43,9 +47,10 @@ export default function Thoughts() {
                     <Image source={require('../../../assets/images/dot.png')} />
 
                 </View> */}
-                <BottomIcons />
-            </ScrollView>
-            <TabBar />
+                    {/* <BottomIcons /> */}
+                </ScrollView>
+                <TabBar />
+            </KeyboardAvoidingView>
         </View>
     );
 }

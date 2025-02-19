@@ -24,6 +24,7 @@ const b2 = "rgba(143, 184, 236, 1)";
 
 export default function SelectCollegeDesign() {
     const [profession, setProfession] = useState('');
+    const [name, setName] = useState('');
     const [food, setFood] = useState([]);
     // const [socialIcons, setsocialIcons] = useState([]);
     const [noteableContribution, setNoteableContribution] = useState('');
@@ -102,7 +103,7 @@ export default function SelectCollegeDesign() {
 
                 <View style={styles.main}>
                     <Text style={styles.title}>Select Collage Design</Text>
-                    <DearlyDepartmentFormComponent name="Enter Friend Name" />
+                    <DearlyDepartmentFormComponent name="Enter Friend Name" value={name} setValue={setName} />
                     <DearlyDepartmentFormComponent
                         name="Upload Picture"
                         iconName="upload"

@@ -28,12 +28,13 @@ export default function PaymentMethod() {
             <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
                 <MainText
                     title={'Payment Method'}
-                    description={'Select payment method or add new payment method'}
+                    // description={'Select payment method or add new payment method'}
                     showIcon={true}
                     gradientColor={[b1, b2]}
                     setting={true}
                 />
                 <View style={styles.main}>
+                    <Text style={styles.paymentText}>Select payment method or add new payment method</Text>
                     <TouchableOpacity style={styles.addNewCard} onPress={() => router.push('/BucketList/addCard')}>
                         <View style={{ flexDirection: "row" }}>
                             <LinearGradient
@@ -101,6 +102,13 @@ const styles = StyleSheet.create({
     scrollViewContainer: {
         flexGrow: 1,
         justifyContent: 'center',
+    },
+    paymentText: {
+        fontSize: 18,
+        paddingVertical: 30,
+        fontWeight: "600",
+        textAlign: "center",
+        width: "85%"
     },
     main: {
         flex: 1,

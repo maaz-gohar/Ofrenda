@@ -34,7 +34,8 @@ export default function PaymentMethod() {
                     description={'Select payment method or add new payment method'}
                     showIcon={true}
                 />
-                <View style={[styles.main, { height, width }]}>
+                <View style={[styles.main]}>
+                    <Text>Select payment method or add new payment method</Text>
                     <View style={styles.addNewCard}>
                         <LinearGradient
                             colors={[b1, b2]}
@@ -78,7 +79,7 @@ export default function PaymentMethod() {
                     {/* <Text style={styles.otherMethod}>Other Method</Text> */}
                 </View>
             </ScrollView>
-            <TabBar/>
+            <TabBar />
         </KeyboardAvoidingView>
     );
 }
@@ -87,6 +88,13 @@ const styles = StyleSheet.create({
     scrollViewContainer: {
         flexGrow: 1,
         justifyContent: 'center',
+    },
+    paymentText: {
+        fontSize: 18,
+        paddingVertical: 30,
+        fontWeight: "600",
+        textAlign: "center",
+        width: "85%"
     },
     main: {
         flex: 1,

@@ -35,7 +35,7 @@ export default function BucketList() {
 
                     <Inputs />
                 </View>
-                <BottomIcons />
+                {/* <BottomIcons /> */}
 
             </ScrollView>
             <TabBar />

@@ -36,7 +36,7 @@ export default function Memory() {
                     <Inputs />
                 </View>
             </ScrollView>
-            <BottomIcons />
+            {/* <BottomIcons /> */}
             <TabBar />
         </View>
     );

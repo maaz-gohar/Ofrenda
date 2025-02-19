@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     View,
@@ -6,10 +6,10 @@ import {
     Dimensions,
     ScrollView,
     TouchableOpacity,
-    Image
+    Image,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-
+import * as ScreenOrientation from 'expo-screen-orientation';
 import MainText from '../components/topText';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import MainButton from '../components/button';
@@ -19,36 +19,19 @@ const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
 
 export default function BffViewInformation() {
-
-    const { height, width } = Dimensions.get('window')
-
+    const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
     const router = useRouter();
     const params = useLocalSearchParams();
+    const [isLandscape, setIsLandscape] = useState(false);
 
-    const [fullScreen, setFullScreen] = useState(false)
+    useEffect(() => {
+        const subscription = Dimensions.addEventListener('change', ({ window }) => {
+            setScreenDimensions(window);
+            setIsLandscape(window.width > window.height);
+        });
 
-    const ToggleFullScreen = () => {
-        setFullScreen(!fullScreen)
-    }
-
-    if (fullScreen) {
-        return (
-            <View style={[styles.fullScreenContainer, { height, width }]}>
-                <Image
-                    source={require('../../../assets/images/BestFriend/college1.jpg')}
-                    style={styles.fullScreenImage}
-                />
-                <TouchableOpacity
-                    onPress={ToggleFullScreen}
-                    style={[styles.icon, styles.fullScreenIcon]}
-                >
-                    <MaterialIcons name='fullscreen-exit' size={24} color={"#fff"} />
-                </TouchableOpacity>
-            </View>
-        );
-
-
-    }
+        return () => subscription?.remove();
+    }, []);
 
     const handleViewDetails = () => {
         const forwardParams = {
@@ -76,33 +59,63 @@ export default function BffViewInformation() {
         });
     };
 
+    // Display full-screen image view in landscape mode
+    if (isLandscape) {
+        return (
+            <View style={[styles.fullScreenContainer, { height: screenDimensions.height, width: screenDimensions.width }]}>
+                <Image
+                    source={require('../../../assets/images/BestFriend/college1.jpg')}
+                    style={[
+                        styles.fullScreenImage,
+                        {
+                            width: screenDimensions.width,
+                            height: screenDimensions.height,
+                        }
+                    ]}
+                    resizeMode="contain" // Use "contain" to fit the image within the screen
+                />
+                <TouchableOpacity
+                    onPress={() => setIsLandscape(false)} // Exit landscape mode
+                    style={[styles.icon, styles.fullScreenIcon]}
+                >
+                    <MaterialIcons name='fullscreen-exit' size={24} color={"#fff"} />
+                </TouchableOpacity>
+            </View>
+        );
+    }
+
+    // Display normal page in portrait mode
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
-                <MainText title={'Best Friends and Family'} showIcon={true} setting={true} gradientColor={[b1, b2]} />
+                <MainText
+                    title={'Best Friend And Family'}
+                    showIcon={true}
+                    setting={true}
+                    gradientColor={[b1, b2]}
+                />
 
                 <View style={[styles.main]}>
                     <View style={styles.imgcover}>
-                        <Image source={require('../../../assets/images/BestFriend/college1.jpg')} style={styles.img} />
+                        <Image
+                            source={require('../../../assets/images/BestFriend/college1.jpg')}
+                            style={styles.img}
+                            resizeMode="cover"
+                        />
                         <TouchableOpacity
-                            onPress={() => router.push('/BestFriendAndFamily/bffViewInformationLandscape')}
-                            style={styles.icon}
+                            onPress={() => setIsLandscape(true)} // Enter landscape mode
+                            style={[styles.icon, styles.fullScreenButton]}
                         >
-                            <MaterialIcons name='crop-rotate' size={20} color={"#fff"} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={ToggleFullScreen} style={[styles.icon, styles.fullScreenButton]}>
                             <MaterialIcons name='fullscreen' size={20} color={"#fff"} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.subbtn}>
                         <View>
-                            <TouchableOpacity
-
-                                style={styles.bg}>
+                            <TouchableOpacity style={styles.bg}>
                                 <Text>Edit</Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={{ flexDirection: "row", width: "60%", justifyContent: "space-between" }}>
+                        <View style={styles.actionButtonsContainer}>
                             <TouchableOpacity style={styles.bg}>
                                 <Text>Share</Text>
                             </TouchableOpacity>
@@ -114,16 +127,20 @@ export default function BffViewInformation() {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <View style={{ width: "95%" }}>
-                            <MainButton title={"View Information"} onPress={handleViewDetails} gradientColor={[b1, b2]} shadowColor='rgba(94, 164, 253, 1)' />
+                    <View style={styles.viewInfoContainer}>
+                        <View style={styles.buttonWrapper}>
+                            <MainButton
+                                title={"View Information"}
+                                onPress={handleViewDetails}
+                                gradientColor={[b1, b2]}
+                                shadowColor='rgba(94, 164, 253, 1)'
+                            />
                         </View>
-
                     </View>
                 </View>
-            </ScrollView >
+            </ScrollView>
             <TabBar />
-        </View >
+        </View>
     );
 }
 
@@ -141,7 +158,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
-        // justifyContent: "center",
         alignItems: "center",
         paddingTop: 30,
         marginTop: -35,
@@ -152,11 +168,12 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 3,
         position: 'relative',
+        overflow: 'hidden',
     },
     img: {
         flex: 1,
         width: "100%",
-        borderRadius: 4
+        borderRadius: 4,
     },
     icon: {
         position: "absolute",
@@ -165,42 +182,45 @@ const styles = StyleSheet.create({
         zIndex: 1,
         borderWidth: 2,
         borderColor: "#fff",
-        borderRadius: "50%",
-        padding: 5
+        borderRadius: 50,
+        padding: 5,
     },
     subbtn: {
         flexDirection: "row",
         justifyContent: "space-between",
         width: "100%",
-        padding: 20
+        padding: 20,
+    },
+    actionButtonsContainer: {
+        flexDirection: "row",
+        width: "60%",
+        justifyContent: "space-between",
     },
     bg: {
-        backgroundColor: "rgba(94, 164, 253, 1)",
+        backgroundColor: b1,
         paddingHorizontal: 20,
         paddingVertical: 7,
-        borderRadius: 250
+        borderRadius: 250,
     },
     fullScreenContainer: {
         flex: 1,
         backgroundColor: '#000',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     fullScreenImage: {
         flex: 1,
         width: '100%',
         height: '100%',
-        resizeMode: 'contain',
-        transform: [{ rotate: '90deg' }],
-
+        position: 'absolute',
     },
     fullScreenIcon: {
+        position: 'absolute',
         top: 40,
         right: 20,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         padding: 8,
-    },
-    rotateIcon: {
-        top: 10,
-        right: 10,
+        zIndex: 2,
     },
     fullScreenButton: {
         position: 'absolute',
@@ -208,6 +228,12 @@ const styles = StyleSheet.create({
         left: 10,
         padding: 5,
         borderRadius: 50,
-        width: 35
+        width: 35,
+    },
+    viewInfoContainer: {
+        flexDirection: 'row',
+    },
+    buttonWrapper: {
+        width: "95%",
     },
 });
