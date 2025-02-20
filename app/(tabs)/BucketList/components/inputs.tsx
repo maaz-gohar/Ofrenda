@@ -9,7 +9,7 @@ import {
     TextInput,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 
 const b1 = "rgba(188, 97, 213, 0.8)";
 const b2 = "rgba(249, 244, 251, 1)";
@@ -226,11 +226,11 @@ export default function Inputs() {
                             <View style={styles.modalContent}>
                                 <Text style={styles.modalTitle}>Select List Type</Text>
                                 <TouchableOpacity style={styles.option} onPress={handleBulletList}>
-                                    <Ionicons name="ellipse" size={24} color="black" />
+                                    <Ionicons name="list" size={24} color="black" />
                                     <Text style={styles.optionText}>Bullet Points</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.option} onPress={handleNumberedList}>
-                                    <Ionicons name="list" size={24} color="black" />
+                                    <FontAwesome name="list-ol" size={20} color="black" />
                                     <Text style={styles.optionText}>Numbered List</Text>
                                 </TouchableOpacity>
                             </View>
@@ -269,14 +269,15 @@ const styles = StyleSheet.create({
     },
     formatButton: {
         position: 'absolute',
-        left: 30,
+        right: 30,
         bottom: 20,
         padding: 10,
     },
     modalContainer: {
         flex: 1,
         justifyContent: "flex-end",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        // backgroundColor: "rgba(0, 0, 0, 0.1)",
+
     },
     modalContent: {
         width: "100%",
@@ -285,6 +286,9 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         alignItems: "center",
+        borderWidth: 1,
+        borderColor: "rgba(0, 0, 0, 0.2)",
+        height: 200
     },
     modalTitle: {
         fontSize: 18,

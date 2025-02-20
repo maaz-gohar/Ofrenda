@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
     StyleSheet,
     View,
@@ -13,6 +13,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import MainText from '../components/topText';
 import MainButton from '../components/button';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useFocusEffect } from '@react-navigation/native';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
@@ -21,9 +22,11 @@ export default function UploadFiles() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const params = useLocalSearchParams();
 
-    useEffect(() => {
-        console.log("Received params in UploadFiles screen:", params);
-    }, [params]);
+    useFocusEffect(
+        useCallback(() => {
+            console.log("Received params in UploadFiles screen:", params);
+        }, [params])
+    );
 
     const SelectImage = async () => {
         try {
@@ -64,30 +67,43 @@ export default function UploadFiles() {
     const handleUploadComplete = () => {
         if (selectedImage) {
             const forwardParams = {
-                profession: params.profession,
                 name: params.name,
+                profession: params.profession,
                 dob: params.dob,
-                food: params.food,
-                selectedImage: selectedImage, // Use the selected image here
-                friendName: params.friendName,
-                dynamicFields: params.dynamicFields,
                 noteableContribution: params.noteableContribution,
                 movie: params.movie,
                 favFood: params.favFood,
                 health: params.health,
+                food: params.food,
+                selectedImage: selectedImage, // Ensure this is correctly set
+                dynamicFields: params.dynamicFields,
                 facebook: params.facebook,
                 instagram: params.instagram,
                 twitter: params.twitter,
-                tiktok: params.tiktok
+                tiktok: params.tiktok,
             };
 
-            // Navigate to the next screen with the parameters
             router.push({
                 pathname: '/BestFriendAndFamily/selectCollegeDesign',
-                params: forwardParams
+                params: forwardParams,
             });
         }
     };
+    // profession: params.profession,
+    // name: params.name,
+    // dob: params.dob,
+    // food: params.food,
+    // selectedImage: selectedImage, // Use the selected image here
+    // friendName: params.friendName,
+    // dynamicFields: params.dynamicFields,
+    // noteableContribution: params.noteableContribution,
+    // movie: params.movie,
+    // favFood: params.favFood,
+    // health: params.health,
+    // facebook: params.facebook,
+    // instagram: params.instagram,
+    // twitter: params.twitter,
+    // tiktok: params.tiktok
 
     return (
         <View style={styles.container}>

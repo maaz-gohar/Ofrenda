@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -15,48 +15,30 @@ import MainButton from '../components/button';
 import DearlyDepartmentFormComponent from '../Dearly Department/components/dearlyDepartmentFormComponent';
 import TabBar from '../components/tabBar';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import SelectList from './components/selectList';
 import { AntDesign } from '@expo/vector-icons';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
 
 export default function SelectCollegeDesign() {
-    const [profession, setProfession] = useState('');
-    const [name, setName] = useState('');
-    const [food, setFood] = useState([]);
-    const [noteableContribution, setNoteableContribution] = useState('');
-    const [movie, setMovie] = useState('');
-    const [favFood, setFavFood] = useState('');
-    const [health, setHealth] = useState('');
-    const [dob, setDob] = useState('Enter DOB');
-    const [dynamicFields, setDynamicFields] = useState([]);
-    const [selectedImage, setSelectedImage] = useState('');
-    const [facebook, setFacebook] = useState('');
-    const [instagram, setInstagram] = useState('');
-    const [twitter, setTwitter] = useState('');
-    const [tiktok, setTiktok] = useState('');
-
     const router = useRouter();
     const params = useLocalSearchParams();
 
-    // Restore state from params when the component mounts or params change
-    useEffect(() => {
-        if (params.name) setName(params.name.toString());
-        if (params.profession) setProfession(params.profession.toString());
-        if (params.dob) setDob(params.dob.toString());
-        if (params.noteableContribution) setNoteableContribution(params.noteableContribution.toString());
-        if (params.movie) setMovie(params.movie.toString());
-        if (params.favFood) setFavFood(params.favFood.toString());
-        if (params.health) setHealth(params.health.toString());
-        if (params.food) setFood(JSON.parse(params.food.toString()));
-        if (params.selectedImage) setSelectedImage(params.selectedImage.toString());
-        if (params.dynamicFields) setDynamicFields(JSON.parse(params.dynamicFields.toString()));
-        if (params.facebook) setFacebook(params.facebook.toString());
-        if (params.instagram) setInstagram(params.instagram.toString());
-        if (params.twitter) setTwitter(params.twitter.toString());
-        if (params.tiktok) setTiktok(params.tiktok.toString());
-    }, [params]);
+    // Initialize state directly from params
+    const [profession, setProfession] = useState(params.profession?.toString() || '');
+    const [name, setName] = useState(params.name?.toString() || '');
+    const [food, setFood] = useState(params.food ? JSON.parse(params.food.toString()) : []);
+    const [noteableContribution, setNoteableContribution] = useState(params.noteableContribution?.toString() || '');
+    const [movie, setMovie] = useState(params.movie?.toString() || '');
+    const [favFood, setFavFood] = useState(params.favFood?.toString() || '');
+    const [health, setHealth] = useState(params.health?.toString() || '');
+    const [dob, setDob] = useState(params.dob?.toString() || 'Enter DOB');
+    const [dynamicFields, setDynamicFields] = useState(params.dynamicFields ? JSON.parse(params.dynamicFields.toString()) : []);
+    const [selectedImage, setSelectedImage] = useState(params.selectedImage?.toString() || '');
+    const [facebook, setFacebook] = useState(params.facebook?.toString() || '');
+    const [instagram, setInstagram] = useState(params.instagram?.toString() || '');
+    const [twitter, setTwitter] = useState(params.twitter?.toString() || '');
+    const [tiktok, setTiktok] = useState(params.tiktok?.toString() || '');
 
     const handleSave = () => {
         router.push({
