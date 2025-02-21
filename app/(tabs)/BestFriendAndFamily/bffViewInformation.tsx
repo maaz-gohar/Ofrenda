@@ -19,44 +19,44 @@ const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
 
 export default function BffViewInformation() {
-    const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
     const router = useRouter();
     const params = useLocalSearchParams();
     const [isLandscape, setIsLandscape] = useState(false);
 
     // // Function to handle orientation changes
-    // const updateOrientation = async () => {
-    //     const orientationInfo = await ScreenOrientation.getOrientationAsync();
-    //     const isLandscape =
-    //         orientationInfo === ScreenOrientation.Orientation.LANDSCAPE_LEFT ||
-    //         orientationInfo === ScreenOrientation.Orientation.LANDSCAPE_RIGHT;
+    const updateOrientation = async () => {
+        const orientationInfo = await ScreenOrientation.getOrientationAsync();
+        const isLandscape =
+            orientationInfo === ScreenOrientation.Orientation.LANDSCAPE_LEFT ||
+            orientationInfo === ScreenOrientation.Orientation.LANDSCAPE_RIGHT;
 
-    //     setIsLandscape(isLandscape);
-
-    //     // Lock orientation based on current state
-    //     await ScreenOrientation.lockAsync(
-    //         isLandscape
-    //             ? ScreenOrientation.OrientationLock.LANDSCAPE
-    //             : ScreenOrientation.OrientationLock.PORTRAIT
-    //     );
-    // };
+        setIsLandscape(isLandscape);
+        if (isLandscape) {
+            await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+        } else {
+            await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT);
+        }
+        await setTimeout(async () => {
+            await ScreenOrientation.unlockAsync();
+       }, 3000);
+    };
 
     useEffect(() => {
-        // Initialize orientation state
-        // updateOrientation();
+        ScreenOrientation.unlockAsync();
 
         // Listen for orientation changes
         const subscription = ScreenOrientation.addOrientationChangeListener((event) => {
             const isLandscape =
                 event.orientationInfo.orientation === ScreenOrientation.Orientation.LANDSCAPE_LEFT ||
                 event.orientationInfo.orientation === ScreenOrientation.Orientation.LANDSCAPE_RIGHT;
-            console.log(isLandscape)
             setIsLandscape(isLandscape);
         });
 
         // Cleanup listener on unmount
-        return () => ScreenOrientation.removeOrientationChangeListener(subscription);
-    }, []);
+        return () => {
+            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+            ScreenOrientation.removeOrientationChangeListener(subscription)};
+    }, [ScreenOrientation]);
 
     const handleViewDetails = () => {
         const forwardParams = {
@@ -93,7 +93,7 @@ export default function BffViewInformation() {
                     resizeMode="contain"
                 />
                 <TouchableOpacity
-                    onPress={() => ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT)}
+                    onPress={updateOrientation}
                     style={styles.fullScreenIcon}
                 >
                     <MaterialIcons name='fullscreen-exit' size={24} color={"#fff"} />
@@ -121,7 +121,7 @@ export default function BffViewInformation() {
                             resizeMode="cover"
                         />
                         <TouchableOpacity
-                            onPress={() => ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE)}
+                            onPress={updateOrientation}
                             style={styles.fullScreenButton}
                         >
                             <MaterialIcons name='fullscreen' size={20} color={"#fff"} />

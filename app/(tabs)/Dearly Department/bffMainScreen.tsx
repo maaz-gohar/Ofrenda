@@ -21,31 +21,48 @@ const b2 = "#ffe9a1";
 
 
 export default function BffMainScreen() {
-    const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
     const router = useRouter();
     const params = useLocalSearchParams();
-    const [isLandscape, setIsLandscape] = useState(screenDimensions.width > screenDimensions.height);
-
-    useEffect(() => {
-        // Check initial orientation and set isLandscape state
-        const updateOrientation = ({ window }) => {
-            setScreenDimensions(window);
-            setIsLandscape(window.width > window.height);
-        };
-
-        // Add listener for orientation changes
-        const subscription = Dimensions.addEventListener('change', updateOrientation);
-
-        // Unlock orientation when the component mounts to allow manual rotation
-        ScreenOrientation.unlockAsync();
-
-        // Cleanup listener on unmount
-        return () => {
-            subscription?.remove();
-            // Lock back to portrait mode when the component unmounts (optional)
-            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-        };
-    }, []);
+    const [isLandscape, setIsLandscape] = useState(false);
+   
+   
+       // // Function to handle orientation changes
+       const updateOrientation = async () => {
+           const orientationInfo = await ScreenOrientation.getOrientationAsync();
+           const isLandscape =
+               orientationInfo === ScreenOrientation.Orientation.LANDSCAPE_LEFT ||
+               orientationInfo === ScreenOrientation.Orientation.LANDSCAPE_RIGHT;
+   
+           setIsLandscape(isLandscape);
+           if (isLandscape) {
+               await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+           } else {
+               await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT);
+           }
+           await setTimeout(async () => {
+               await ScreenOrientation.unlockAsync();
+          }, 3000);
+       };
+   
+       useEffect(() => {
+           ScreenOrientation.unlockAsync();
+   
+           // Listen for orientation changes
+           const subscription = ScreenOrientation.addOrientationChangeListener((event) => {
+                   console.log(event.orientationInfo.orientation);
+               const isLandscape =
+                   event.orientationInfo.orientation === ScreenOrientation.Orientation.LANDSCAPE_LEFT ||
+                   event.orientationInfo.orientation === ScreenOrientation.Orientation.LANDSCAPE_RIGHT;
+               setIsLandscape(isLandscape);
+           });
+       
+   
+           // Cleanup listener on unmount
+           return () => {
+               ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+               ScreenOrientation.removeOrientationChangeListener(subscription)};
+       }, [ScreenOrientation]);
+   
 
     const handleViewDetails = () => {
         const forwardParams = {
@@ -72,35 +89,19 @@ export default function BffMainScreen() {
         });
     };
 
-    const enterFullScreen = async () => {
-        // Lock the screen to landscape mode when entering full-screen
-        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-        setIsLandscape(true);
-    };
-
-    const exitFullScreen = async () => {
-        // Lock the screen back to portrait mode when exiting full-screen
-        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-        setIsLandscape(false);
-    };
-
     // Display full-screen image view in landscape mode
     if (isLandscape) {
         return (
-            <View style={[styles.fullScreenContainer, { height: screenDimensions.height, width: screenDimensions.width }]}>
+           <View style={styles.fullScreenContainer}>
                 <Image
                     source={require('../../../assets/images/SelectOfrenda/3.png')}
                     style={[
-                        styles.fullScreenImage,
-                        {
-                            width: screenDimensions.width,
-                            height: screenDimensions.height,
-                        }
+                        styles.fullScreenImage
                     ]}
                     resizeMode="contain" // Use "contain" to fit the image within the screen
                 />
                 <TouchableOpacity
-                    onPress={exitFullScreen} // Exit landscape mode and return to portrait
+                    onPress={updateOrientation} // Exit landscape mode and return to portrait
                     style={[styles.icon, styles.fullScreenIcon]}
                 >
                     <MaterialIcons name='fullscreen-exit' size={24} color={"#fff"} />
@@ -128,7 +129,7 @@ export default function BffMainScreen() {
                             resizeMode="cover"
                         />
                         <TouchableOpacity
-                            onPress={enterFullScreen} // Enter landscape mode
+                            onPress={updateOrientation} // Enter landscape mode
                             style={[styles.icon, styles.fullScreenButton]}
                         >
                             <MaterialIcons name='fullscreen' size={20} color={"#fff"} />
@@ -234,10 +235,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     fullScreenImage: {
-        flex: 1,
         width: '100%',
         height: '100%',
-        position: 'absolute',
     },
     fullScreenIcon: {
         position: 'absolute',

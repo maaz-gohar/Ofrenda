@@ -126,7 +126,7 @@ export default function SelectCollegeDesign() {
                         value={selectedImage}
                         onPress={handleUploadImage} // Use handleUploadImage instead of inline function
                     />
-                    <DatePickerComponent placeholder="Enter DOB" onDateChange={setDob} />
+                    <DatePickerComponent placeholder="Enter DOB" dob={dob} onDateChange={setDob} />
                     <DearlyDepartmentFormComponent
                         name="Favoraite Pastimes (Separated by ,)"
                         value={food}

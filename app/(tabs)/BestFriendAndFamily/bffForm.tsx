@@ -42,8 +42,6 @@ export default function BffForm() {
         });
     };
 
-    console.log(hobbies)
-
     return (
         <KeyboardAvoidingView
             style={styles.container}
@@ -67,7 +65,7 @@ export default function BffForm() {
 
                     <DearlyDepartmentFormComponent name="Enter Friend Name" />
 
-                    <DatePickerComponent placeholder="Enter DOB" onDateChange={setDob} />
+                    <DatePickerComponent placeholder="Enter DOB" dob={dob} onDateChange={setDob} />
 
 
 
