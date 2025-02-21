@@ -21,7 +21,7 @@ export default function HomeScreen() {
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         bounces={false}>
-        <View style={[styles.main, { height }]}>
+        <View style={[styles.main, { height, width }]}>
           <ImageBackground
             source={require('../../assets/images/auth/main_bg.jpg')}
             style={[styles.bg_main, { height, width }]}

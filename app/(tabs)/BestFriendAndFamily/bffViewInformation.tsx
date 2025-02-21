@@ -24,26 +24,38 @@ export default function BffViewInformation() {
     const params = useLocalSearchParams();
     const [isLandscape, setIsLandscape] = useState(false);
 
-    useEffect(() => {
-        // Check initial orientation and set isLandscape state
-        const initialOrientation = screenDimensions.width > screenDimensions.height;
-        setIsLandscape(initialOrientation);
+    // // Function to handle orientation changes
+    // const updateOrientation = async () => {
+    //     const orientationInfo = await ScreenOrientation.getOrientationAsync();
+    //     const isLandscape =
+    //         orientationInfo === ScreenOrientation.Orientation.LANDSCAPE_LEFT ||
+    //         orientationInfo === ScreenOrientation.Orientation.LANDSCAPE_RIGHT;
 
-        // Add listener for orientation changes
-        const subscription = Dimensions.addEventListener('change', ({ window }) => {
-            setScreenDimensions(window);
-            setIsLandscape(window.width > window.height);
+    //     setIsLandscape(isLandscape);
+
+    //     // Lock orientation based on current state
+    //     await ScreenOrientation.lockAsync(
+    //         isLandscape
+    //             ? ScreenOrientation.OrientationLock.LANDSCAPE
+    //             : ScreenOrientation.OrientationLock.PORTRAIT
+    //     );
+    // };
+
+    useEffect(() => {
+        // Initialize orientation state
+        // updateOrientation();
+
+        // Listen for orientation changes
+        const subscription = ScreenOrientation.addOrientationChangeListener((event) => {
+            const isLandscape =
+                event.orientationInfo.orientation === ScreenOrientation.Orientation.LANDSCAPE_LEFT ||
+                event.orientationInfo.orientation === ScreenOrientation.Orientation.LANDSCAPE_RIGHT;
+            console.log(isLandscape)
+            setIsLandscape(isLandscape);
         });
 
-        // Unlock orientation when the component mounts to allow manual rotation
-        ScreenOrientation.unlockAsync();
-
         // Cleanup listener on unmount
-        return () => {
-            subscription?.remove();
-            // Lock back to portrait mode when the component unmounts (optional)
-            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-        };
+        return () => ScreenOrientation.removeOrientationChangeListener(subscription);
     }, []);
 
     const handleViewDetails = () => {
@@ -65,44 +77,24 @@ export default function BffViewInformation() {
             tiktok: params.tiktok
         };
 
-        console.log("Forwarding params to DisplayData:", forwardParams);
-
         router.push({
             pathname: '/BestFriendAndFamily/displayData',
             params: forwardParams
         });
     };
 
-    const enterFullScreen = async () => {
-        // Lock the screen to landscape mode when entering full-screen
-        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-        setIsLandscape(true);
-    };
-
-    const exitFullScreen = async () => {
-        // Lock the screen back to portrait mode when exiting full-screen
-        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-        setIsLandscape(false);
-    };
-
     // Display full-screen image view in landscape mode
     if (isLandscape) {
         return (
-            <View style={[styles.fullScreenContainer, { height: screenDimensions.height, width: screenDimensions.width }]}>
+            <View style={styles.fullScreenContainer}>
                 <Image
                     source={require('../../../assets/images/BestFriend/college1.jpg')}
-                    style={[
-                        styles.fullScreenImage,
-                        {
-                            width: screenDimensions.width,
-                            height: screenDimensions.height,
-                        }
-                    ]}
-                    resizeMode="contain" // Use "contain" to fit the image within the screen
+                    style={styles.fullScreenImage}
+                    resizeMode="contain"
                 />
                 <TouchableOpacity
-                    onPress={exitFullScreen} // Exit landscape mode and return to portrait
-                    style={[styles.icon, styles.fullScreenIcon]}
+                    onPress={() => ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT)}
+                    style={styles.fullScreenIcon}
                 >
                     <MaterialIcons name='fullscreen-exit' size={24} color={"#fff"} />
                 </TouchableOpacity>
@@ -121,7 +113,7 @@ export default function BffViewInformation() {
                     gradientColor={[b1, b2]}
                 />
 
-                <View style={[styles.main]}>
+                <View style={styles.main}>
                     <View style={styles.imgcover}>
                         <Image
                             source={require('../../../assets/images/BestFriend/college1.jpg')}
@@ -129,8 +121,8 @@ export default function BffViewInformation() {
                             resizeMode="cover"
                         />
                         <TouchableOpacity
-                            onPress={enterFullScreen} // Enter landscape mode
-                            style={[styles.icon, styles.fullScreenButton]}
+                            onPress={() => ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE)}
+                            style={styles.fullScreenButton}
                         >
                             <MaterialIcons name='fullscreen' size={20} color={"#fff"} />
                         </TouchableOpacity>
@@ -201,8 +193,8 @@ const styles = StyleSheet.create({
         width: "100%",
         borderRadius: 4,
     },
-    icon: {
-        position: "absolute",
+    fullScreenButton: {
+        position: 'absolute',
         top: 10,
         right: 10,
         zIndex: 1,
@@ -235,10 +227,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     fullScreenImage: {
-        flex: 1,
         width: '100%',
         height: '100%',
-        position: 'absolute',
     },
     fullScreenIcon: {
         position: 'absolute',
@@ -246,15 +236,7 @@ const styles = StyleSheet.create({
         right: 20,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         padding: 8,
-        zIndex: 2,
-    },
-    fullScreenButton: {
-        position: 'absolute',
-        top: 10,
-        left: 10,
-        padding: 5,
         borderRadius: 50,
-        width: 35,
     },
     viewInfoContainer: {
         flexDirection: 'row',

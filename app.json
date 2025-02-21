@@ -9,10 +9,19 @@
       "package": "com.ofrenda.app"
     },
     "ios": {
+      "requireFullScreen": true,
       "bundleIdentifier": "com.ofrenda.app",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "DEFAULT"
+        }
+      ]
+    ]
   }
 }
