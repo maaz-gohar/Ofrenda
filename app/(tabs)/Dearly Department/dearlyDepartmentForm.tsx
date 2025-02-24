@@ -32,8 +32,8 @@ export default function DearlyDepartmentForm() {
     const [noteableContribution, setNoteableContribution] = useState(params.noteableContribution || '');
     const [movie, setMovie] = useState(params.movie || '');
     const [food, setFood] = useState(params.food || '');
-    const [dob, setDob] = useState(params.dob || 'Enter DOB');
-    const [dod, setDod] = useState(params.dod || 'Enter DOD');
+    const [dob, setDob] = useState(params.dob as string || 'Enter DOB');
+    const [dod, setDod] = useState(params.dod as string || 'Enter DOD');
     const [hobbies, setHobbies] = useState(params.hobbies || '');
     const [selectedImage, setSelectedImage] = useState(params.selectedImage || '');
     const [dynamicFields, setDynamicFields] = useState([]);
@@ -151,8 +151,8 @@ export default function DearlyDepartmentForm() {
                                 />
                             )}
 
-                            <DatePickerComponent placeholder="Enter DOB" onDateChange={setDob} />
-                            <DatePickerComponent placeholder="Enter DOD" onDateChange={setDod} />
+                            <DatePickerComponent placeholder="Enter DOB" dob={dob} onDateChange={setDob} />
+                            <DatePickerComponent placeholder="Enter DOD" dob={dod} onDateChange={setDod} />
 
                             <DearlyDepartmentFormComponent
                                 name="Select Hobbies (Separated by ,)"
