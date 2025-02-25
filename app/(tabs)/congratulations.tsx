@@ -43,7 +43,7 @@ export default function Congratulations() {
                 </View>
                 <View style={styles.endView}>
                     <MainButton title="Explore App"
-                        onPress={() => router.push('/basicPackages')}
+                        onPress={() => router.push('/Dearly Department/dearlyDepartmentForm')}
                     />
                 </View>
             </ScrollView>
