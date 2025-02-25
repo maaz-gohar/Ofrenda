@@ -53,6 +53,7 @@ export default function Summary() {
                     <LinearGradient colors={[b1, b2]} style={styles.gradient}>
                         <View style={styles.price}>
                             <Text style={styles.priceDetails}>Price Details</Text>
+                            <Text style={{textAlign:"center", paddingBottom:20}}>Package includes 16 photo frames, 12 backgrounds, and 100 customizable lists for comprehensive creative projects.</Text>
                             <View style={styles.innerPlan}>
                                 <Text style={{ fontSize: 16 }}>Package Price (Annual)</Text>
                                 <Text style={{ fontWeight: "500", fontSize: 16 }}>USD 60.00</Text>

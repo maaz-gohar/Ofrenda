@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     gradient: {
-        borderRadius: "50%",
+        borderRadius: 500,
         marginBottom: 40
     },
 });

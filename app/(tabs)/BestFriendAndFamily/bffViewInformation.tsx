@@ -114,6 +114,7 @@ export default function BffViewInformation() {
                 />
 
                 <View style={styles.main}>
+                    
                     <View style={styles.imgcover}>
                         <Image
                             source={require('../../../assets/images/BestFriend/college1.jpg')}
@@ -128,12 +129,12 @@ export default function BffViewInformation() {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.subbtn}>
-                        <View>
+                        {/* <View> */}
+                        <View style={styles.actionButtonsContainer}>
                             <TouchableOpacity style={styles.bg}>
                                 <Text>Edit</Text>
                             </TouchableOpacity>
-                        </View>
-                        <View style={styles.actionButtonsContainer}>
+                        {/* </View> */}
                             <TouchableOpacity style={styles.bg}>
                                 <Text>Share</Text>
                             </TouchableOpacity>
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
     },
     actionButtonsContainer: {
         flexDirection: "row",
-        width: "60%",
+        width: "100%",
         justifyContent: "space-between",
     },
     bg: {

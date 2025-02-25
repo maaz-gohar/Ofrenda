@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -22,6 +22,13 @@ const b2 = "rgba(249, 244, 251, 1)";
 export default function PaymentMethod() {
     const { height, width } = Dimensions.get("window");
     const router = useRouter();
+        const [selectedPayment, setSelectedPayment] = useState(null); // State to track selected payment
+    
+        // Function to handle payment selection
+        const handlePaymentSelection = (amount) => {
+            setSelectedPayment(amount);
+        };
+    
 
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -35,6 +42,37 @@ export default function PaymentMethod() {
                 />
                 <View style={styles.main}>
                     <Text style={styles.paymentText}>Select payment method or add new payment method</Text>
+                                        <View style={styles.paymentContainer}>
+                    
+                                            <View style={styles.paymentButtonsContainer}>
+                                                <TouchableOpacity
+                                                    style={[styles.paymentButton, selectedPayment === 5 && styles.selectedPaymentButton]}
+                                                    onPress={() => handlePaymentSelection(5)}
+                                                >
+                                                    <Text style={styles.paymentButtonText}>$5.0</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity
+                                                    style={[styles.paymentButton, selectedPayment === 10 && styles.selectedPaymentButton]}
+                                                    onPress={() => handlePaymentSelection(10)}
+                                                >
+                                                    <Text style={styles.paymentButtonText}>$10.0</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity
+                                                    style={[styles.paymentButton, selectedPayment === 20 && styles.selectedPaymentButton]}
+                                                    onPress={() => handlePaymentSelection(20)}
+                                                >
+                                                    <Text style={styles.paymentButtonText}>$20.0</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+
+                                        {selectedPayment !== null && (
+                                                                <View style={styles.selectedPaymentContainer}>
+                                                                    <Text style={styles.selectedPaymentText}>Selected Payment: ${selectedPayment.toFixed(1)}</Text>
+                                                                </View>
+                                                            )}
+                                        
+                    
                     <TouchableOpacity style={styles.addNewCard} onPress={() => router.push('/BucketList/addCard')}>
                         <View style={{ flexDirection: "row" }}>
                             <LinearGradient
@@ -120,6 +158,43 @@ const styles = StyleSheet.create({
         zIndex: 10,
         marginTop: -15,
         justifyContent: "flex-start"
+    },
+    paymentContainer: {
+        width: "90%",
+        marginBottom: 20,
+    },
+    paymentButtonsContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 10,
+    },
+    paymentButton: {
+        flex: 1,
+        marginHorizontal: 5,
+        paddingVertical: 15,
+        backgroundColor: "#f0f0f0",
+        borderRadius: 10,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    selectedPaymentButton: {
+        backgroundColor: b1,
+    },
+    paymentButtonText: {
+        fontSize: 16,
+        fontWeight: "600",
+    },
+    selectedPaymentContainer: {
+        width: "90%",
+        paddingVertical: 15,
+        backgroundColor: "#f0f0f0",
+        borderRadius: 10,
+        alignItems: "center",
+        marginTop: 10,
+    },
+    selectedPaymentText: {
+        fontSize: 16,
+        fontWeight: "600",
     },
     addNewCard: {
         height: 90,

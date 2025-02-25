@@ -136,12 +136,12 @@ export default function BffMainScreen() {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.subbtn}>
-                        <View>
+                        {/* <View> */}
+                        <View style={styles.actionButtonsContainer}>
                             <TouchableOpacity style={styles.bg}>
                                 <Text>Edit</Text>
                             </TouchableOpacity>
-                        </View>
-                        <View style={styles.actionButtonsContainer}>
+                        {/* </View> */}
                             <TouchableOpacity style={styles.bg}>
                                 <Text>Share</Text>
                             </TouchableOpacity>
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     },
     actionButtonsContainer: {
         flexDirection: "row",
-        width: "60%",
+        width: "100%",
         justifyContent: "space-between",
     },
     bg: {

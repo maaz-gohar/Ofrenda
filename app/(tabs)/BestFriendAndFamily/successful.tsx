@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         marginTop: -35,
     },
     gradient: {
-        borderRadius: "50%",
+        borderRadius: 500,
         // padding: 20,
         marginBottom: 40
     },

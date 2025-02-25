@@ -5,6 +5,7 @@ import MainButton from './components/button';
 import DropdownComponent from './components/dropdown';
 import MainText from './components/topText';
 import { useRouter } from 'expo-router';
+import CountryDropdown from './components/countryDropdown';
 
 export default function AddCard() {
     // const { height, width } = Dimensions.get("window");
@@ -38,7 +39,7 @@ export default function AddCard() {
                     />
                     <PaymentInput placeholder="Name on card" maxLength={225} />
                     <Text style={styles.card}>Country or Region</Text>
-                    <DropdownComponent />
+                    <CountryDropdown />
                     <PaymentInput placeholder="ZIP" maxLength={225} />
                 </View>
                 <View style={styles.endView}>
