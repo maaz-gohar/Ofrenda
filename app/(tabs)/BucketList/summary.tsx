@@ -53,7 +53,7 @@ export default function Summary() {
                     <LinearGradient colors={[b1, b2]} style={styles.gradient}>
                         <View style={styles.price}>
                             <Text style={styles.priceDetails}>Price Details</Text>
-                            <Text style={{textAlign:"center", paddingBottom:20}}>Package includes 16 photo frames, 12 backgrounds, and 100 customizable lists for comprehensive creative projects.</Text>
+                            <Text style={{textAlign:"center", paddingBottom:20, width:300}}>Package includes 16 photo frames, 12 backgrounds, and 100 customizable lists for comprehensive creative projects.</Text>
                             <View style={styles.innerPlan}>
                                 <Text style={{ fontSize: 16 }}>Package Price (Annual)</Text>
                                 <Text style={{ fontWeight: "500", fontSize: 16 }}>USD 60.00</Text>
@@ -79,7 +79,7 @@ export default function Summary() {
                     <View style={styles.checkboxContainer}>
                         <TouchableOpacity onPress={ToggleCheckBox} style={styles.checkbox}>
                             {isCheck && (
-                                <AntDesign name="check" color="#fff" size={18} />
+                                <AntDesign name="check" color="#000" size={18} />
                             )}
                         </TouchableOpacity>
                         <Text style={{ fontSize: 16 }}>
@@ -169,7 +169,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         alignSelf: "flex-start",
-        backgroundColor: "#000"
+        // backgroundColor: "#000"
+        
     },
     endView: {
         paddingVertical: 30,

@@ -79,7 +79,7 @@ export default function Notificaition() {
                     />
 
                     <MainButton
-                        title={"See All Notisficaitons"}
+                        title={"See All Notificaitons"}
                     />
 
                 </View>

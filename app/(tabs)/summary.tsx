@@ -77,7 +77,7 @@ export default function Summary() {
                     <View style={styles.checkboxContainer}>
                         <TouchableOpacity onPress={ToggleCheckBox} style={styles.checkbox}>
                             {isCheck && (
-                                <AntDesign name="check" color="#fff" size={18} />
+                                <AntDesign name="check" color="#000" size={18} />
                             )}
                         </TouchableOpacity>
                         <Text style={{ fontSize: 16 }}>
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         alignSelf: "flex-start",
-        backgroundColor: "#000"
+        // backgroundColor: "#000"
     },
     endView: {
         paddingVertical: 30,

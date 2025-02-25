@@ -24,8 +24,8 @@ export default function HomeScreen() {
         <View style={[styles.main, { height, width }]}>
           <ImageBackground
             source={require('../../assets/images/auth/main_bg.jpg')}
-            style={[styles.bg_main, { height, width }]}
-            resizeMode="cover"
+            style={[styles.bg_main, {  width }]}
+            resizeMode="streched"
           >
             <View style={styles.content}>
               <Text style={styles.text}>Create Your</Text>
@@ -79,5 +79,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingTop: 30,
     paddingBottom: 40,
+    width:"85%"
   },
 });

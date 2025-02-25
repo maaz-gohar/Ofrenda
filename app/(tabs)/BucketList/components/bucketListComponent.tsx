@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
         width: 100,
         textAlign: "center",
         position: "absolute",
-        fontSize: 12,
+        fontSize: 10,
         top: 6
     }
 });
