@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        paddingHorizontal: 10,
+        paddingHorizontal: 5,
     },
     main: {
         justifyContent: "center",
@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
     },
     image: {
         borderRadius: 8,
-        height: 109,
-        width: 109,
+        height: 100,
+        width: 100,
     },
     iconContainer: {
         position: "absolute",

@@ -14,6 +14,7 @@ import MainText from '../components/topText';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import MainButton from '../components/button';
 import InfoComponent from '../Dearly Department/components/infoComponent';
+import Wrapper from '../wrapper';
 
 
 const b1 = "rgba(94, 164, 253, 1)";
@@ -31,7 +32,8 @@ export default function ViewInformation() {
             <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
                 <MainText title={'Information'} showIcon={true} setting={true} gradientColor={[b1, b2]} />
 
-                <View style={[styles.main]}>
+                {/* <View style={[styles.main]}> */}
+                    <Wrapper>
                     <View style={styles.imgcover}>
                         <Image source={require('../../../assets/images/BestFriend/college1.jpg')} style={styles.img} />
 
@@ -49,7 +51,8 @@ export default function ViewInformation() {
                     {/* <View style={{ width: "45%" }}>
                         <MainButton title={"View Information"} onPress={() => router.push('/Dearly Department/addFamilyTree')} />
                     </View> */}
-                </View>
+                {/* </View> */}
+                </Wrapper>
             </ScrollView >
         </View >
     );

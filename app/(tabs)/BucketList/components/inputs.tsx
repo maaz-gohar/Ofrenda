@@ -8,14 +8,17 @@ import {
     TouchableWithoutFeedback,
     TextInput,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import MainButton from '../../components/button';
 
 const b1 = "rgba(188, 97, 213, 0.8)";
 const b2 = "rgba(249, 244, 251, 1)";
 
 export default function Inputs() {
     const router = useRouter();
+    const params = useLocalSearchParams();
+    const text = params.text || "Default Title"; // Get the title from the query params or use a default value
     const [noteText, setNoteText] = useState('');
     const [visibleModal, setVisibleModal] = useState(false);
     const [listType, setListType] = useState('none'); // 'none', 'bullet', 'number'
@@ -187,25 +190,34 @@ export default function Inputs() {
         }
     };
 
+    const handleSave = () => {
+        // Pass the text and notes to the displayData screen
+        router.push({
+            pathname: '/BucketList/displayData',
+            params: { text, notes: noteText }, // Pass text and notes as query parameters
+        });
+    };
+
     return (
         <View style={styles.container}>
-            <TextInput
-                placeholder='Title'
-                placeholderTextColor={"#000"}
-                style={styles.input1}
-            />
+            {/* Title Container */}
+            <View style={styles.titleContainer}>
+                <Text style={styles.titleText}>{text}</Text>
+            </View>
 
             <View style={styles.separator} />
-            <TextInput
-                ref={textInputRef}
-                placeholder='Note'
-                placeholderTextColor={"#000"}
-                style={styles.input}
-                multiline
-                value={noteText}
-                onChangeText={handleNoteChange}
-                onSelectionChange={handleSelectionChange}
-            />
+            <View style={styles.inputContainer}>
+                <TextInput
+                    ref={textInputRef}
+                    placeholder='Note'
+                    placeholderTextColor={"#000"}
+                    style={styles.input}
+                    multiline
+                    value={noteText}
+                    onChangeText={handleNoteChange}
+                    onSelectionChange={handleSelectionChange}
+                />
+            </View>
 
             <TouchableOpacity
                 style={styles.formatButton}
@@ -238,6 +250,16 @@ export default function Inputs() {
                     </View>
                 </TouchableWithoutFeedback>
             </Modal>
+
+            {/* Save Button */}
+            <View style={styles.buttonContainer}>
+                <MainButton
+                    onPress={handleSave}
+                    title="Save Note"
+                    gradientColor={[b1, b2]}
+                    shadowColor='#f8deff'
+                />
+            </View>
         </View>
     );
 }
@@ -248,19 +270,25 @@ const styles = StyleSheet.create({
         alignSelf: "flex-start",
         paddingHorizontal: 20,
         width: "100%",
-        position: 'relative'
+        position: 'relative',
+    },
+    titleContainer: {
+        paddingVertical: 10,
+    },
+    titleText: {
+        fontSize: 18,
+        fontWeight: '600',
+        paddingLeft: 10,
+    },
+    inputContainer: {
+        flex: 1,
+        paddingBottom: 80, // Add padding to avoid overlap with the button
     },
     input: {
-        height: 380,
         paddingHorizontal: 10,
         fontSize: 16,
         textAlignVertical: 'top',
-        minHeight: 100
-    },
-    input1: {
-        height: 50,
-        paddingHorizontal: 10,
-        fontSize: 22,
+        flex: 1,
     },
     separator: {
         height: 1,
@@ -270,14 +298,11 @@ const styles = StyleSheet.create({
     formatButton: {
         position: 'absolute',
         right: 30,
-        bottom: 20,
-        padding: 10,
+        bottom: 80,
     },
     modalContainer: {
         flex: 1,
         justifyContent: "flex-end",
-        // backgroundColor: "rgba(0, 0, 0, 0.1)",
-
     },
     modalContent: {
         width: "100%",
@@ -288,7 +313,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderWidth: 1,
         borderColor: "rgba(0, 0, 0, 0.2)",
-        height: 200
+        height: 200,
     },
     modalTitle: {
         fontSize: 18,
@@ -304,5 +329,13 @@ const styles = StyleSheet.create({
     optionText: {
         fontSize: 16,
         marginLeft: 10,
+    },
+    buttonContainer: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        alignItems: 'center',
+        // paddingBottom: 20,
     },
 });

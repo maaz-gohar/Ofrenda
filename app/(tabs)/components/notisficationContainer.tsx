@@ -21,9 +21,9 @@ const NotisficationContainer = ({ name, event, time }) => {
                     <Text style={{ color: "#fff", fontWeight: "700" }}>KT</Text>
                 </View>
                 <Text style={styles.name}>{name}</Text>
-                <Text>{event}</Text>
+                <Text style={{width:"55%" ,paddingRight:10}}>{event}</Text>
             </View>
-            <Text style={{ alignSelf: "center", color: "#C2C2C2" }}>{time}</Text>
+            <Text style={{ alignSelf: "center", color: "#C2C2C2" , paddingRight:40}}>{time}</Text>
         </View>
     );
 };
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         height: 50,
         paddingVertical: 5,
         justifyContent: 'space-between',
-        width: "95%",
+        width: "100%",
         flexDirection: "row"
     },
     data: {

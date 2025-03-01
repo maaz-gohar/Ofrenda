@@ -21,6 +21,7 @@ import InfoComponent from './components/infoComponent';
 import TabBar from './components/tabBar';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
+import Wrapper from './wrapper';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
@@ -71,6 +72,7 @@ export default function Profile() {
             <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
                 <MainText title="Profile" showIcon={true} setting={true} />
                 <View style={styles.main}>
+                {/* <Wrapper> */}
                     <Image
                         source={
                             profileImage
@@ -80,11 +82,11 @@ export default function Profile() {
                         style={styles.img}
                     />
                     <View >
-                        <TouchableOpacity onPress={() => setModalVisible(true)}>
-                            <LinearGradient colors={[b1, b2]} style={styles.gradient}>
-                                <Octicons name="pencil" size={18} color="#000" style={styles.icon} />
-                            </LinearGradient>
-                        </TouchableOpacity>
+                    <TouchableOpacity onPress={() => setModalVisible(true)}>
+    <LinearGradient colors={[b1, b2]} style={styles.gradient}>
+        <Octicons name="pencil" size={18} color="#000" style={styles.icon} />
+    </LinearGradient>
+</TouchableOpacity>
                     </View>
                     <View>
                         <FloatingLabelInput placeholder="First Name" iconName="person-outline" />
@@ -96,55 +98,56 @@ export default function Profile() {
                         <InfoComponent name="Logout" iconName={"logout"} iconType='MaterialIcons' onPress={() => router.push('/')} />
                     </View>
                 </View>
+                
+                 {/* </Wrapper> */}
                 <View style={styles.endView}>
                     <MainButton title="Change Password" showIcon={true} />
                 </View>
             </ScrollView>
 
             <Modal
-                animationType="fade"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={CloseModal}
-            >
-                <View style={styles.modalOverlay}>
-                    <View style={styles.modalContainer}>
-                        <View style={{ flexDirection: "row" }}>
-                            <TouchableOpacity onPress={PickImage}>
-                                <View style={styles.modalOption}>
-                                    <LinearGradient colors={[b1, b2]} style={styles.optionGradient}>
-                                        <MaterialIcons name="photo-library" size={37} color={"rgba(86, 86, 86, 1)"} />
-                                    </LinearGradient>
-                                    <Text style={styles.optionText}>Select Photo</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={SelectImage}>
-                                <View style={styles.modalOption}>
-                                    <LinearGradient colors={[b1, b2]} style={styles.optionGradient}>
-                                        <Ionicons name="camera-outline" size={37} color={"rgba(86, 86, 86, 1)"} />
-                                    </LinearGradient>
-                                    <Text style={styles.optionText}>Take Photo</Text>
-                                </View>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity onPress={RemoveImage}>
-                                <View style={styles.modalOption}>
-                                    <LinearGradient colors={[b1, b2]} style={styles.optionGradient}>
-                                        <MaterialIcons name="delete" size={37} color={"rgba(86, 86, 86, 1)"} />
-                                    </LinearGradient>
-                                    <Text style={styles.optionText}>Remove Photo</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                        <TouchableOpacity
-                            style={styles.closeButton}
-                            onPress={CloseModal}
-                        >
-                            <Text style={styles.closeButtonText}>Close</Text>
-                        </TouchableOpacity>
+    animationType="fade"
+    transparent={true}
+    visible={modalVisible}
+    onRequestClose={CloseModal}
+>
+    <View style={styles.modalOverlay}>
+        <View style={styles.modalContainer}>
+            <View style={{ flexDirection: "row" }}>
+                <TouchableOpacity onPress={PickImage}>
+                    <View style={styles.modalOption}>
+                        <LinearGradient colors={[b1, b2]} style={styles.optionGradient}>
+                            <MaterialIcons name="photo-library" size={37} color={"rgba(86, 86, 86, 1)"} />
+                        </LinearGradient>
+                        <Text style={styles.optionText}>Select Photo</Text>
                     </View>
-                </View>
-            </Modal>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={SelectImage}>
+                    <View style={styles.modalOption}>
+                        <LinearGradient colors={[b1, b2]} style={styles.optionGradient}>
+                            <Ionicons name="camera-outline" size={37} color={"rgba(86, 86, 86, 1)"} />
+                        </LinearGradient>
+                        <Text style={styles.optionText}>Take Photo</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={RemoveImage}>
+                    <View style={styles.modalOption}>
+                        <LinearGradient colors={[b1, b2]} style={styles.optionGradient}>
+                            <MaterialIcons name="delete" size={37} color={"rgba(86, 86, 86, 1)"} />
+                        </LinearGradient>
+                        <Text style={styles.optionText}>Remove Photo</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+                style={styles.closeButton}
+                onPress={CloseModal}
+            >
+                <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+        </View>
+    </View>
+</Modal>
 
             <TabBar />
         </KeyboardAvoidingView>
@@ -163,7 +166,8 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 20,
         alignItems: "center",
         paddingTop: 30,
-        marginTop: -15
+        marginTop: -15,
+        paddingHorizontal: 10,
     },
     img: {
         height: 120,
@@ -172,12 +176,14 @@ const styles = StyleSheet.create({
         borderColor: "#000",
         borderRadius: 60,
         marginTop: -90,
+        alignSelf:"center"
     },
     gradient: {
         borderRadius: 50,
         position: "absolute",
         bottom: 0,
         left: 25,
+        alignSelf:"center"
     },
     icon: {
         padding: 8,
@@ -192,7 +198,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         borderRadius: 10,
         padding: 20,
-        width: "80%",
+        width: "95%",
         alignItems: "center",
     },
     modalOption: {

@@ -18,6 +18,7 @@ import DatePickerComponent from '../Dearly Department/components/datePicker';
 import MainButton from '../components/button';
 import DearlyDepartmentFormComponent from '../Dearly Department/components/dearlyDepartmentFormComponent';
 import TabBar from '../components/tabBar';
+import Wrapper from '../wrapper';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
@@ -59,7 +60,8 @@ export default function BffForm() {
                     gradientColor={[b1, b2]}
                 />
 
-                <View style={styles.main}>
+                {/* <View style={styles.main}> */}
+                <Wrapper>
                     <Text style={styles.title}>Add Information</Text>
 
 
@@ -95,7 +97,9 @@ export default function BffForm() {
                         iconType="AntDesign"
                     />
                     <MainButton title={"Submit Information"} onPress={handleSave} gradientColor={[b1, b2]} shadowColor='rgba(94, 164, 253, 1)' />
-                </View>
+                {/* </View>
+                 */}
+                 </Wrapper>
             </ScrollView>
             <TabBar />
         </KeyboardAvoidingView>

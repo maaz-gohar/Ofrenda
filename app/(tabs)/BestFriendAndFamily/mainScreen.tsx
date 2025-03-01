@@ -13,6 +13,7 @@ import TabBar from '../components/tabBar';
 import { LinearGradient } from 'expo-linear-gradient';
 import Header from './components/header';
 import { useRouter } from 'expo-router';
+import Wrapper from '../wrapper';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
@@ -53,7 +54,8 @@ export default function MainScreen() {
                 description={"Select One Free Option"}
                 name={"Anna"}
             />
-            <View style={styles.main}>
+            {/* <View style={styles.main}> */}
+            <Wrapper>
                 <View>
                     <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
                         <ImageBackground
@@ -91,7 +93,8 @@ export default function MainScreen() {
                         </ImageBackground>
                     </Animated.View>
                 </View>
-            </View>
+            {/* </View> */}
+            </Wrapper>
             {/* </ScrollView> */}
             <TabBar />
         </View>

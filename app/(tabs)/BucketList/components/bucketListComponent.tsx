@@ -14,97 +14,42 @@ interface BucketListComponentProps {
     showIcon?: boolean;
     IconName?: string;
     showText?: boolean;
+    text: string;
+    route: string;
+    image: any;
 }
 
-export default function BucketListComponent({ showIcon = true, IconName, showText = false }: BucketListComponentProps) {
+export default function BucketListComponent({ showIcon = true, IconName, showText = false, text, route, image , value , setValue}: BucketListComponentProps) {
     const router = useRouter();
 
-    // Helper function to handle navigation only when showIcon is false
-    const handlePress = (route: string) => {
-        if (!showIcon) {
-            router.push(route);
-        }
+    // Helper function to handle navigation
+    const handlePress = () => {
+        const targetRoute = text === 'Natural Disaster' ? '/BucketList/naturalDisaster' : route;
+        router.push(`${targetRoute}?text=${encodeURIComponent(text)}`);
     };
 
-    const renderContent = (index: number) => {
-        if (index === 0) {
-            if (showText) {
-                return <Text style={styles.BucketText}>Natural Disaster</Text>;
-            }
-            if (showIcon) {
-                return <Fontisto name={IconName} size={12} color={"#000"} style={styles.icon} />;
-            }
-        } else {
-            if (showIcon) {
-                return <Fontisto name={IconName} size={12} color={"#000"} style={styles.icon} />;
-            }
-        }
-        return null;
+    const renderContent = () => {
+        return (
+            <>
+                {showText && <Text style={styles.BucketText}>{text}</Text>}
+                {showIcon && <Fontisto name={IconName} size={14} color={"#000"} style={styles.icon} />}
+            </>
+        );
     };
 
     return (
-        <View style={styles.container}>
-            <ScrollView
-                contentContainerStyle={styles.scrollViewContainer}
-                bounces={false}
-            >
-                <View style={styles.bucketContainer}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            if (showText) {
-                                router.push('/BucketList/naturalDisaster');
-                            } else if (!showIcon) {
-                                router.push('/BucketList/bucketLists');
-                            }
-                        }}
-                        disabled={showIcon && !showText}
-                    >
-                        <View style={styles.itemContainer}>
-                            <Image
-                                source={require('../../../../assets/images/Group 1508.png')}
-                                resizeMode='contain'
-                            />
-                            {renderContent(0)}
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        onPress={() => {
-                            if (!showIcon) {
-                                router.push('/BucketList/memory');
-                            }
-                        }}
-                        disabled={showIcon}
-                    >
-                        <View style={styles.itemContainer}>
-                            <Image
-                                source={require('../../../../assets/images/Group 1508.png')}
-                                resizeMode='contain'
-                            />
-                            {renderContent(1)}
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        onPress={() => {
-                            if (!showIcon) {
-                                router.push('/BucketList/thoughts');
-                            }
-                        }}
-                        disabled={showIcon}
-                    >
-
-                        <View style={styles.itemContainer}>
-                            <Image
-                                source={require('../../../../assets/images/Group 1508.png')}
-                                resizeMode='contain'
-                            />
-                            {renderContent(2)}
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
-        </View>
+        <TouchableOpacity
+            onPress={handlePress}
+            disabled={showIcon && !showText}
+        >
+            <View style={styles.itemContainer}>
+                <Image
+                    source={image}
+                    resizeMode='contain'
+                />
+                {renderContent()}
+            </View>
+        </TouchableOpacity>
     );
 }
 
@@ -127,19 +72,22 @@ const styles = StyleSheet.create({
     itemContainer: {
         alignItems: 'center',
         justifyContent: 'center',
+        paddingHorizontal: 6,
+        position: 'relative', // Ensure the icon and text are positioned relative to this container
     },
     icon: {
-        zIndex: 1,
+        zIndex: 2, // Ensure the icon is above the text
         alignSelf: "center",
         position: "absolute",
-        top: 5
+        top: 5,
     },
     BucketText: {
+        zIndex: 1, // Ensure the text is below the icon
         fontWeight: "700",
         width: 100,
         textAlign: "center",
         position: "absolute",
         fontSize: 10,
-        top: 6
+        top: 6,
     }
 });

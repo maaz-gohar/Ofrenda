@@ -16,6 +16,7 @@ import DearlyDepartmentFormComponent from '../Dearly Department/components/dearl
 import TabBar from '../components/tabBar';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { AntDesign } from '@expo/vector-icons';
+import Wrapper from '../wrapper';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
@@ -116,7 +117,8 @@ export default function SelectCollegeDesign() {
                     gradientColor={[b1, b2]}
                 />
 
-                <View style={styles.main}>
+                {/* <View style={styles.main}> */}
+                <Wrapper>
                     <Text style={styles.title}>Select Collage Design</Text>
                     <DearlyDepartmentFormComponent name="Enter Friend Name" value={name} setValue={setName} />
                     <DearlyDepartmentFormComponent
@@ -187,7 +189,8 @@ export default function SelectCollegeDesign() {
                         </View>
                     </TouchableOpacity>
                     <MainButton title={"Add BFF"} onPress={handleSave} gradientColor={[b1, b2]} shadowColor='rgba(94, 164, 253, 1)' />
-                </View>
+                {/* </View> */}
+                </Wrapper>
             </ScrollView>
             <TabBar />
         </KeyboardAvoidingView>

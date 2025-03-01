@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
         paddingTop: 30,
         zIndex: 10,
         marginTop: -15,
-        justifyContent: "flex-start"
+        justifyContent: "flex-start",
+        paddingHorizontal: 10,
     },
 
     text: {
@@ -126,7 +127,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 40,
         paddingVertical: 12,
-        flexDirection: "row"
+        flexDirection: "row",
+        alignItems:"center",
     },
     logout: {
         color: "red",

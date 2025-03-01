@@ -16,6 +16,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import MainText from './components/topText';
 import NotisficationContainer from './components/notisficationContainer';
 import TabBar from './components/tabBar';
+import Wrapper from './wrapper';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
@@ -35,7 +36,9 @@ export default function Notificaition() {
                     showIcon={true}
                 />
 
-                <View style={[styles.main, { height, width }]}>
+                <View style={[styles.main]}>
+
+                {/* <Wrapper> */}
 
                     <NotisficationContainer
                         name={"Kate Tanner"}
@@ -81,7 +84,7 @@ export default function Notificaition() {
                     <MainButton
                         title={"See All Notificaitons"}
                     />
-
+{/* </Wrapper> */}
                 </View>
             </ScrollView>
             <TabBar />
@@ -103,7 +106,8 @@ const styles = StyleSheet.create({
         paddingTop: 30,
         zIndex: 10,
         marginTop: -15,
-        justifyContent: "flex-start"
+        justifyContent: "flex-start",
+        paddingHorizontal: 10,
     },
     addNewCard: {
         height: 90,

@@ -17,6 +17,7 @@ import { useRouter } from 'expo-router';
 import AncestorsComponent from '../Dearly Department/components/ancestorsComponent';
 import MainText from '../components/topText';
 import MainButton from '../components/button';
+import Wrapper from '../wrapper';
 // import MainText from './components/topText';
 
 const b1 = "rgba(94, 164, 253, 1)";
@@ -38,15 +39,16 @@ export default function BffInformation() {
                     setting={true}
                     gradientColor={[b1, b2]}
                 />
-                <View style={[styles.main]}>
-
+                {/* <View style={[styles.main]}> */}
+<Wrapper>
 
                     <View style={styles.icon}>
                         <Fontisto name='info' size={110} color={"#000"} />
                     </View>
                     <Text style={styles.messageText}>Your Information Appear Here</Text>
                     <MainButton title={"Add Information"} onPress={() => router.push('/(tabs)/BestFriendAndFamily/bffForm')} gradientColor={[b1, b2]} shadowColor='rgba(94, 164, 253, 1)' />
-                </View>
+                {/* </View> */}
+                </Wrapper>
             </ScrollView>
             <TabBar />
         </View>

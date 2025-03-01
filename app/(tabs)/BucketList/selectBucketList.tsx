@@ -19,6 +19,16 @@ const b2 = "rgba(249, 244, 251, 1)";
 export default function SelectBucketList() {
     const router = useRouter();
 
+    const [params, setParams] = React.useState({ route: '', text: '' });
+
+    const handleUpload = (route, text) => {
+        setParams({ route, text });
+        router.push({
+            pathname: route,
+            params: { text } // Pass the title as a query parameter
+        });
+    };
+
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
@@ -36,14 +46,259 @@ export default function SelectBucketList() {
                             <Text style={styles.BucketText}>Memories</Text>
                             <Text style={styles.BucketText}>Thoughts & Notes</Text>
                         </View>
-                        <BucketListComponent showIcon={false} />
-                        <BucketListComponent IconName={"locked"} />
-                        <BucketListComponent IconName={"locked"} />
-                        <BucketListComponent IconName={"locked"} />
-                        <BucketListComponent IconName={"locked"} />
-                        <BucketListComponent IconName={"locked"} />
-                        <BucketListComponent IconName={"locked"} />
-                        <BucketListComponent IconName={"locked"} />
+                        <ScrollView bounces={false} style={{ height: 300 }}>
+                            <View style={{ flexDirection: "row" }}>
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="Destinations"
+                                    route="/BucketList/bucketLists"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                />
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="Kindergarten"
+                                    route="/BucketList/memory"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    IconName='locked'
+                                    onPress={handleUpload}
+                                />
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="Politics"
+                                    route="/BucketList/thoughts"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                />
+                            </View>
+                            <View style={{ flexDirection: "row" }}>
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="Activities"
+                                    route="/BucketList/bucketLists"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                />
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="Junior school"
+                                    route="/BucketList/memory"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    IconName='locked'
+                                    onPress={handleUpload}
+                                />
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="Religion"
+                                    route="/BucketList/thoughts"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                />
+                            </View>
+                            <View style={{ flexDirection: "row" }}>
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="Restaurants"
+                                    route="/BucketList/bucketLists"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                />
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="Best friends "
+                                    route="/BucketList/memory"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    IconName='locked'
+                                    onPress={handleUpload}
+                                />
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="Friendship"
+                                    route="/BucketList/thoughts"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                />                          
+                            </View>
+                            <View style={{ flexDirection: "row" }}>
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="Holidays"
+                                    route="/BucketList/bucketLists"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                />
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="College days"
+                                    route="/BucketList/memory"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    IconName='locked'
+                                    onPress={handleUpload}
+                                />
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="Music"
+                                    route="/BucketList/thoughts"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                />                          
+                            </View>
+                            <View style={{ flexDirection: "row" }}>
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="Recipes"
+                                    route="/BucketList/bucketLists"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                />
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="Music"
+                                    route="/BucketList/memory"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    IconName='locked'
+                                    onPress={handleUpload}
+                                />
+                                <BucketListComponent
+                                    showIcon={false}
+                                    showText={true}
+                                    text="Social Media"
+                                    route="/BucketList/thoughts"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                />                          
+                            </View>
+                            <View style={{ flexDirection: "row" }}>
+                                <BucketListComponent
+                                    showIcon={true}
+                                    showText={true} // Ensure showText is true when showIcon is true
+                                    // text="Health"
+                                    route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                    IconName='locked'
+                                />
+                                <BucketListComponent
+                                    showIcon={true}
+                                    showText={true} // Ensure showText is true when showIcon is true
+                                    // text="Work"
+                                    route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    IconName='locked'
+                                    onPress={handleUpload}
+                                />
+                                <BucketListComponent
+                                    showIcon={true}
+                                    showText={true} // Ensure showText is true when showIcon is true
+                                    // text="Family"
+                                    route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                    IconName='locked'
+                                />                          
+                            </View>
+                            <View style={{ flexDirection: "row" }}>
+                                <BucketListComponent
+                                    showIcon={true}
+                                    showText={true} // Ensure showText is true when showIcon is true
+                                    // text="Health"
+                                    route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                    IconName='locked'
+                                />
+                                <BucketListComponent
+                                    showIcon={true}
+                                    showText={true} // Ensure showText is true when showIcon is true
+                                    // text="Work"
+                                    route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    IconName='locked'
+                                    onPress={handleUpload}
+                                />
+                                <BucketListComponent
+                                    showIcon={true}
+                                    showText={true} // Ensure showText is true when showIcon is true
+                                    // text="Family"
+                                    route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                    IconName='locked'
+                                />                          
+                            </View>
+                            <View style={{ flexDirection: "row" }}>
+                                <BucketListComponent
+                                    showIcon={true}
+                                    showText={true} // Ensure showText is true when showIcon is true
+                                    // text="Health"
+                                    route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                    IconName='locked'
+                                />
+                                <BucketListComponent
+                                    showIcon={true}
+                                    showText={true} // Ensure showText is true when showIcon is true
+                                    // text="Work"
+                                    route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    IconName='locked'
+                                    onPress={handleUpload}
+                                />
+                                <BucketListComponent
+                                    showIcon={true}
+                                    showText={true} // Ensure showText is true when showIcon is true
+                                    // text="Family"
+                                    route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                    IconName='locked'
+                                />                          
+                            </View>
+                            <View style={{ flexDirection: "row" }}>
+                                <BucketListComponent
+                                    showIcon={true}
+                                    showText={true} // Ensure showText is true when showIcon is true
+                                    // text="Health"
+                                    route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                    IconName='locked'
+                                />
+                                <BucketListComponent
+                                    showIcon={true}
+                                    showText={true} // Ensure showText is true when showIcon is true
+                                    // text="Work"
+                                    route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    IconName='locked'
+                                    onPress={handleUpload}
+                                />
+                                <BucketListComponent
+                                    showIcon={true}
+                                    showText={true} // Ensure showText is true when showIcon is true
+                                    // text="Family"
+                                    route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                    image={require('../../../assets/images/Group 1508.png')}
+                                    onPress={handleUpload}
+                                    IconName='locked'
+                                />                          
+                            </View>
+                        </ScrollView>
                     </View>
                     <TouchableOpacity onPress={() => router.push('/BucketList/paymentMethod')}>
                         <View style={styles.bucketContainer2}>
@@ -54,16 +309,259 @@ export default function SelectBucketList() {
                                 <Text style={styles.premium}>Premium</Text>
                             </View>
                             <Text style={styles.textBig}>Tool Kit Lists</Text>
-                            <View style={styles.premiumContainer}>
-                            </View>
-                            <BucketListComponent />
-                            <BucketListComponent />
-                            <BucketListComponent />
-                            <BucketListComponent />
-                            <BucketListComponent />
-                            <BucketListComponent />
-                            <BucketListComponent />
-                            <BucketListComponent />
+                            <ScrollView bounces={false} style={{ height: 300 }}>
+                                <View style={{ flexDirection: "row" }}>
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="Evacuation Kit"
+                                        route="/BucketList/bucketLists"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                    />
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="Estate Planning"
+                                        route="/BucketList/memory"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        IconName='locked'
+                                        onPress={handleUpload}
+                                    />
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="Depression Recovery"
+                                        route="/BucketList/thoughts"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                    />
+                                </View>
+                                <View style={{ flexDirection: "row" }}>
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="Earthquake kit"
+                                        route="/BucketList/bucketLists"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                    />
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="Will"
+                                        route="/BucketList/memory"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        IconName='locked'
+                                        onPress={handleUpload}
+                                    />
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="Dating list"
+                                        route="/BucketList/thoughts"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                    />
+                                </View>
+                                <View style={{ flexDirection: "row" }}>
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="Fire/ flood kit"
+                                        route="/BucketList/bucketLists"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                    />
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="Financial Plan"
+                                        route="/BucketList/memory"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        IconName='locked'
+                                        onPress={handleUpload}
+                                    />
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="Young Parents'"
+                                        route="/BucketList/thoughts"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                    />                          
+                                </View>
+                                <View style={{ flexDirection: "row" }}>
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="Job Loss"
+                                        route="/BucketList/bucketLists"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                    />
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="Pet Emergency"
+                                        route="/BucketList/memory"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        IconName='locked'
+                                        onPress={handleUpload}
+                                    />
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="College Preparation"
+                                        route="/BucketList/thoughts"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                    />                          
+                                </View>
+                                <View style={{ flexDirection: "row" }}>
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="Digital Security"
+                                        route="/BucketList/bucketLists"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                    />
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="Medical Emergency"
+                                        route="/BucketList/memory"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        IconName='locked'
+                                        onPress={handleUpload}
+                                    />
+                                    <BucketListComponent
+                                        showIcon={false}
+                                        showText={true}
+                                        text="Job Search"
+                                        route="/BucketList/thoughts"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                    />                          
+                                </View>
+                                <View style={{ flexDirection: "row" }}>
+                                    <BucketListComponent
+                                        showIcon={true}
+                                        showText={true} // Ensure showText is true when showIcon is true
+                                        // text="Health"
+                                        route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                        IconName='locked'
+                                    />
+                                    <BucketListComponent
+                                        showIcon={true}
+                                        showText={true} // Ensure showText is true when showIcon is true
+                                        // text="Work"
+                                        route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        IconName='locked'
+                                        onPress={handleUpload}
+                                    />
+                                    <BucketListComponent
+                                        showIcon={true}
+                                        showText={true} // Ensure showText is true when showIcon is true
+                                        // text="Family"
+                                        route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                        IconName='locked'
+                                    />                          
+                                </View>
+                                <View style={{ flexDirection: "row" }}>
+                                    <BucketListComponent
+                                        showIcon={true}
+                                        showText={true} // Ensure showText is true when showIcon is true
+                                        // text="Health"
+                                        route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                        IconName='locked'
+                                    />
+                                    <BucketListComponent
+                                        showIcon={true}
+                                        showText={true} // Ensure showText is true when showIcon is true
+                                        // text="Work"
+                                        route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        IconName='locked'
+                                        onPress={handleUpload}
+                                    />
+                                    <BucketListComponent
+                                        showIcon={true}
+                                        showText={true} // Ensure showText is true when showIcon is true
+                                        // text="Family"
+                                        route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                        IconName='locked'
+                                    />                          
+                                </View>
+                                <View style={{ flexDirection: "row" }}>
+                                    <BucketListComponent
+                                        showIcon={true}
+                                        showText={true} // Ensure showText is true when showIcon is true
+                                        // text="Health"
+                                        route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                        IconName='locked'
+                                    />
+                                    <BucketListComponent
+                                        showIcon={true}
+                                        showText={true} // Ensure showText is true when showIcon is true
+                                        // text="Work"
+                                        route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        IconName='locked'
+                                        onPress={handleUpload}
+                                    />
+                                    <BucketListComponent
+                                        showIcon={true}
+                                        showText={true} // Ensure showText is true when showIcon is true
+                                        // text="Family"
+                                        route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                        IconName='locked'
+                                    />                          
+                                </View>
+                                <View style={{ flexDirection: "row" }}>
+                                    <BucketListComponent
+                                        showIcon={true}
+                                        showText={true} // Ensure showText is true when showIcon is true
+                                        // text="Health"
+                                        route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                        IconName='locked'
+                                    />
+                                    <BucketListComponent
+                                        showIcon={true}
+                                        showText={true} // Ensure showText is true when showIcon is true
+                                        // text="Work"
+                                        route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        IconName='locked'
+                                        onPress={handleUpload}
+                                    />
+                                    <BucketListComponent
+                                        showIcon={true}
+                                        showText={true} // Ensure showText is true when showIcon is true
+                                        // text="Family"
+                                        route="/BucketList/paymentMethod" // Set route to "/BucketList/paymentMethod"
+                                        image={require('../../../assets/images/Group 1508.png')}
+                                        onPress={handleUpload}
+                                        IconName='locked'
+                                    />                          
+                                </View>
+                            </ScrollView>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -141,11 +639,9 @@ const styles = StyleSheet.create({
     },
     bucketContainerText: {
         flexDirection: "row",
-        // width: "100%",
         justifyContent: "space-between",
         paddingBottom: 20,
         alignItems: "center",
-        // paddingHorizontal: 50
     },
     BucketText: {
         fontWeight: "700",
@@ -162,6 +658,5 @@ const styles = StyleSheet.create({
     premium: {
         fontWeight: "bold",
         fontSize: 30,
-
     }
 });

@@ -10,6 +10,7 @@ import {
 import MainText from '../components/topText';
 import { useSearchParams } from 'expo-router/build/hooks';
 import TabBar from '../components/tabBar';
+import Wrapper from '../wrapper';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
@@ -39,8 +40,8 @@ export default function DisplayData() {
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
                 <MainText title={'Best Friends and Family'} showIcon={true} setting={true} gradientColor={[b1, b2]} />
-
-                <View style={[styles.main]}>
+<Wrapper>
+                {/* <View style={[styles.main]}> */}
                     <View style={styles.bgContain}>
                         <ImageBackground
                             source={require('../../../assets/images/Group 2093.png')}
@@ -161,7 +162,8 @@ export default function DisplayData() {
                             </View>
                         </ImageBackground>
                     </View>
-                </View>
+                {/* </View> */}
+                </Wrapper>
             </ScrollView>
             <TabBar />
         </View>

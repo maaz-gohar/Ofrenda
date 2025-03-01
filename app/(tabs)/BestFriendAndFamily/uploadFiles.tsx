@@ -14,6 +14,7 @@ import MainText from '../components/topText';
 import MainButton from '../components/button';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
+import Wrapper from '../wrapper';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
@@ -115,7 +116,8 @@ export default function UploadFiles() {
                     gradientColor={[b1, b2]}
                 />
 
-                <View style={styles.main}>
+                {/* <View style={styles.main}> */}
+                <Wrapper>
                     <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 10 }}>Upload File Or Take Photos</Text>
                     <View style={styles.contentStyle}>
                         <TouchableOpacity>
@@ -172,7 +174,8 @@ export default function UploadFiles() {
                             />
                         </View>
                     </View>
-                </View>
+                {/* </View> */}
+                </Wrapper>
             </ScrollView>
         </View>
     );

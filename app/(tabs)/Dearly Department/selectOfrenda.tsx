@@ -6,7 +6,6 @@ import {
     Dimensions,
     ScrollView,
     TouchableOpacity,
-
 } from 'react-native';
 import { FontAwesome, Ionicons, Entypo, FontAwesome6, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -18,20 +17,16 @@ import MainButton from '../components/button';
 import AncestorsImage from './components/ancestorsImage';
 import { useRouter } from 'expo-router';
 import FrameComponent from './components/frameComponent';
-// import MainText from './components/topText';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
 
 export default function SelectOfredna() {
-    // const { height, width } = Dimensions.get("window");
     const router = useRouter();
 
     return (
         <View style={styles.container}>
-
-            <ScrollView contentContainerStyle={styles.scrollViewContainer}
-                bounces={false}>
+            <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
                 <MainText
                     title={'Dearly Departed'}
                     showIcon={true}
@@ -40,8 +35,8 @@ export default function SelectOfredna() {
 
                 <View style={[styles.main]}>
                     <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 10 }}>Select Memory Boards</Text>
-                    <ScrollView contentContainerStyle={{ paddingHorizontal: 20 }} bounces={false} >
-                        <View style={{ flexDirection: "row", alignItems: "center", paddingVertical: 10 }}>
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 20 }} bounces={false}>
+                        <View style={{ flexDirection: "row", paddingVertical: 10 }}>
                             <FrameComponent text="Ofrenda" isGradient={true} onPress={() => router.push('/Dearly Department/selectOfrenda')} />
                             <FrameComponent text="Elegant" onPress={() => router.push('/Dearly Department/elegant')} />
                             <FrameComponent text="Indian" onPress={() => router.push('/Dearly Department/indian')} />
@@ -54,17 +49,12 @@ export default function SelectOfredna() {
                             <FrameComponent text="Classical Christian altar" />
                             <FrameComponent text="Hebrew altar" />
                             <FrameComponent text="Wall photo frames" />
-                            {/* <View style={styles.scrollContainer}>
-                            <Text style={{ fontWeight: "600", fontSize: 16 }}>More</Text>
-                        </View> */}
-
-
                         </View>
                     </ScrollView>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+
+                    <View style={styles.ancestorsRow}>
                         <AncestorsImage
                             imagePath={require('../../../assets/images/SelectOfrenda/1.png')}
-                        // onPress={() => router.push('/Dearly Department/selectOfrenda')}
                         />
                         <AncestorsImage
                             imagePath={require('../../../assets/images/SelectOfrenda/2.png')}
@@ -73,7 +63,7 @@ export default function SelectOfredna() {
                             imagePath={require('../../../assets/images/SelectOfrenda/3.png')}
                         />
                     </View>
-                    <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                    <View style={styles.ancestorsRow}>
                         <AncestorsImage
                             imagePath={require('../../../assets/images/SelectOfrenda/2.png')}
                         />
@@ -84,41 +74,34 @@ export default function SelectOfredna() {
                         <AncestorsImage
                             imagePath={require('../../../assets/images/SelectOfrenda/1.png')}
                             showIcon={true}
-
                         />
                     </View>
-                    <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                    <View style={styles.ancestorsRow}>
                         <AncestorsImage
                             imagePath={require('../../../assets/images/SelectOfrenda/3.png')}
                             showIcon={true}
-
                         />
                         <AncestorsImage
                             imagePath={require('../../../assets/images/SelectOfrenda/1.png')}
                             showIcon={true}
-
                         />
                         <AncestorsImage
                             imagePath={require('../../../assets/images/SelectOfrenda/2.png')}
                             showIcon={true}
-
                         />
                     </View>
-                    <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                    <View style={styles.ancestorsRow}>
                         <AncestorsImage
                             imagePath={require('../../../assets/images/SelectOfrenda/1.png')}
                             showIcon={true}
-
                         />
                         <AncestorsImage
                             imagePath={require('../../../assets/images/SelectOfrenda/2.png')}
                             showIcon={true}
-
                         />
                         <AncestorsImage
                             imagePath={require('../../../assets/images/SelectOfrenda/3.png')}
                             showIcon={true}
-
                         />
                     </View>
                 </View>
@@ -131,10 +114,11 @@ export default function SelectOfredna() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "#fff",
     },
     scrollViewContainer: {
-        flexGrow: 1,
-        justifyContent: 'center',
+        // flexGrow: 1,
+        backgroundColor: "#fff",
     },
     main: {
         paddingVertical: 20,
@@ -145,6 +129,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingTop: 30,
         marginTop: -35,
+        paddingHorizontal:10
     },
     text: {
         fontSize: 16,
@@ -157,14 +142,12 @@ const styles = StyleSheet.create({
     },
     scrollContainer1: {
         height: 40,
-        // width: 120,
         paddingHorizontal: 20,
         justifyContent: "center",
         alignItems: "center",
     },
     scrollContainer: {
         height: 40,
-        // width: 120,
         paddingHorizontal: 20,
         borderWidth: 1,
         borderColor: "#C2C2C2",
@@ -172,5 +155,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 250,
         marginHorizontal: 5,
+    },
+    ancestorsRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingHorizontal: 20,
+        // marginTop: 20,
     },
 });

@@ -15,6 +15,7 @@ import MainText from '../components/topText';
 import MainButton from '../components/button';
 
 import AddDearlyDepartmentComponent from '../Dearly Department/components/dearlyDepartmentImage';
+import Wrapper from '../wrapper';
 
 
 // import MainText from './components/topText';
@@ -36,8 +37,8 @@ export default function SelectImage() {
                     showIcon={true}
                     gradientColor={[b1, b2]}
                 />
-
-                <View style={[styles.main]}>
+<Wrapper>
+                {/* <View style={[styles.main]}> */}
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
 
                         <AddDearlyDepartmentComponent
@@ -175,7 +176,8 @@ export default function SelectImage() {
 
                     </View>
                     <MainButton title={"Select"} gradientColor={[b1, b2]} shadowColor='rgba(94, 164, 253, 1)' />
-                </View>
+                {/* </View> */}
+                </Wrapper>
             </ScrollView>
         </View>
     );

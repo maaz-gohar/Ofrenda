@@ -16,6 +16,7 @@ import TabBar from '../components/tabBar';
 import { useRouter } from 'expo-router';
 import AncestorsComponent from '../Dearly Department/components/ancestorsComponent';
 import MainText from '../components/topText';
+import Wrapper from '../wrapper';
 // import MainText from './components/topText';
 
 const b1 = "rgba(94, 164, 253, 1)";
@@ -38,8 +39,8 @@ export default function BFFMainScreen() {
                     setting={true}
                     gradientColor={[b1, b2]}
                 />
-                <View style={[styles.main]}>
-
+                {/* <View style={[styles.main]}> */}
+        <Wrapper>
                     <AncestorsComponent imagePath={require('../../../assets/images/BestFriend/ViewCollege.png')}
                         text={"View Collage"}
                         onPress={() => router.push('/BestFriendAndFamily/selectFrames')} />
@@ -47,8 +48,8 @@ export default function BFFMainScreen() {
                     <AncestorsComponent imagePath={require('../../../assets/images/bff.jpg')}
                         text={"View Information"}
                         onPress={() => router.push('/BestFriendAndFamily/information')} />
-
-                </View>
+</Wrapper>
+                {/* </View> */}
             </ScrollView>
             <TabBar />
         </View>

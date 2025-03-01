@@ -13,6 +13,7 @@ import TabBar from '../components/tabBar';
 import CollegeDesignComponent from './components/collegeDesignComponent';
 import FrameComponent from '../Dearly Department/components/frameComponent';
 import { useRouter } from 'expo-router';
+import Wrapper from '../wrapper';
 // import CollegeDesignComponent from './components/CollegeDesignComponent';
 
 const b1 = "rgba(94, 164, 253, 1)";
@@ -33,7 +34,8 @@ export default function SelectFrames({ navigation }) {
                     gradientColor={[b1, b2]}
                 />
 
-                <View style={styles.main}>
+                {/* <View style={styles.main}> */}
+                <Wrapper>
                     <Text style={styles.title}>Select Collage Design</Text>
 
                     {/* Collage Selection Options */}
@@ -137,7 +139,8 @@ export default function SelectFrames({ navigation }) {
                             />
                         </View>
                     </View>
-                </View>
+                {/* </View> */}
+                </Wrapper>
             </ScrollView>
             <TabBar />
         </View>
@@ -147,9 +150,11 @@ export default function SelectFrames({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "#fff",
     },
     scrollViewContainer: {
-        flexGrow: 1,
+        // flexGrow: 1,
+        backgroundColor: "#fff",
     },
     main: {
         flex: 1,
@@ -199,7 +204,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
-        marginBottom: 10,
+        // marginBottom: 10,
     },
 });
 

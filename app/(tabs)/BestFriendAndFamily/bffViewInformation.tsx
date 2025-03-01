@@ -14,6 +14,7 @@ import MainText from '../components/topText';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import MainButton from '../components/button';
 import TabBar from '../components/tabBar';
+import Wrapper from '../wrapper';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
@@ -113,7 +114,8 @@ export default function BffViewInformation() {
                     gradientColor={[b1, b2]}
                 />
 
-                <View style={styles.main}>
+                {/* <View style={styles.main}> */}
+                <Wrapper>
                     
                     <View style={styles.imgcover}>
                         <Image
@@ -156,7 +158,8 @@ export default function BffViewInformation() {
                             />
                         </View>
                     </View>
-                </View>
+                {/* </View> */}
+                </Wrapper>
             </ScrollView>
             <TabBar />
         </View>

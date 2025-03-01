@@ -50,9 +50,10 @@ const styles = StyleSheet.create({
         height: 55,
         paddingVertical: 5,
         justifyContent: 'space-between',
-        width: "95%",
+        width: "100%",
         flexDirection: "row",
-        minWidth: 400
+        // minWidth: 400
+        // paddingHorizontal: 10,
     },
     data: {
         flexDirection: "row",

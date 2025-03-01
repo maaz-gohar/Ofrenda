@@ -16,6 +16,7 @@ import TabBar from '../components/tabBar';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Inputs from './components/inputs';
 import BottomIcons from './components/bottomIcons';
+import MainButton from '../components/button';
 
 const b1 = "rgba(188, 97, 213, 0.8)";
 const b2 = "rgba(249, 244, 251, 1)";
@@ -48,6 +49,12 @@ export default function Thoughts() {
 
                 </View> */}
                     {/* <BottomIcons /> */}
+                    {/* <MainButton
+                        title="Make Payment"
+                        // onPress={() => router.push('/BucketList/selectBucketListPremium')}
+                        gradientColor={[b1, b2]}
+                        shadowColor='#f8deff'
+                    /> */}
                 </ScrollView>
                 <TabBar />
             </KeyboardAvoidingView>
@@ -62,6 +69,7 @@ const styles = StyleSheet.create({
     scrollViewContainer: {
         flexGrow: 1,
         justifyContent: 'center',
+        backgroundColor: "#fff"
     },
     main: {
         flex: 1,
