@@ -4,11 +4,18 @@ import {
     View,
     ScrollView,
     ImageBackground,
-    Text
+    Text,
+    Share,
+    TouchableOpacity
 } from 'react-native';
 import MainText from '../components/topText';
 import { useSearchParams } from 'expo-router/build/hooks';
 import TabBar from '../components/tabBar';
+import { Ionicons } from '@expo/vector-icons';
+
+const b1 = "#FFC70BE5";
+const b2 = "#ffe9a1";
+
 
 export default function DisplayData() {
     const searchParams = useSearchParams();
@@ -54,6 +61,26 @@ export default function DisplayData() {
     // }
     // Join hobbies with commas
     // const hobbiesString = parsedHobbies.join(', ');
+
+        const handleShare = async () => {
+            try {
+                const result = await Share.share({
+                    message: `Check out my Ancestors details:\n\nName: ${name}\nDOB: ${dob}\nHobbies: ${hobbies}\nRelationship: ${relationship}\nFavorite Movie: ${movie}\nHealth Conditions: ${health}\nNotable Contributions: ${noteableContribution}\n\nShared via Ofrenda App`,
+                });
+                if (result.action === Share.sharedAction) {
+                    if (result.activityType) {
+                        // shared with activity type of result.activityType
+                    } else {
+                        // shared
+                    }
+                } else if (result.action === Share.dismissedAction) {
+                    // dismissed
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+        };
+    
 
     return (
         <View style={styles.container}>
@@ -137,6 +164,10 @@ export default function DisplayData() {
                             </View>
                         </ImageBackground>
                     </View>
+                    <TouchableOpacity style={styles.shareButton} onPress={handleShare}>
+                <Ionicons name="share-social" size={24} color="white" />
+                <Text style={styles.shareButtonText}>Share</Text>
+            </TouchableOpacity>
                 </View>
             </ScrollView>
             <TabBar />
@@ -216,5 +247,20 @@ const styles = StyleSheet.create({
         alignItems: "center",
         // marginBottom: 10
         // paddingBottom: 10
+    },
+    shareButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: b1,
+        padding: 10,
+        borderRadius: 5,
+        width:"90%",
+        margin: 20,
+    },
+    shareButtonText: {
+        color: 'white',
+        marginLeft: 10,
+        fontSize: 16,
     },
 });

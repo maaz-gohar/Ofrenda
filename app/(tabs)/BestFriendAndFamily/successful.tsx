@@ -20,7 +20,6 @@ export default function Successful() {
 
     const params = useLocalSearchParams();
 
-
     useEffect(() => {
         console.log("Received params in Successful screen:", params);
     }, [params]);
@@ -52,12 +51,10 @@ export default function Successful() {
         });
     };
 
-
     return (
         <View style={styles.container}>
             <MainText title={'Best Friends and Family'} showIcon={true} setting={true} gradientColor={[b1, b2]} />
-            {/* <View style={styles.main}> */}
-            <Wrapper>
+            <Wrapper style={styles.wrapper}>
                 <LinearGradient colors={[b1, b2]} style={styles.gradient}>
                     <Ionicons name='checkmark-circle' size={97} color={"#fff"} />
                 </LinearGradient>
@@ -65,7 +62,6 @@ export default function Successful() {
                 <Text style={styles.description}>
                     Your BFF has been successfully added to your account.
                 </Text>
-                {/* Optional: Display some of the data to confirm it's there */}
                 {params.friendName && (
                     <Text style={styles.dataConfirmation}>
                         Added {params.friendName} as BFF
@@ -77,7 +73,6 @@ export default function Successful() {
                     gradientColor={[b1, b2]}
                     shadowColor='rgba(94, 164, 253, 1)'
                 />
-            {/* </View> */}
             </Wrapper>
             <TabBar />
         </View>
@@ -89,25 +84,23 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
-    main: {
+    wrapper: {
         flex: 1,
-        backgroundColor: "#fff",
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
-        alignItems: "center",
-        justifyContent: "center",
-        paddingTop: 50,
-        marginTop: -35,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
     },
     gradient: {
         borderRadius: 500,
-        // padding: 20,
-        marginBottom: 40
+        marginBottom: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     title: {
         fontSize: 24,
         fontWeight: '700',
         marginBottom: 10,
+        textAlign: 'center',
     },
     description: {
         fontSize: 16,
@@ -120,6 +113,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#444',
         marginBottom: 20,
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        textAlign: 'center',
     }
 });

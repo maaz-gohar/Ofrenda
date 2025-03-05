@@ -5,12 +5,15 @@ import {
     ScrollView,
     ImageBackground,
     Text,
-    Image
+    Image,
+    TouchableOpacity,
+    Share
 } from 'react-native';
 import MainText from '../components/topText';
 import { useSearchParams } from 'expo-router/build/hooks';
 import TabBar from '../components/tabBar';
 import Wrapper from '../wrapper';
+import { Ionicons } from '@expo/vector-icons';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
@@ -25,7 +28,6 @@ export default function DisplayData() {
     const movie = searchParams.get('movie');
     const favFood = searchParams.get('favFood');
     const health = searchParams.get('health');
-    // const parsedFood = food ? JSON.parse(food) : [];
     const dynamicFields = searchParams.get('dynamicFields');
     const parsedDynamicFields = dynamicFields ? JSON.parse(dynamicFields) : [];
     const facebook = searchParams.get('facebook');
@@ -33,27 +35,36 @@ export default function DisplayData() {
     const twitter = searchParams.get('twitter');
     const tiktok = searchParams.get('tiktok');
 
-    // const foodString = parsedFood.join(', ');
-
+    const handleShare = async () => {
+        try {
+            const result = await Share.share({
+                message: `Check out my Best Friend and Family details:\n\nName: ${name}\nDOB: ${dob}\nProfession: ${Profession}\nFavorite Food: ${favFood}\nFavorite Movie: ${movie}\nHealth Conditions: ${health}\nNotable Contributions: ${noteableContribution}\n\nShared via Ofrenda App`,
+            });
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    // shared with activity type of result.activityType
+                } else {
+                    // shared
+                }
+            } else if (result.action === Share.dismissedAction) {
+                // dismissed
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
 
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
                 <MainText title={'Best Friends and Family'} showIcon={true} setting={true} gradientColor={[b1, b2]} />
-<Wrapper>
-                {/* <View style={[styles.main]}> */}
+                <Wrapper>
                     <View style={styles.bgContain}>
                         <ImageBackground
                             source={require('../../../assets/images/Group 2093.png')}
                             style={styles.bg}
                             resizeMode="stretch"
                         >
-                            {/* <View style={{
-                                justifyContent: "center",
-                                alignItems: "center",
-                                paddingHorizontal: 20, // Add horizontal padding
-                                width: "100%" // Ensure full width
-                            }}> */}
                             <View style={{ justifyContent: "center", alignItems: "center" }}>
                                 <Text style={styles.granded}>Friend</Text>
                                 <View style={{ flexDirection: "row" }}>
@@ -65,16 +76,6 @@ export default function DisplayData() {
                                 <Text style={styles.normalText}>{name}</Text>
 
                                 <Text style={styles.boldText}>Favorite pastimes</Text>
-                                {/* {parsedFood.length > 0 ? (
-                                parsedFood.map((food, index) => (
-                                    <Text key={index} style={styles.normalText}>
-                                        {food}
-                                    </Text>
-                                ))
-                            ) : (
-                                <Text style={styles.normalText}>No hobbies selected</Text>
-                            )} */}
-
                                 <Text style={styles.normalText}>{food}</Text>
 
                                 <Text style={styles.boldText}>Profession</Text>
@@ -108,7 +109,6 @@ export default function DisplayData() {
                                         <View style={styles.greybg}>
                                             <Image
                                                 source={require('../../../assets/images/logos_facebook.png')}
-
                                             />
                                         </View>
                                     )}
@@ -116,7 +116,6 @@ export default function DisplayData() {
                                         <View style={styles.greybg}>
                                             <Image
                                                 source={require('../../../assets/images/Group.png')}
-
                                             />
                                         </View>
                                     )}
@@ -124,7 +123,6 @@ export default function DisplayData() {
                                         <View style={styles.greybg}>
                                             <Image
                                                 source={require('../../../assets/images/prime_twitter.png')}
-
                                             />
                                         </View>
                                     )}
@@ -132,45 +130,23 @@ export default function DisplayData() {
                                         <View style={styles.greybg}>
                                             <Image
                                                 source={require('../../../assets/images/logos_tiktok-icon.png')}
-
                                             />
                                         </View>
                                     )}
-                                    {/* <View style={styles.greybg}>
-
-                                        <Image
-                                            source={require('../../../assets/images/logos_tiktok-icon.png')}
-
-                                        />
-                                    </View>
-                                    <View style={styles.greybg}>
-
-                                        <Image
-                                            source={require('../../../assets/images/logos_facebook.png')}
-
-                                        />
-                                    </View>
-                                    <View style={styles.greybg}>
-
-                                        <Image
-                                            source={require('../../../assets/images/prime_twitter.png')}
-
-                                        />
-                                    </View> */}
                                 </View>
-                                {/* </View> */}
                             </View>
                         </ImageBackground>
                     </View>
-                {/* </View> */}
+            <TouchableOpacity style={styles.shareButton} onPress={handleShare}>
+                <Ionicons name="share-social" size={24} color="white" />
+                <Text style={styles.shareButtonText}>Share</Text>
+            </TouchableOpacity>
                 </Wrapper>
             </ScrollView>
             <TabBar />
         </View>
     );
 }
-
-
 
 const styles = StyleSheet.create({
     container: {
@@ -192,12 +168,9 @@ const styles = StyleSheet.create({
         paddingTop: 30,
         marginTop: -35,
         width: "100%",
-
     },
     bgContain: {
-
         width: "90%",
-
     },
     bg: {
         width: "100%",
@@ -205,13 +178,11 @@ const styles = StyleSheet.create({
         paddingVertical: 50,
         alignItems: "center",
         alignSelf: "center",
-        // paddingHorizontal: 10
     },
     granded: {
         fontSize: 40,
         fontFamily: "Cochin",
         fontWeight: "500",
-        // paddingTop: 40,
     },
     boldText: {
         fontSize: 25,
@@ -220,19 +191,17 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         alignSelf: "center",
         width: 300,
-        textAlign: "center"
-        // paddingHorizontal: 10
+        textAlign: "center",
     },
     normalText: {
         fontWeight: 500,
         marginTop: 5,
         paddingHorizontal: 30,
-        textAlign: "center"
+        textAlign: "center",
     },
     social: {
         flexDirection: "row",
         paddingTop: 10,
-        // marginBottom: 50,
     },
     greybg: {
         margin: 4,
@@ -242,7 +211,20 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         justifyContent: "center",
         alignItems: "center",
-        // marginBottom: 10
-        // paddingBottom: 10
+    },
+    shareButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: b1,
+        padding: 10,
+        borderRadius: 5,
+        width:"90%",
+        margin: 20,
+    },
+    shareButtonText: {
+        color: 'white',
+        marginLeft: 10,
+        fontSize: 16,
     },
 });

@@ -46,7 +46,7 @@ export default function SelectBucketList() {
                             <Text style={styles.BucketText}>Memories</Text>
                             <Text style={styles.BucketText}>Thoughts & Notes</Text>
                         </View>
-                        <ScrollView bounces={false} style={{ height: 300 }}>
+                        <ScrollView bounces={false} style={{ height: 300 }} nestedScrollEnabled={true} contentContainerStyle={{ flexGrow: 1 }}>
                             <View style={{ flexDirection: "row" }}>
                                 <BucketListComponent
                                     showIcon={false}
@@ -309,7 +309,7 @@ export default function SelectBucketList() {
                                 <Text style={styles.premium}>Premium</Text>
                             </View>
                             <Text style={styles.textBig}>Tool Kit Lists</Text>
-                            <ScrollView bounces={false} style={{ height: 300 }}>
+                            <ScrollView bounces={false} style={{ height: 300 , maxWidth:400, width:"100%" }} nestedScrollEnabled={true} contentContainerStyle={{ flexGrow: 1 }}>
                                 <View style={{ flexDirection: "row" }}>
                                     <BucketListComponent
                                         showIcon={false}
@@ -591,27 +591,28 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start"
     },
     bucketContainer: {
-        width: "95%",
+        width: "100%", // Ensure the width is 100% for all screens
         backgroundColor: "#F7F5FA",
         borderWidth: 1,
         borderRadius: 12,
         justifyContent: "space-between",
         alignItems: "center",
-        paddingHorizontal: 10,
-        padding: 10,
-        marginTop: 20
+        paddingVertical: 10,
+        marginTop: 20,
+        maxWidth: 360, // Ensure the content does not expand beyond this width
     },
     bucketContainer2: {
-        width: "95%",
+        width: "100%", // Ensure the width is 100% for all screens
         backgroundColor: "#F7F5FA",
         borderWidth: 1,
         borderRadius: 12,
         justifyContent: "space-between",
         alignItems: "center",
-        paddingHorizontal: 10,
         padding: 10,
         marginTop: 20,
         position: 'relative',
+        paddingHorizontal:22,
+        maxWidth: 360, // Ensure the content does not expand beyond this width
     },
     overlay: {
         position: 'absolute',
@@ -624,7 +625,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: "row"
+        flexDirection: "row",
     },
     icon: {
         backgroundColor: "#000",
@@ -645,7 +646,7 @@ const styles = StyleSheet.create({
     },
     BucketText: {
         fontWeight: "700",
-        width: 120,
+        width: 112,
         textAlign: "center",
         justifyContent: "center",
         alignItems: "center"

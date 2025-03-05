@@ -5,10 +5,13 @@ import {
     ScrollView,
     ImageBackground,
     Text,
+    TouchableOpacity,
+    Share
 } from 'react-native';
 import MainText from '../components/topText';
 import TabBar from '../components/tabBar';
 import { useLocalSearchParams } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 const b1 = "rgba(188, 97, 213, 0.8)";
 const b2 = "rgba(249, 244, 251, 1)";
@@ -17,6 +20,26 @@ export default function DisplayData() {
     const params = useLocalSearchParams();
     const text = params.text || "Default Title"; // Fallback if text is not provided
     const notes = params.notes || "No notes available."; // Fallback if notes are not provided
+
+            const handleShare = async () => {
+                try {
+                    const result = await Share.share({
+                        message: `Check out my Bucket List details:\n\nTitle: ${text}\nNotes: ${notes}\n\nShared via Ofrenda App`,
+                    });
+                    if (result.action === Share.sharedAction) {
+                        if (result.activityType) {
+                            // shared with activity type of result.activityType
+                        } else {
+                            // shared
+                        }
+                    } else if (result.action === Share.dismissedAction) {
+                        // dismissed
+                    }
+                } catch (error) {
+                    alert(error.message);
+                }
+            };
+        
 
     return (
         <View style={styles.container}>
@@ -42,6 +65,10 @@ export default function DisplayData() {
                             </View>
                         </ImageBackground>
                     </View>
+                    <TouchableOpacity style={styles.shareButton} onPress={handleShare}>
+                <Ionicons name="share-social" size={24} color="white" />
+                <Text style={styles.shareButtonText}>Share</Text>
+            </TouchableOpacity>
                 </View>
             </ScrollView>
             <TabBar />
@@ -101,17 +128,20 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         textAlign: "center",
     },
-    social: {
-        flexDirection: "row",
-        paddingTop: 10,
+    shareButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: b1,
+        padding: 10,
+        borderRadius: 5,
+        width:"90%",
+        margin: 20,
     },
-    greybg: {
-        margin: 4,
-        backgroundColor: "rgba(228, 228, 228, 1)",
-        height: 30,
-        width: 30,
-        borderRadius: 4,
-        justifyContent: "center",
-        alignItems: "center",
+    shareButtonText: {
+        color: 'white',
+        marginLeft: 10,
+        fontSize: 16,
     },
+    
 });

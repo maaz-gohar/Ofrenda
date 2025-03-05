@@ -18,7 +18,7 @@ const b2 = "rgba(249, 244, 251, 1)";
 export default function Inputs() {
     const router = useRouter();
     const params = useLocalSearchParams();
-    const text = params.text || "Default Title"; // Get the title from the query params or use a default value
+    const text = params.text; // Get the title from the query params or use a default value
     const [noteText, setNoteText] = useState('');
     const [visibleModal, setVisibleModal] = useState(false);
     const [listType, setListType] = useState('none'); // 'none', 'bullet', 'number'
@@ -201,9 +201,15 @@ export default function Inputs() {
     return (
         <View style={styles.container}>
             {/* Title Container */}
-            <View style={styles.titleContainer}>
-                <Text style={styles.titleText}>{text}</Text>
-            </View>
+            <TextInput
+                style={styles.titleContainer}
+                value={text}
+                onChangeText={(newText) => router.setParams({ text: newText })}
+                placeholder="Enter Title"
+                placeholderTextColor="#000"
+            />
+                {/* <Text style={styles.titleText}>{text}</Text>
+            </View> */}
 
             <View style={styles.separator} />
             <View style={styles.inputContainer}>
@@ -274,6 +280,9 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         paddingVertical: 10,
+        fontSize: 18,
+        paddingLeft:10,
+        fontWeight: '600',
     },
     titleText: {
         fontSize: 18,
