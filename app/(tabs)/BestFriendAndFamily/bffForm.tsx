@@ -18,7 +18,7 @@ import DatePickerComponent from '../Dearly Department/components/datePicker';
 import MainButton from '../components/button';
 import DearlyDepartmentFormComponent from '../Dearly Department/components/dearlyDepartmentFormComponent';
 import TabBar from '../components/tabBar';
-import Wrapper from '../wrapper';
+import Wrapper from '../components/wrapper';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
@@ -64,12 +64,9 @@ export default function BffForm() {
                 <Wrapper>
                     <Text style={styles.title}>Add Information</Text>
 
-
                     <DearlyDepartmentFormComponent name="Enter Friend Name" />
 
                     <DatePickerComponent placeholder="Enter DOB" dob={dob} onDateChange={setDob} />
-
-
 
                     {/* Pass setHobbies to SelectList */}
                     <SelectList setSelected={setHobbies} />
@@ -77,23 +74,23 @@ export default function BffForm() {
                     <DearlyDepartmentFormComponent
                         name="Profession"
                         value={memory}
-                        setValue={setMemory}
+                        setValue={() => setMemory('')}
                     />
                     <DearlyDepartmentFormComponent
                         name="Favorite Food, Restaurants"
                         value={worked}
-                        setValue={setWorked}
+                        setValue={() => (value: any) => setWorked(value)}
                     />
                     <DearlyDepartmentFormComponent
                         name="Add Social Media URL"
                         value={health}
-                        setValue={setHealth}
+                        setValue={() => (value: string) => setHealth(value)}
                         iconName="link"
                         iconType="AntDesign"
                     />
                     <DearlyDepartmentFormComponent
                         name="Add Another Field"
-                        iconName="plus"
+                        iconName="add"
                         iconType="AntDesign"
                     />
                     <MainButton title={"Submit Information"} onPress={handleSave} gradientColor={[b1, b2]} shadowColor='rgba(94, 164, 253, 1)' />

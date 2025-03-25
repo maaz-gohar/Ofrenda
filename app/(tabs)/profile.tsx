@@ -21,7 +21,7 @@ import InfoComponent from './components/infoComponent';
 import TabBar from './components/tabBar';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
-import Wrapper from './wrapper';
+import Wrapper from './components/wrapper';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";

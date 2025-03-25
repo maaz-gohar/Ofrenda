@@ -11,7 +11,7 @@ import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import TabBar from '../components/tabBar';
-import Wrapper from '../wrapper';
+import Wrapper from '../components/wrapper';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
@@ -54,7 +54,7 @@ export default function Successful() {
     return (
         <View style={styles.container}>
             <MainText title={'Best Friends and Family'} showIcon={true} setting={true} gradientColor={[b1, b2]} />
-            <Wrapper style={styles.wrapper}>
+            <Wrapper>
                 <LinearGradient colors={[b1, b2]} style={styles.gradient}>
                     <Ionicons name='checkmark-circle' size={97} color={"#fff"} />
                 </LinearGradient>
@@ -83,12 +83,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-    },
-    wrapper: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
     },
     gradient: {
         borderRadius: 500,

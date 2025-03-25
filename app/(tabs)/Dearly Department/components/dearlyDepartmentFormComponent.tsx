@@ -7,10 +7,17 @@ import {
 } from 'react-native';
 import { Ionicons, FontAwesome, AntDesign, MaterialIcons } from '@expo/vector-icons';
 
-const DearlyDepartmentFormComponent = ({ name, onPress, iconType = 'Ionicons', iconName, value, setValue }) => {
-    const [error, setError] = useState(null);
+const DearlyDepartmentFormComponent: any = ({ 
+    name = 'Enter hobbies', 
+    onPress = () => {}, 
+    iconType = 'Ionicons', 
+    iconName = 'add' as keyof typeof Ionicons.glyphMap, 
+    value = '', 
+    setValue = (value: string) => {} 
+}) => {
+    const [error, setError] = useState<string | null>(null);
 
-    const handleHobbyChange = (text) => {
+    const handleHobbyChange = (text: string) => {
         // Split hobbies by comma and filter empty strings
         const hobbies = text.split(',').map(h => h.trim()).filter(h => h);
 
@@ -41,18 +48,17 @@ const DearlyDepartmentFormComponent = ({ name, onPress, iconType = 'Ionicons', i
                 value={value}
                 onChangeText={handleHobbyChange}
                 style={[styles.textInput, error && styles.errorInput]}
-                onPress={onPress}
                 multiline
                 maxLength={1000} // Optional character limit
             />
             {iconType === 'Ionicons' ? (
-                <Ionicons name={iconName} size={14} color="#858383" style={styles.icon} />
+                <Ionicons name={iconName as keyof typeof Ionicons.glyphMap} size={14} color="#858383" style={styles.icon} />
             ) : iconType === 'FontAwesome' ? (
-                <FontAwesome name={iconName} size={14} color="#858383" style={styles.icon} />
+                <FontAwesome name={iconName as keyof typeof FontAwesome.glyphMap} size={14} color="#858383" style={styles.icon} />
             ) : iconType === 'MaterialIcons' ? (
-                <MaterialIcons name={iconName} size={14} color="#858383" style={styles.icon} />
+                <MaterialIcons name={iconName as keyof typeof MaterialIcons.glyphMap} size={14} color="#858383" style={styles.icon} />
             ) : iconType === 'AntDesign' ? (
-                <AntDesign name={iconName} size={14} color="#858383" style={styles.icon} />
+                <AntDesign name={iconName as keyof typeof AntDesign.glyphMap} size={14} color="#858383" style={styles.icon} />
             ) : null}
 
             {error && (

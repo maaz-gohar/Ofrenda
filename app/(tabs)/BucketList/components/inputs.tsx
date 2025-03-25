@@ -18,7 +18,7 @@ const b2 = "rgba(249, 244, 251, 1)";
 export default function Inputs() {
     const router = useRouter();
     const params = useLocalSearchParams();
-    const text = params.text; // Get the title from the query params or use a default value
+    const text = Array.isArray(params.text) ? params.text.join(' ') : params.text || ''; // Ensure text is a string
     const [noteText, setNoteText] = useState('');
     const [visibleModal, setVisibleModal] = useState(false);
     const [listType, setListType] = useState('none'); // 'none', 'bullet', 'number'
@@ -27,11 +27,11 @@ export default function Inputs() {
     const selection = useRef({ start: 0, end: 0 });
     const textInputRef = useRef(null);
 
-    const handleSelectionChange = (event) => {
+    const handleSelectionChange = (event:any) => {
         selection.current = event.nativeEvent.selection;
     };
 
-    const handleNoteChange = (text) => {
+    const handleNoteChange = (text:any) => {
         const lines = text.split('\n');
         const currentLine = lines[lines.length - 1] || '';
 
@@ -113,7 +113,7 @@ export default function Inputs() {
         setNoteText(text);
     };
 
-    const convertSelectedTextToList = (type) => {
+    const convertSelectedTextToList = (type:any) => {
         const start = selection.current.start;
         const end = selection.current.end;
 

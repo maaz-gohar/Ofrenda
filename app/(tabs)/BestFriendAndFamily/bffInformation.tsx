@@ -17,7 +17,7 @@ import { useRouter } from 'expo-router';
 import AncestorsComponent from '../Dearly Department/components/ancestorsComponent';
 import MainText from '../components/topText';
 import MainButton from '../components/button';
-import Wrapper from '../wrapper';
+import Wrapper from '../components/wrapper';
 // import MainText from './components/topText';
 
 const b1 = "rgba(94, 164, 253, 1)";

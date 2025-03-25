@@ -15,7 +15,7 @@ import MainText from '../components/topText';
 import MainButton from '../components/button';
 
 import AddDearlyDepartmentComponent from '../Dearly Department/components/dearlyDepartmentImage';
-import Wrapper from '../wrapper';
+import Wrapper from '../components/wrapper';
 
 
 // import MainText from './components/topText';

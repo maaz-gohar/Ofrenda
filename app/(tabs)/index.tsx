@@ -25,7 +25,7 @@ export default function HomeScreen() {
           <ImageBackground
             source={require('../../assets/images/auth/main_bg.jpg')}
             style={[styles.bg_main, {  width }]}
-            resizeMode="streched"
+            resizeMode="stretch"
           >
             <View style={styles.content}>
               <Text style={styles.text}>Create Your</Text>
@@ -36,10 +36,7 @@ export default function HomeScreen() {
 
               <MainButton
                 title={'Get Started'}
-                // onPress={() => router.push('/paymentMethod')}
                 onPress={() => router.push('/Dearly Department/mainScreen')}
-              // onPress={() => router.push('/BestFriendAndFamily/mainScreen')}
-              // onPress={() => router.push('/BucketList/selectBucketListPremium')}
               />
             </View>
           </ImageBackground>

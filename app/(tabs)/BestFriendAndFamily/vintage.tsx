@@ -13,7 +13,7 @@ import TabBar from '../components/tabBar';
 import CollegeDesignComponent from './components/collegeDesignComponent';
 import FrameComponent from '../Dearly Department/components/frameComponent';
 import { useRouter } from 'expo-router';
-import Wrapper from '../wrapper';
+import Wrapper from '../components/wrapper';
 // import CollegeDesignComponent from './components/CollegeDesignComponent';
 
 const b1 = "rgba(94, 164, 253, 1)";

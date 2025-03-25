@@ -14,7 +14,7 @@ import MainText from '../components/topText';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import MainButton from '../components/button';
 import TabBar from '../components/tabBar';
-import Wrapper from '../wrapper';
+import Wrapper from '../components/wrapper';
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";

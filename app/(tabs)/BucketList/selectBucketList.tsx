@@ -21,7 +21,7 @@ export default function SelectBucketList() {
 
     const [params, setParams] = React.useState({ route: '', text: '' });
 
-    const handleUpload = (route, text) => {
+    const handleUpload = (route: string, text: string) => {
         setParams({ route, text });
         router.push({
             pathname: route,

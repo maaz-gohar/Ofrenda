@@ -36,10 +36,12 @@ export default function DearlyDepartmentForm() {
     const [dod, setDod] = useState(params.dod as string || 'Enter DOD');
     const [hobbies, setHobbies] = useState(params.hobbies || '');
     const [selectedImage, setSelectedImage] = useState(params.selectedImage || '');
-    const [dynamicFields, setDynamicFields] = useState([]);
+    const [dynamicFields, setDynamicFields] = useState<{ id: number; title: string; value: string }[]>([]);
     const [relationship, setRelationship] = useState(params.relationship || '');
     const [ancestorRelationship, setAncestorRelationship] = useState(params.ancestorRelationship || '');
     const [selectedFoodImage, setSelectedFoodImage] = useState(params.selectedFoodImage || '');
+
+    
 
     useEffect(() => {
         if (params.selectedImage) {
@@ -73,10 +75,10 @@ export default function DearlyDepartmentForm() {
     };
 
     const addAnotherField = () => {
-        setDynamicFields([...dynamicFields, { id: dynamicFields.length, title: '', value: '' }]);
+        setDynamicFields([...dynamicFields , { id: dynamicFields.length, title: '', value: '' }]);
     };
 
-    const handleFieldChange = (index, field, value) => {
+    const handleFieldChange = (index: number, field: string, value: string) => {
         const updatedFields = dynamicFields.map((item, idx) => {
             if (idx === index) {
                 return { ...item, [field]: value };
@@ -131,7 +133,7 @@ export default function DearlyDepartmentForm() {
                                         food,
                                         relationship,
                                         ancestorRelationship,
-                                        dynamicFields,
+                                        dynamicFields: JSON.stringify(dynamicFields),
                                         selectedImage
                                     }
                                 })}
@@ -139,7 +141,7 @@ export default function DearlyDepartmentForm() {
 
                             <DropdownComponent
                                 placeholder="Select Relationship"
-                                onSelect={(value) => setRelationship(value)}
+                                onSelect={(value:string) => setRelationship(value)}
                             />
 
                             {/* Conditionally render Relationship with Ancestors field */}
@@ -197,17 +199,17 @@ export default function DearlyDepartmentForm() {
                                 onPress={() => router.push('/Dearly Department/selectFood')}
                             />
                             {dynamicFields.map((field, index) => (
-                                <View key={field.id} style={styles.fullWidth}>
+                                <View key={field.id}>
                                     <DearlyDepartmentFormComponent
                                         name={`Title ${index + 1}`}
                                         value={field.title}
-                                        setValue={(value) => handleFieldChange(index, 'title', value)}
+                                        setValue={(value:string) => handleFieldChange(index, 'title', value)}
                                         placeholder="Title"
                                     />
                                     <DearlyDepartmentFormComponent
                                         name={`Value ${index + 1}`}
                                         value={field.value}
-                                        setValue={(value) => handleFieldChange(index, 'value', value)}
+                                        setValue={(value:string) => handleFieldChange(index, 'value', value)}
                                     />
                                 </View>
                             ))}

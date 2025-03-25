@@ -12,7 +12,7 @@ import {
 import MainText from '../components/topText';
 import { useSearchParams } from 'expo-router/build/hooks';
 import TabBar from '../components/tabBar';
-import Wrapper from '../wrapper';
+import Wrapper from '../components/wrapper';
 import { Ionicons } from '@expo/vector-icons';
 
 const b1 = "rgba(94, 164, 253, 1)";

@@ -12,27 +12,28 @@ import { useRouter } from 'expo-router';
 
 interface BucketListComponentProps {
     showIcon?: boolean;
-    IconName?: string;
+    IconName?: "search" | "anchor" | "bold" | "link" | "at" | "filter" | "medium" | "justify" | "key" | "map" | "code" | "picture" | "ruby" | "ellipse" | "line" | "stop" | "locked" | "android" | undefined;
     showText?: boolean;
-    text: string;
-    route: string;
+    text?: string;
+    route?: string;
     image: any;
+    onPress?: (route: string, text: string) => void; 
 }
 
-export default function BucketListComponent({ showIcon = true, IconName, showText = false, text, route, image , value , setValue}: BucketListComponentProps) {
+export default function BucketListComponent({ showIcon = true, IconName, showText = false, text, onPress, image}: BucketListComponentProps) {
     const router = useRouter();
 
     // Helper function to handle navigation
     const handlePress = () => {
-        const targetRoute = text === 'Natural Disaster' ? '/BucketList/naturalDisaster' : route;
-        router.push(`${targetRoute}?text=${encodeURIComponent(text)}`);
+        const targetRoute = text === 'Natural Disaster' ? '/BucketList/naturalDisaster' : onPress;
+        router.push(`${targetRoute}?text=${encodeURIComponent(text || '')}`);
     };
 
     const renderContent = () => {
         return (
             <>
                 {showText && <Text style={styles.BucketText}>{text}</Text>}
-                {showIcon && <Fontisto name={IconName} size={14} color={"#000"} style={styles.icon} />}
+                {showIcon && IconName && <Fontisto name={IconName} size={14} color={"#000"} style={styles.icon} />}
             </>
         );
     };

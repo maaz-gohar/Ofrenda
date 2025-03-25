@@ -2,9 +2,6 @@ import React from 'react';
 import {
     StyleSheet,
     View,
-    ScrollView,
-    KeyboardAvoidingView,
-    Platform
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';

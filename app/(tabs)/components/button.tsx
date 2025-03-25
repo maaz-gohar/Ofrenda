@@ -3,13 +3,20 @@ import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 
-const MainButton = ({
-    title,
+const MainButton: React.FC<{
+    title?: string;
+    onPress: () => void;
+    showIcon?: boolean;
+    gradientColor?: string[];
+    shadowColor?: string;
+    fontSize?: number;
+}> = ({
+    title = '',
     onPress,
     showIcon = false,
     gradientColor = ["#FFC70BE5", "#ffe9a1"],
     shadowColor = "#FFC70BE5",
-    fontSize = 18, // Default font size
+    fontSize = 18, 
 }) => {
     return (
         <View style={styles.btn_view}>

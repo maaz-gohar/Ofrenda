@@ -16,7 +16,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import MainText from './components/topText';
 import NotisficationContainer from './components/notisficationContainer';
 import TabBar from './components/tabBar';
-import Wrapper from './wrapper';
+import Wrapper from './components/wrapper';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";

@@ -6,34 +6,28 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import { goBack } from '@/utils';
-import { useRootNavigationState, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 
-const b1 = "#FFC70BE5"; // Gradient color 1
-const b2 = "#ffe9a1";   // Gradient color 2
-const bg = "rgba(0,0,0, 0.45)"; // Background color for icons
+const b1 = "#FFC70BE5"; 
+const b2 = "#ffe9a1";   
+const bg = "rgba(0,0,0, 0.45)"; 
 
 export default function MainText({
-    title,
+    title = "",
     showIcon = false,
     setting = false,
-    description,
+    description = "",
     descriptioncondition = false,
     gradientColor = [b1, b2],
-    onBackPress, // Add this prop for custom back handling
 }) {
     const router = useRouter();
 
     const handleBack = () => {
-        if (onBackPress) {
-            onBackPress();
-        } else {
-            router.back();
-        }
+        router.back();
     };
 
     return (
-        <LinearGradient colors={gradientColor} style={styles.gradient}>
+        <LinearGradient colors={gradientColor as [string, string, ...string[]]} style={styles.gradient}>
             <View style={styles.main}>
                 {showIcon && (
                     <TouchableOpacity
@@ -53,7 +47,6 @@ export default function MainText({
                 </View>
                 {setting && (
                     <TouchableOpacity
-                        // onPress={() => navigation.navigate('Settings')} // Navigate to the settings screen
                         onPress={() => router.push('/setting')}
                         style={styles.iconContainer2}
                         accessibilityLabel="Settings"
