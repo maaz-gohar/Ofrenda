@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import MainButton from './components/button';
+import MainButton from '../../components/auth/button';
 
 export default function HomeScreen() {
   const { height, width } = Dimensions.get('window');
@@ -33,10 +33,9 @@ export default function HomeScreen() {
               <Text style={styles.text_small}>
                 Invites users to engage in the process of creating their memorials.
               </Text>
-
               <MainButton
                 title={'Get Started'}
-                onPress={() => router.push('/Dearly Department/mainScreen')}
+                onPress={() => router.push('/dearly-departed/main-screen')}
               />
             </View>
           </ImageBackground>

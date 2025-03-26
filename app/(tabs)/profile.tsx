@@ -14,21 +14,21 @@ import {
 } from 'react-native';
 import { MaterialIcons, Ionicons, Octicons } from '@expo/vector-icons';
 import { LinearGradient } from "expo-linear-gradient";
-import FloatingLabelInput from './components/input';
-import MainButton from './components/button';
-import MainText from './components/topText';
-import InfoComponent from './components/infoComponent';
-import TabBar from './components/tabBar';
+import FloatingLabelInput from '../../components/auth/input';
+import MainButton from '../../components/auth/button';
+import MainText from '../../components/auth/top-text';
+import InfoComponent from '../../components/auth/info-component';
+import TabBar from '../../components/auth/tab-bar';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
-import Wrapper from './components/wrapper';
+import Wrapper from '../../components/auth/wrapper';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
 
 export default function Profile() {
     const [modalVisible, setModalVisible] = useState(false);
-    const [profileImage, setProfileImage] = useState(null);
+    const [profileImage, setProfileImage] = useState<string | null>(null);
 
     const CloseModal = () => setModalVisible(false);
 

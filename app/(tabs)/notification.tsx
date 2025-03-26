@@ -10,13 +10,13 @@ import {
     Image
 } from 'react-native';
 import { FontAwesome, FontAwesome6, Ionicons } from '@expo/vector-icons';
-import FloatingLabelInput from './components/input';
-import MainButton from './components/button';
+import FloatingLabelInput from '../../components/auth/input';
+import MainButton from '../../components/auth/button';
 import { LinearGradient } from "expo-linear-gradient";
-import MainText from './components/topText';
-import NotisficationContainer from './components/notisficationContainer';
-import TabBar from './components/tabBar';
-import Wrapper from './components/wrapper';
+import MainText from '../../components/auth/top-text';
+import NotisficationContainer from '../../components/auth/notisfication-container';
+import TabBar from '../../components/auth/tab-bar';
+import Wrapper from '../../components/auth/wrapper';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";

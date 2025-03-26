@@ -11,8 +11,8 @@ import {
     Image
 } from 'react-native';
 import { AntDesign, FontAwesome } from '@expo/vector-icons'; // Updated import
-import MainButton from './components/button';
-import MainText from './components/topText';
+import MainButton from '../../components/auth/button';
+import MainText from '../../components/auth/top-text';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient'; // Updated import
 
@@ -43,7 +43,7 @@ export default function Congratulations() {
                 </View>
                 <View style={styles.endView}>
                     <MainButton title="Explore App"
-                        onPress={() => router.push('/Dearly Department/dearlyDepartmentForm')}
+                        onPress={() => router.push('/dearly-departed/dearly-department-form')}
                     />
                 </View>
             </ScrollView>

@@ -12,14 +12,14 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { FontAwesome, FontAwesome6, Ionicons } from '@expo/vector-icons';
-import FloatingLabelInput from './components/input';
-import MainButton from './components/button';
+import FloatingLabelInput from '../../components/auth/input';
+import MainButton from '../../components/auth/button';
 import { LinearGradient } from "expo-linear-gradient";
-import MainText from './components/topText';
-import NotisficationContainer from './components/notisficationContainer';
-import InfoComponent from './components/infoComponent';
+import MainText from '../../components/auth/top-text';
+import NotisficationContainer from '../../components/auth/notisfication-container';
+import InfoComponent from '../../components/auth/info-component';
 import { TextInput } from 'react-native-gesture-handler';
-import TabBar from './components/tabBar';
+import TabBar from '../../components/auth/tab-bar';
 import { useRouter } from 'expo-router';
 
 
