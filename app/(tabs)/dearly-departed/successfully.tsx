@@ -21,27 +21,14 @@ const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
 
 export default function Successfully() {
-    // const { height, width } = Dimensions.get("window");
+    
     const router = useRouter();
-
     const params = useLocalSearchParams();
-
-
-
-    // worked:
-    // memory:
-    // health:
-    // hobbies: 
-    // dob:
-    // dod:
-    // noteableContribution:
-    // movie:
-    // food:
-
-
 
     const handleViewDetails = () => {
         const forwardParams = {
+            selectedFrame: params.selectedFrame,
+            frameImage: params.frameImage,
             worked: params.worked,
             name: params.name,
             memory: params.memory,
@@ -55,6 +42,7 @@ export default function Successfully() {
             relationship: params.relationship,
             ancestorRelationship: params.ancestorRelationship,
             dynamicFields: params.dynamicFields,
+            selectedImage: params.selectedImage
 
         }
         console.log("success", forwardParams)
@@ -64,7 +52,6 @@ export default function Successfully() {
             params: forwardParams
         })
     }
-
 
     return (
         <View style={styles.container}>

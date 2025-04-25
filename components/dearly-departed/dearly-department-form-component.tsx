@@ -16,6 +16,7 @@ interface DearlyDepartmentFormProps {
     iconName?: keyof typeof Ionicons.glyphMap | keyof typeof FontAwesome.glyphMap | keyof typeof MaterialIcons.glyphMap | keyof typeof AntDesign.glyphMap;
     value?: any;
     setValue?: (value: string) => void;
+    placeholder?: string;
 }
 
 const DearlyDepartmentFormComponent: React.FC<DearlyDepartmentFormProps> = ({
@@ -80,6 +81,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         width: '93%',
         flexDirection: 'row',
+        alignSelf: 'center',
     },
     textInput: {
         flex: 1,

@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingTop: 1,
         zIndex: 10,
-        marginTop: -15,
+        marginTop: -35,
         justifyContent: "flex-start"
     },
     paymentContainer: {

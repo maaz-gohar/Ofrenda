@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -21,34 +21,9 @@ export default function UploadFile() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const params = useLocalSearchParams();
 
-    // Request camera permissions and launch camera
-    const SelectImage = async () => {
-        try {
-            const { status } = await ImagePicker.requestCameraPermissionsAsync();
-            if (status !== 'granted') {
-                alert('Camera permission is required to take a photo.');
-                return;
-            }
-
-            let result = await ImagePicker.launchCameraAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                allowsEditing: true,
-                aspect: [1, 1],
-                quality: 1
-            });
-
-            if (!result.canceled) {
-                setSelectedImage(result.assets[0].uri);
-            }
-        } catch (error) {
-            console.log('Error taking photo:', error);
-        }
-    };
-
-    // Launch image library
     const PickImage = async () => {
         try {
-            let result = await ImagePicker.launchImageLibraryAsync({
+            const result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 allowsEditing: true,
                 aspect: [1, 1],
@@ -57,41 +32,51 @@ export default function UploadFile() {
 
             if (!result.canceled) {
                 setSelectedImage(result.assets[0].uri);
+                console.log("Image picked:", result.assets[0].uri);
             }
         } catch (error) {
             console.log('Error picking image:', error);
         }
     };
 
-    // Handle upload completion and navigate with parameters
-    const handleUploadComplete = () => {
-        if (selectedImage) {
-            const forwardParams = {
-                worked: params.worked,
-                name: params.name,
-                memory: params.memory,
-                health: params.health,
-                hobbies: params.hobbies,
-                dob: params.dob,
-                dod: params.dod,
-                noteableContribution: params.noteableContribution,
-                movie: params.movie,
-                food: params.food,
-                relationship: params.relationship,
-                ancestorRelationship: params.ancestorRelationship,
-                dynamicFields: params.dynamicFields,
-                selectedImage: selectedImage, // Use the selected image here
-                selectedFoodImage: params.selectedFoodImage // Pass the food image if needed
-            };
+    const SelectImage = async () => {
+        try {
+            const { status } = await ImagePicker.requestCameraPermissionsAsync();
+            if (status !== 'granted') {
+                console.log("Camera permission not granted");
+                return;
+            }
 
-            // Navigate back to the form with updated parameters
-            router.push({
-                pathname: '/dearly-departed/dearly-department-form',
-                params: forwardParams
+            const result = await ImagePicker.launchCameraAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 1
             });
+
+            if (!result.canceled) {
+                setSelectedImage(result.assets[0].uri);
+                console.log("Photo taken:", result.assets[0].uri);
+            }
+        } catch (error) {
+            console.log('Error taking photo:', error);
         }
     };
 
+    const handleUploadComplete = () => {
+        if (!selectedImage) return;
+
+        // Prevent repeated routing loops
+        console.log("Navigating to form with image:", selectedImage);
+
+        router.replace({
+            pathname: '/dearly-departed/dearly-department-form',
+            params: {
+                ...params,
+                selectedImage: selectedImage,
+            }
+        });
+    };
 
     return (
         <View style={styles.container}>
@@ -106,22 +91,12 @@ export default function UploadFile() {
                 <View style={styles.main}>
                     <Text style={styles.headerText}>Upload File Or Take Photos</Text>
                     <View style={styles.contentStyle}>
-                        <TouchableOpacity>
-                            <View style={styles.TextContainer}>
-                                <Text style={styles.text}>View Photo</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style={styles.TextContainer}>
-                                <Text style={styles.text}>Upload Photo</Text>
-                            </View>
-                        </TouchableOpacity>
                         <View style={styles.uploadContainer}>
                             <View style={styles.SelectPhoto}>
                                 <TouchableOpacity onPress={PickImage}>
                                     <View>
                                         <LinearGradient colors={[b1, b2]} style={styles.gradient}>
-                                            <MaterialIcons name='photo-library' size={37} color={"rgba(86, 86, 86, 1)"} />
+                                            <MaterialIcons name='photo-library' size={37} color="#565656" />
                                         </LinearGradient>
                                         <Text style={styles.selectText}>Select Photo</Text>
                                     </View>
@@ -129,7 +104,7 @@ export default function UploadFile() {
                                 <TouchableOpacity onPress={SelectImage}>
                                     <View>
                                         <LinearGradient colors={[b1, b2]} style={styles.gradient}>
-                                            <Ionicons name='camera-outline' size={37} color={"rgba(86, 86, 86, 1)"} />
+                                            <Ionicons name='camera-outline' size={37} color="#565656" />
                                         </LinearGradient>
                                         <Text style={styles.selectText}>Take Photo</Text>
                                     </View>
@@ -138,7 +113,10 @@ export default function UploadFile() {
 
                             {selectedImage && (
                                 <View style={styles.previewContainer}>
-                                    <Image source={{ uri: selectedImage }} style={styles.previewImage} />
+                                    <Image 
+                                        source={{ uri: selectedImage }} 
+                                        style={styles.previewImage} 
+                                    />
                                 </View>
                             )}
 
@@ -146,7 +124,6 @@ export default function UploadFile() {
                                 title={selectedImage ? "Use This Photo" : "Select a Photo"}
                                 onPress={handleUploadComplete}
                                 gradientColor={[b1, b2]}
-                                shadowColor='#FFC70B'
                                 disabled={!selectedImage}
                             />
                         </View>
@@ -187,19 +164,6 @@ const styles = StyleSheet.create({
         borderColor: "black",
         backgroundColor: "rgba(217, 217, 217, 0.8)",
         paddingVertical: 30,
-    },
-    TextContainer: {
-        backgroundColor: "#fff",
-        marginBottom: 30,
-        borderRadius: 250,
-        borderWidth: 1,
-        borderColor: "#000",
-        paddingVertical: 15,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    text: {
-        fontWeight: "500",
     },
     uploadContainer: {
         padding: 30,

@@ -3,10 +3,10 @@ import {
     StyleSheet,
     View,
     Text,
-    Dimensions,
     ScrollView,
     TouchableOpacity,
     Image,
+    Modal,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ScreenOrientation from 'expo-screen-orientation';
@@ -14,219 +14,290 @@ import MainText from '../../../components/auth/top-text';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import MainButton from '../../../components/auth/button';
 import TabBar from '../../../components/auth/tab-bar';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSearchParams } from 'expo-router/build/hooks';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
-
 
 export default function BffMainScreen() {
     const router = useRouter();
     const params = useLocalSearchParams();
     const [isLandscape, setIsLandscape] = useState(false);
-   
-   
-       // // Function to handle orientation changes
-       const updateOrientation = async () => {
-           const orientationInfo = await ScreenOrientation.getOrientationAsync();
-           const isLandscape =
-               orientationInfo === ScreenOrientation.Orientation.LANDSCAPE_LEFT ||
-               orientationInfo === ScreenOrientation.Orientation.LANDSCAPE_RIGHT;
-   
-           setIsLandscape(isLandscape);
-           if (isLandscape) {
-               await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
-           } else {
-               await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT);
-           }
-           await setTimeout(async () => {
-               await ScreenOrientation.unlockAsync();
-          }, 3000);
-       };
-   
-       useEffect(() => {
-           ScreenOrientation.unlockAsync();
-   
-           // Listen for orientation changes
-           const subscription = ScreenOrientation.addOrientationChangeListener((event) => {
-                   console.log(event.orientationInfo.orientation);
-               const isLandscape =
-                   event.orientationInfo.orientation === ScreenOrientation.Orientation.LANDSCAPE_LEFT ||
-                   event.orientationInfo.orientation === ScreenOrientation.Orientation.LANDSCAPE_RIGHT;
-               setIsLandscape(isLandscape);
-           });
-       
-   
-           // Cleanup listener on unmount
-           return () => {
-               ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
-               ScreenOrientation.removeOrientationChangeListener(subscription)};
-       }, [ScreenOrientation]);
-   
+    const searchParams = useSearchParams();
+    const [selectedFrameData, setSelectedFrameData] = useState<{
+        imageUri?: any;
+        frameId?: string;
+    }>({});
+    const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
-    const handleViewDetails = () => {
-        const forwardParams = {
-            worked: params.worked,
-            name: params.name,
-            memory: params.memory,
-            health: params.health,
-            hobbies: params.hobbies,
-            dob: params.dob,
-            dod: params.dod,
-            noteableContribution: params.noteableContribution,
-            movie: params.movie,
-            food: params.food,
-            relationship: params.relationship,
-            ancestorRelationship: params.ancestorRelationship,
-            dynamicFields: params.dynamicFields,
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                // Load selected frame
+                const storedFrame = await AsyncStorage.getItem('selectedFrame');
+                if (storedFrame) {
+                    const { imageUri } = JSON.parse(storedFrame);
+                    setSelectedFrameData({ imageUri });
+                }
+
+                // Load uploaded image from params or storage
+                if (params.selectedImage) {
+                    setUploadedImage(params.selectedImage.toString());
+                } else {
+                    const storedImage = await AsyncStorage.getItem('uploadedImage');
+                    if (storedImage) setUploadedImage(storedImage);
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
         };
 
-        console.log("Forwarding params to DisplayData:", forwardParams);
+        loadData();
+    }, [params.selectedImage]);
 
+    const frameImages = {
+        frame1: require('../../../assets/images/frames/frame1.png'),
+        frame2: require('../../../assets/images/frames/frame2.png'),
+        frame3: require('../../../assets/images/frames/frame3.png'),
+    };
+
+    const updateOrientation = async () => {
+        const orientation = await ScreenOrientation.getOrientationAsync();
+        const isLandscape = [ScreenOrientation.Orientation.LANDSCAPE_LEFT, 
+                           ScreenOrientation.Orientation.LANDSCAPE_RIGHT].includes(orientation);
+        
+        setIsLandscape(isLandscape);
+        await ScreenOrientation.lockAsync(
+            isLandscape 
+                ? ScreenOrientation.OrientationLock.PORTRAIT_UP
+                : ScreenOrientation.OrientationLock.LANDSCAPE_LEFT
+        );
+        
+        setTimeout(() => ScreenOrientation.unlockAsync(), 2000);
+    };
+
+    // Handle orientation changes
+    useEffect(() => {
+        const subscription = ScreenOrientation.addOrientationChangeListener(({ orientationInfo }) => {
+            setIsLandscape([ScreenOrientation.Orientation.LANDSCAPE_LEFT, 
+                          ScreenOrientation.Orientation.LANDSCAPE_RIGHT].includes(orientationInfo.orientation));
+        });
+
+        return () => {
+            ScreenOrientation.removeOrientationChangeListener(subscription);
+            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+        };
+    }, []);
+
+    const handleViewDetails = () => {
         router.push({
             pathname: '/dearly-departed/display-data',
-            params: forwardParams
+            params: {
+                selectedImage: params.selectedImage,
+                worked: params.worked,
+                name: params.name,
+                memory: params.memory,
+                health: params.health,
+                hobbies: params.hobbies,
+                dob: params.dob,
+                dod: params.dod,
+                noteableContribution: params.noteableContribution,
+                movie: params.movie,
+                food: params.food,
+                relationship: params.relationship,
+                ancestorRelationship: params.ancestorRelationship,
+                dynamicFields: params.dynamicFields,
+            },
         });
     };
 
-    // Display full-screen image view in landscape mode
+    const selectedImage = searchParams.get('selectedImage')
+
     if (isLandscape) {
         return (
-           <View style={styles.fullScreenContainer}>
-                <Image
-                    source={require('../../../assets/images/SelectOfrenda/3.png')}
-                    style={[
-                        styles.fullScreenImage
-                    ]}
-                    resizeMode="contain" // Use "contain" to fit the image within the screen
-                />
-                <TouchableOpacity
-                    onPress={updateOrientation} // Exit landscape mode and return to portrait
-                    style={[styles.icon, styles.fullScreenIcon]}
-                >
-                    <MaterialIcons name='fullscreen-exit' size={24} color={"#fff"} />
+            <View style={styles.fullScreenContainer}>
+                {selectedFrameData.imageUri && (
+                    <Image 
+                        source={selectedFrameData.imageUri} 
+                        style={styles.fullScreenFrame}
+                        resizeMode="contain"
+                        pointerEvents="none"
+                    />
+                )}
+                
+                {selectedImage && (
+                    <TouchableOpacity onPress={handleViewDetails} style={styles.imageContentContainer2}>
+                    <Image
+                        source={{ uri: selectedImage  }}
+                        style={styles.fullScreenContent}
+                        resizeMode="cover"
+                    />
+                    </TouchableOpacity>
+                )}
+                
+                <TouchableOpacity onPress={updateOrientation} style={styles.fullScreenIcon}>
+                    <MaterialIcons name="fullscreen-exit" size={24} color="#fff" />
                 </TouchableOpacity>
             </View>
         );
     }
 
-    // Display normal page in portrait mode
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
                 <MainText
-                    title={'Dearly Departed'}
+                    title="Dearly Departed"
                     showIcon={true}
                     setting={true}
                     gradientColor={[b1, b2]}
                 />
 
-                <View style={[styles.main]}>
-                    <View style={styles.imgcover}>
-                        <Image
-                            source={require('../../../assets/images/SelectOfrenda/3.png')}
-                            style={styles.img}
-                            resizeMode="cover"
-                        />
+                <View style={styles.main}>
+                    <View style={styles.frameContainer}>
+                        {selectedFrameData.imageUri ? (
+                            <>
+                                <Image 
+                                    source={selectedFrameData.imageUri} 
+                                    style={styles.frameImage}
+                                    resizeMode="cover"
+                                    pointerEvents="none"
+                                />
+                                {selectedImage && (
+                                    <TouchableOpacity onPress={handleViewDetails} style={styles.imageContentContainer}>
+                                        <Image
+                                            source={{ uri: selectedImage }}
+                                            style={styles.uploadedImage}
+                                            resizeMode="cover"
+                                        />
+                                    </TouchableOpacity>
+                                )}
+                            </>
+                        ) : (
+                            <Text style={styles.noFrameText}>No frame selected</Text>
+                        )}
+                        
                         <TouchableOpacity
-                            onPress={updateOrientation} // Enter landscape mode
+                            onPress={updateOrientation}
                             style={[styles.icon, styles.fullScreenButton]}
                         >
-                            <MaterialIcons name='fullscreen' size={20} color={"#fff"} />
+                            <MaterialIcons name="fullscreen" size={20} color="#fff" />
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.subbtn}>
-                        {/* <View> */}
+
+                    <View style={styles.controlsContainer}>
                         <View style={styles.actionButtonsContainer}>
-                            <TouchableOpacity style={styles.bg}>
-                                <Text>Edit</Text>
-                            </TouchableOpacity>
-                        {/* </View> */}
-                            <TouchableOpacity style={styles.bg}>
-                                <Text>Share</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.bg}>
-                                <Text>Cast</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.bg}>
-                                <Text>Print</Text>
-                            </TouchableOpacity>
+                            {["Edit", "Share", "Cast", "Print"].map((action) => (
+                                <TouchableOpacity key={action} style={styles.actionButton}>
+                                    <Text style={styles.buttonText}>{action}</Text>
+                                </TouchableOpacity>
+                            ))}
                         </View>
-                    </View>
-                    <View style={styles.viewInfoContainer}>
-                        <View style={styles.buttonWrapper}>
+                        
+                        <View style={styles.infoButtonContainer}>
                             <MainButton
-                                title={"View Information"}
+                                title="View Information"
                                 onPress={handleViewDetails}
                                 gradientColor={[b1, b2]}
-                            // shadowColor='rgba(94, 164, 253, 1)'
                             />
                         </View>
                     </View>
                 </View>
             </ScrollView>
+            
             <TabBar />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+    container: { 
+        flex: 1, 
+        backgroundColor: "#fff" 
     },
-    scrollViewContainer: {
-        flexGrow: 1,
-        justifyContent: 'center',
+    scrollViewContainer: { 
+        flexGrow: 1 
     },
     main: {
         paddingVertical: 20,
-        flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
-        alignItems: "center",
+        alignItems: 'center',
         paddingTop: 30,
         marginTop: -35,
     },
-    imgcover: {
-        width: "90%",
+    frameContainer: {
+        width: '90%',
         height: 282,
         borderRadius: 8,
         borderWidth: 3,
+        // position: 'relative',
+        // overflow: 'hidden',
+        backgroundColor: '#f0f0f0',
+    },
+    frameImage: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        zIndex: 2,
+        flex:1
+    },
+    imageContentContainer: {
         position: 'relative',
+        width: '32%',
+        height: '60%',
+        top: '2%',
+        left: '42%',
+        zIndex: 1,
+        // backgroundColor: 'rgba(255,255,255,0.9)',
+        // borderRadius: 8,
         overflow: 'hidden',
     },
-    img: {
-        flex: 1,
-        width: "100%",
-        borderRadius: 4,
-    },
-    icon: {
-        position: "absolute",
-        top: 10,
-        right: 10,
+    imageContentContainer2: {
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        // top: '5%',
+        right: '40.2%',
         zIndex: 1,
-        borderWidth: 2,
-        borderColor: "#fff",
-        borderRadius: 50,
-        padding: 5,
+        // backgroundColor: 'rgba(255,255,255,0.9)',
+        // borderRadius: 8,
+        overflow: 'hidden',
     },
-    subbtn: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: "100%",
-        padding: 20,
+    uploadedImage: {
+        width: '50%',
+        height: '50%',
+    },
+    noFrameText: {
+        textAlign: 'center',
+        marginTop: 120,
+        color: '#666',
+        fontSize: 16,
+    },
+    controlsContainer: {
+        width: '100%',
+        paddingHorizontal: 20,
+        marginTop: 20,
     },
     actionButtonsContainer: {
-        flexDirection: "row",
-        width: "100%",
-        justifyContent: "space-between",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 20,
     },
-    bg: {
+    actionButton: {
         backgroundColor: b1,
         paddingHorizontal: 20,
-        paddingVertical: 7,
-        borderRadius: 250,
+        paddingVertical: 10,
+        borderRadius: 25,
+    },
+    buttonText: {
+        // color: '#fff',
+        fontWeight: '600',
+    },
+    infoButtonContainer: {
+        width: '100%',
+        marginVertical: 15,
     },
     fullScreenContainer: {
         flex: 1,
@@ -234,9 +305,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    fullScreenImage: {
+    fullScreenFrame: {
         width: '100%',
         height: '100%',
+        position: 'absolute',
+        zIndex:2
+    },
+    fullScreenContent: {
+        position: 'absolute',
+        width: "10%",
+        height: "21%",
+        top: '15%',
+        right: '5%',
+        zIndex: 1,
+        // backgroundColor: 'rgba(255,255,255,0.9)',
+        // borderRadius: 8,
+        overflow: 'hidden',
     },
     fullScreenIcon: {
         position: 'absolute',
@@ -246,18 +330,17 @@ const styles = StyleSheet.create({
         padding: 8,
         zIndex: 2,
     },
-    fullScreenButton: {
+    icon: {
         position: 'absolute',
         top: 10,
-        left: 10,
-        padding: 5,
+        right: 10,
+        zIndex: 3,
+        borderWidth: 2,
+        borderColor: '#fff',
         borderRadius: 50,
-        width: 35,
+        padding: 5,
     },
-    viewInfoContainer: {
-        flexDirection: 'row',
-    },
-    buttonWrapper: {
-        width: "95%",
+    fullScreenButton: {
+        backgroundColor: 'rgba(0,0,0,0.3)',
     },
 });

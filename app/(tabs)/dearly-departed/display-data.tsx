@@ -34,34 +34,6 @@ export default function DisplayData() {
     const ancestorRelationship = searchParams.get('ancestorRelationship');
     const parsedDynamicFields = dynamicFields ? JSON.parse(dynamicFields) : [];
 
-
-
-    console.log(worked,
-        memory,
-        health,
-        hobbies,
-        dob,
-        dod,
-        noteableContribution,
-        movie,
-        food)
-
-    // let parsedHobbies = [];
-    // try {
-    //     if (hobbies) {
-    //         // Check if hobbies is already an array
-    //         if (Array.isArray(hobbies)) {
-    //             parsedHobbies = hobbies;
-    //         } else {
-    //             parsedHobbies = JSON.parse(hobbies);
-    //         }
-    //     }
-    // } catch (error) {
-    //     console.error("Error parsing hobbies:", error);
-    // }
-    // Join hobbies with commas
-    // const hobbiesString = parsedHobbies.join(', ');
-
         const handleShare = async () => {
             try {
                 const result = await Share.share({

@@ -8,55 +8,58 @@ import {
     KeyboardAvoidingView,
     Platform,
 } from 'react-native';
-import { LinearGradient } from "expo-linear-gradient";
 import MainText from '../../../components/auth/top-text';
 import DearlyDepartmentFormComponent from '../../../components/dearly-departed/dearly-department-form-component';
 import DropdownComponent from '../../../components/auth/dropdown';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import DatePickerComponent from '../../../components/dearly-departed/date-picker';
 import MainButton from '../../../components/auth/button';
-import FrameComponent from '../../../components/dearly-departed/frame-component';
 import { AntDesign } from '@expo/vector-icons';
 import TabBar from '../../../components/auth/tab-bar';
-import { useRoute } from '@react-navigation/native';
+import { useSearchParams } from 'expo-router/build/hooks';
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
 
 export default function DearlyDepartmentForm() {
     const params = useLocalSearchParams();
+    const searchParams = useSearchParams();
     const router = useRouter();
 
-    const [name, setName] = useState(params.name || '');
-    const [worked, setWorked] = useState(params.worked || '');
-    const [memory, setMemory] = useState(params.memory || '');
-    const [health, setHealth] = useState(params.health || '');
-    const [noteableContribution, setNoteableContribution] = useState(params.noteableContribution || '');
-    const [movie, setMovie] = useState(params.movie || '');
-    const [food, setFood] = useState(params.food || '');
-    const [dob, setDob] = useState(params.dob as string || 'Enter DOB');
-    const [dod, setDod] = useState(params.dod as string || 'Enter DOD');
-    const [hobbies, setHobbies] = useState(params.hobbies || '');
-    const [selectedImage, setSelectedImage] = useState(params.selectedImage || '');
-    const [dynamicFields, setDynamicFields] = useState<{ id: number; title: string; value: string }[]>([]);
-    const [relationship, setRelationship] = useState(params.relationship || '');
-    const [ancestorRelationship, setAncestorRelationship] = useState(params.ancestorRelationship || '');
-    const [selectedFoodImage, setSelectedFoodImage] = useState(params.selectedFoodImage || '');
+    // State management
+    const [name, setName] = useState(params.name?.toString() || '');
+    const [worked, setWorked] = useState(params.worked?.toString() || '');
+    const [memory, setMemory] = useState(params.memory?.toString() || '');
+    const [health, setHealth] = useState(params.health?.toString() || '');
+    const [noteableContribution, setNoteableContribution] = useState(params.noteableContribution?.toString() || '');
+    const [movie, setMovie] = useState(params.movie?.toString() || '');
+    const [food, setFood] = useState(params.food?.toString() || '');
+    const [dob, setDob] = useState(params.dob?.toString() || 'Enter DOB');
+    const [dod, setDod] = useState(params.dod?.toString() || 'Enter DOD');
+    const [hobbies, setHobbies] = useState(params.hobbies?.toString() || '');
+    const [selectedImage, setSelectedImage] = useState(params.selectedImage?.toString() || '');
+    const [dynamicFields, setDynamicFields] = useState<{ id: number; title: string; value: string }[]>(
+        params.dynamicFields ? JSON.parse(params.dynamicFields.toString()) : []
+    );
+    const [relationship, setRelationship] = useState(params.relationship?.toString() || '');
+    const [ancestorRelationship, setAncestorRelationship] = useState(params.ancestorRelationship?.toString() || '');
+    const [selectedFoodImage, setSelectedFoodImage] = useState(params.selectedFoodImage?.toString() || '');
 
-    
-
-    useEffect(() => {
-        if (params.selectedImage) {
-            setSelectedImage(params.selectedImage.toString());
-        }
-        if (params.selectedFoodImage) {
-            setSelectedFoodImage(params.selectedFoodImage.toString());
-        }
-    }, [params]);
+    // useEffect(() => {
+    //     if (params.selectedImage) {
+    //         setSelectedImage(params.selectedImage.toString());
+    //     }
+    //     if (params.selectedFoodImage) {
+    //         setSelectedFoodImage(params.selectedFoodImage.toString());
+    //     }
+    //     if (params.dynamicFields) {
+    //         setDynamicFields(JSON.parse(params.dynamicFields.toString()));
+    //     }
+    // }, [params]);
 
     const handleSave = () => {
         router.push({
-            pathname: '/dearly-departed/successfully',
+            pathname: '/dearly-departed/select-ofrenda',
             params: {
                 name,
                 worked,
@@ -72,21 +75,21 @@ export default function DearlyDepartmentForm() {
                 selectedFoodImage,
                 relationship,
                 ancestorRelationship,
+                selectedImage,
+                frameId: params.frameId,
+                fromForm: 'true'
             },
         });
     };
 
     const addAnotherField = () => {
-        setDynamicFields([...dynamicFields , { id: dynamicFields.length, title: '', value: '' }]);
+        setDynamicFields([...dynamicFields, { id: Date.now(), title: '', value: '' }]);
     };
 
     const handleFieldChange = (index: number, field: string, value: string) => {
-        const updatedFields = dynamicFields.map((item, idx) => {
-            if (idx === index) {
-                return { ...item, [field]: value };
-            }
-            return item;
-        });
+        const updatedFields = dynamicFields.map((item, idx) =>
+            idx === index ? { ...item, [field]: value } : item
+        );
         setDynamicFields(updatedFields);
     };
 
@@ -115,7 +118,7 @@ export default function DearlyDepartmentForm() {
 
                         <View style={styles.centeredField}>
                             <DearlyDepartmentFormComponent name="Enter Name" value={name} setValue={setName} />
-                            <DearlyDepartmentFormComponent
+                            {/* <DearlyDepartmentFormComponent
                                 name="Upload Picture"
                                 iconName="upload"
                                 iconType="AntDesign"
@@ -142,11 +145,38 @@ export default function DearlyDepartmentForm() {
                                         },
                                     });
                                 }}
+                            /> */}
+
+                            <DearlyDepartmentFormComponent
+                                name="Upload Picture"
+                                iconName="upload"
+                                iconType="AntDesign"
+                                value={selectedImage}
+                                onPress={() => router.push({
+                                    pathname: '/dearly-departed/upload-file',
+                                    params: { 
+                                        ...params, frameId: params.frameId,
+                                        worked,
+                                        name,
+                                        memory,
+                                        health,
+                                        hobbies,
+                                        dob,
+                                        dod,
+                                        noteableContribution,
+                                        movie,
+                                        food,
+                                        relationship,
+                                        ancestorRelationship,
+                                        dynamicFields: JSON.stringify(dynamicFields),
+                                        selectedImage,
+                                    }
+                                })}
                             />
 
                             <DropdownComponent
                                 placeholder="Select Relationship"
-                                onSelect={(value:string) => setRelationship(value)}
+                                onSelect={(value: string) => setRelationship(value)}
                             />
 
                             {/* Conditionally render Relationship with Ancestors field */}
@@ -208,13 +238,13 @@ export default function DearlyDepartmentForm() {
                                     <DearlyDepartmentFormComponent
                                         name={`Title ${index + 1}`}
                                         value={field.title}
-                                        setValue={(value:string) => handleFieldChange(index, 'title', value)}
+                                        setValue={(value: string) => handleFieldChange(index, 'title', value)}
                                         placeholder="Title"
                                     />
                                     <DearlyDepartmentFormComponent
                                         name={`Value ${index + 1}`}
                                         value={field.value}
-                                        setValue={(value:string) => handleFieldChange(index, 'value', value)}
+                                        setValue={(value: string) => handleFieldChange(index, 'value', value)}
                                     />
                                 </View>
                             ))}

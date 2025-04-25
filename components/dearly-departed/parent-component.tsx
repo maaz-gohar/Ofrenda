@@ -51,13 +51,13 @@ const ParentComponent: React.FC<ParentComponentProps> = ({ onImageSelect, select
             {images.map((imagePath, index) => (
                 <TouchableOpacity 
                     key={index}
-                    onPress={() => router.push('paymentMethod')} 
+                    onPress={() => router.push('payment-method')} 
                     style={styles.imageWrapper}
                 >
                     <AddDearlyDepartmentComponent
                         imagePath={imagePath}
                         isSelected={selectedImageIndex === index}
-                        onSelect={() => onImageSelect(index)}
+                        onSelect={() => onImageSelect && onImageSelect(index)}
                     />
                     <View style={styles.lockIconContainer}>
                         <FontAwesome name="lock" size={24} color="black" />

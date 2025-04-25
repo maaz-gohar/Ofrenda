@@ -166,16 +166,16 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 20,
         alignItems: "center",
         paddingTop: 30,
-        marginTop: -15,
+        marginTop: -25,
         paddingHorizontal: 10,
     },
     img: {
-        height: 120,
-        width: 120,
+        height: 100,
+        width: 100,
         borderWidth: 3,
         borderColor: "#000",
         borderRadius: 60,
-        marginTop: -90,
+        marginTop: -75,
         alignSelf:"center"
     },
     gradient: {

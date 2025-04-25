@@ -11,6 +11,7 @@ const MainButton: React.FC<{
     shadowColor?: string;
     fontSize?: number;
     disabled?: boolean;
+    style?: object;
 }> = ({
     title = '',
     onPress,
