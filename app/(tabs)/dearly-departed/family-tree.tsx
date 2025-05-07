@@ -44,7 +44,7 @@ export default function FamilyTree() {
                     <View style={styles.btns}>
                         <View style={styles.inactive}>
                             <TouchableOpacity
-                                onPress={() => router.push('/Dearly Department/addFamilyTree')}
+                                onPress={() => router.push('/dearly-departed/add-family-tree')}
                             >
                                 <Text style={styles.inactiveText}>Paternal Family Tree</Text>
                             </TouchableOpacity>
@@ -126,7 +126,7 @@ export default function FamilyTree() {
                     </View>
                 </View>
                 <View style={styles.endView}>
-                    <MainButton title={"Add Family Member"} onPress={() => router.push('/dearly-departed/dearly-department-form')} />
+                    <MainButton title={"Add Family Member"} onPress={() => router.push('/dearly-departed/family-tree -form')} />
 
                 </View>
             </ScrollView>

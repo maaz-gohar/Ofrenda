@@ -35,8 +35,8 @@ export default function HomeScreen() {
               </Text>
               <MainButton
                 title={'Get Started'}
-                // onPress={() => router.push('/frame')}
-                onPress={() => router.push('/dearly-departed/main-screen')}
+                onPress={() => router.push('/sign-in')}
+                // onPress={() => router.push('/dearly-departed/main-screen')}
               />
             </View>
           </ImageBackground>

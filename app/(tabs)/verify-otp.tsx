@@ -6,20 +6,18 @@ import {
     Dimensions,
     ScrollView,
     KeyboardAvoidingView,
-    Platform
+    Platform,
+    TextInput,
+    Alert
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import MainButton from '../../components/auth/button';
 import { LinearGradient } from "expo-linear-gradient";
-import { TextInput } from 'react-native-gesture-handler';
 import MainText from '../../components/auth/top-text';
 import { useRouter } from 'expo-router';
 
 export default function VerifyOTP() {
-    // const { height, width } = Dimensions.get("window");
-
     const [otp, setOtp] = useState(["", "", "", ""]);
-
 
     const inputRefs: React.RefObject<TextInput>[] = [
         useRef<TextInput>(null),
@@ -33,29 +31,68 @@ export default function VerifyOTP() {
         newOtp[index] = text;
         setOtp(newOtp);
 
-
         if (text.length === 1 && index < otp.length - 1) {
             const nextInput = inputRefs[index + 1].current;
             if (nextInput) {
                 nextInput.focus();
             }
         }
-    }
+    };
 
     const router = useRouter();
 
+    const checkOtp = async () => {
+        const otpCode = otp.join("");
+        if (otpCode.length !== 4) {
+            alert("Please enter the full 4-digit OTP.");
+            return;
+        }
+        console.log(otpCode)
+
+        try {
+            const response = await fetch("http://192.168.18.164:3000/api/otp/verify-otp", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ otp: otpCode }),
+            });
+          
+            const text = await response.text(); // get raw text response
+            console.log("Raw Response Text:", text);
+          
+            let data;
+            try {
+              data = JSON.parse(text); // try parsing it if it's JSON
+            } catch (parseError) {
+              console.error("Failed to parse JSON:", parseError);
+              alert("Invalid response from server.");
+              return;
+            }
+          
+            console.log("Parsed Data:", data);
+          
+            if (response.ok ) {
+              alert("OTP verified successfully!");
+              setTimeout(() => {
+                router.push("/dearly-departed/main-screen");
+              }, 500);
+            } else {
+              alert(data.message || "Invalid OTP");
+            }
+          } catch (error) {
+            console.error("OTP verification error:", error);
+            alert("An error occurred. Please try again.");
+          }
+          
+    };
+
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-            <ScrollView contentContainerStyle={styles.scrollViewContainer}
-                bounces={false}>
-                <MainText
-                    title={'Verify OTP'}
-                    showIcon={true}
-                />
-                <View style={[styles.main]}>
-                    <Text style={styles.verify}>
-                        Verify OTP
-                    </Text>
+            <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
+                <MainText title={'Verify OTP'} showIcon={true} />
+                <View style={styles.main}>
+                    <Text style={styles.verify}>Verify OTP</Text>
                     <Text style={styles.verifytxt}>Enter the verification code</Text>
 
                     <View style={styles.otpContainer}>
@@ -72,35 +109,9 @@ export default function VerifyOTP() {
                             />
                         ))}
                     </View>
+
                     <View style={styles.endView}>
-                        <MainButton title={"Verify"} onPress={() => router.push('/sign-in')} />
-                        {/* <Text style={styles.account}>Don't have a account? <Text style={styles.registerText}>Register</Text></Text>
-                        <View style={styles.orContainer}>
-                            <LinearGradient
-                                colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.3)', 'rgba(0, 0, 0, 0.6)']}
-                                style={styles.leftLine}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
-                            />
-                            <Text style={styles.orText}>OR</Text>
-                            <LinearGradient
-                                colors={['rgba(0, 0, 0, 0.6)', 'rgba(0, 0, 0, 0.3)', 'rgba(0, 0, 0, 0)']}
-                                style={styles.rightLine}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
-                            />
-                        </View>
-                        <View style={styles.socialIcons}>
-                            <View style={styles.iconContainer}>
-                                <FontAwesome name="facebook-f" size={24} color="#000" />
-                            </View>
-                            <View style={styles.iconContainer}>
-                                <FontAwesome name="google" size={24} color="#000" />
-                            </View>
-                            <View style={styles.iconContainer}>
-                                <FontAwesome name="apple" size={24} color="#000" />
-                            </View>
-                        </View> */}
+                        <MainButton title={"Verify"} onPress={checkOtp} />
                     </View>
                 </View>
             </ScrollView>
@@ -155,48 +166,5 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end",
         marginBottom: 30,
         width: "100%"
-    },
-    account: {
-        marginTop: -20
-    },
-    registerText: {
-        textDecorationLine: "underline",
-        fontWeight: 'bold',
-    },
-    orContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: 30,
-        justifyContent: 'center',
-        width: "50%"
-    },
-    leftLine: {
-        flex: 1,
-        height: 2,
-        marginRight: 10,
-    },
-    rightLine: {
-        flex: 1,
-        height: 2,
-        marginLeft: 10,
-        color: "#666666"
-    },
-    orText: {
-        fontSize: 16,
-        color: "#666666"
-    },
-    socialIcons: {
-        justifyContent: "center",
-        flexDirection: "row",
-        alignItems: "center"
-    },
-    iconContainer: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        backgroundColor: '#FFC70B',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginHorizontal: 10
     }
 });

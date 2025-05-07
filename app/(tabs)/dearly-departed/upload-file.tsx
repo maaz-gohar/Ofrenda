@@ -20,6 +20,7 @@ const b2 = "#ffe9a1";
 export default function UploadFile() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const params = useLocalSearchParams();
+    const { redirectTo } = params; // <-- get the redirectTo parameter
 
     const PickImage = async () => {
         try {
@@ -65,18 +66,31 @@ export default function UploadFile() {
 
     const handleUploadComplete = () => {
         if (!selectedImage) return;
-
-        // Prevent repeated routing loops
-        console.log("Navigating to form with image:", selectedImage);
-
-        router.replace({
-            pathname: '/dearly-departed/dearly-department-form',
-            params: {
-                ...params,
-                selectedImage: selectedImage,
-            }
-        });
+    
+        console.log("Navigating with image:", selectedImage);
+        console.log("RedirectTo is:", redirectTo);
+    
+        if (redirectTo?.toString() === '/dearly-departed/family-tree-form') {
+            console.log("Redirecting to family-tree-form");
+            router.push({
+                pathname: '/dearly-departed/family-tree-form',
+                params: {
+                    ...params,
+                    selectedImage: selectedImage,
+                }
+            });
+        } else {
+            console.log("Redirecting to dearly-departed-form (default)");
+            router.push({
+                pathname: '/dearly-departed/dearly-department-form',
+                params: {
+                    ...params,
+                    selectedImage: selectedImage,
+                }
+            });
+        }
     };
+    
 
     return (
         <View style={styles.container}>

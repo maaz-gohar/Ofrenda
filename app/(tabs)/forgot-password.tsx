@@ -16,9 +16,36 @@ import MainText from '../../components/auth/top-text';
 import { useRouter } from 'expo-router';
 
 export default function ForgotPassword() {
-    // const { height, width } = Dimensions.get("window");
     const router = useRouter();
 
+const [email, setEmail] = useState("");
+
+      const forgetPassword = async () => {
+        try {
+            const response = await fetch("http://192.168.18.164:3000/api/auth/forgot-password", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                }),
+            });
+    
+            const data = await response.json();
+            console.log("data ", data)
+    
+            if (response.ok) {
+                router.push('/verify-otp');
+              } else {
+                // Show an error message to the user
+                alert(data.message || "Invalid Email");
+            }
+        } catch (error) {
+            console.error("error:", error);
+            alert("An error occurred. Please try again.");
+        }
+    };
 
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -34,9 +61,9 @@ export default function ForgotPassword() {
                     </Text>
                     <Text style={styles.forgottxt}>Enter your email or phone number to reset your password</Text>
 
-                    <FloatingLabelInput placeholder="Email Address/Phone Number" iconName="envelope-o" iconType='FontAwesome' />
+                    <FloatingLabelInput placeholder="Email Address/Phone Number" value={email} onChangeText={setEmail} iconName="envelope-o" iconType='FontAwesome' />
                     <View style={styles.btn}>
-                        <MainButton title={"Reset"} onPress={() => router.push('/verify-otp')} />
+                        <MainButton title={"Reset"} onPress={forgetPassword} />
                     </View>
 
                 </View>

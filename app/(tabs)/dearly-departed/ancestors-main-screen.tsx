@@ -44,7 +44,7 @@ export default function AncestorsMainScreen() {
                     <AncestorsComponent
                         imagePath={require('../../../assets/images/ancestors2.png')}
                         text={"View Relationship Tree"}
-                        onPress={() => router.push('/dearly-departed/family-tree-board')}
+                        onPress={() => router.push('/dearly-departed/add-family-tree')}
                     />
                     <AncestorsComponent
                         imagePath={require('../../../assets/images/info.jpg')}

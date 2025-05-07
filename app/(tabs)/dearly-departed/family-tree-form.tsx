@@ -21,9 +21,8 @@ import { useSearchParams } from 'expo-router/build/hooks';
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
 
-export default function DearlyDepartmentForm() {
+export default function FamilyTreeForm() {
     const params = useLocalSearchParams();
-    const searchParams = useSearchParams();
     const router = useRouter();
 
     // State management
@@ -45,21 +44,9 @@ export default function DearlyDepartmentForm() {
     const [ancestorRelationship, setAncestorRelationship] = useState(params.ancestorRelationship?.toString() || '');
     const [selectedFoodImage, setSelectedFoodImage] = useState(params.selectedFoodImage?.toString() || '');
 
-    // useEffect(() => {
-    //     if (params.selectedImage) {
-    //         setSelectedImage(params.selectedImage.toString());
-    //     }
-    //     if (params.selectedFoodImage) {
-    //         setSelectedFoodImage(params.selectedFoodImage.toString());
-    //     }
-    //     if (params.dynamicFields) {
-    //         setDynamicFields(JSON.parse(params.dynamicFields.toString()));
-    //     }
-    // }, [params]);
-
     const handleSave = () => {
         router.push({
-            pathname: '/dearly-departed/select-ofrenda',
+            pathname: '/dearly-departed/family-succesful',
             params: {
                 name,
                 worked,
@@ -92,6 +79,7 @@ export default function DearlyDepartmentForm() {
         );
         setDynamicFields(updatedFields);
     };
+    
 
     return (
         <KeyboardAvoidingView
@@ -103,31 +91,27 @@ export default function DearlyDepartmentForm() {
                 bounces={false}
                 keyboardShouldPersistTaps="handled"
             >
-                <MainText
-                    title={'Dearly Departed'}
-                    showIcon={true}
-                    setting={true}
-                />
+                <MainText title={'Dearly Departed'} showIcon={true} setting={true} />
 
                 <View style={styles.main}>
-                    <Text style={styles.title}>Add dearly departed</Text>
+                    <Text style={styles.title}>Add Family Member</Text>
 
                     <ScrollView contentContainerStyle={styles.innerScrollContainer} bounces={false}>
-                        {/* Frame Components */}
-                        {/* (Your existing FrameComponent code here) */}
-
                         <View style={styles.centeredField}>
                             <DearlyDepartmentFormComponent name="Enter Name" value={name} setValue={setName} />
-                            {/* <DearlyDepartmentFormComponent
+
+                            <DearlyDepartmentFormComponent
                                 name="Upload Picture"
                                 iconName="upload"
                                 iconType="AntDesign"
                                 value={selectedImage}
-                                onPress={() => {
-                                    console.log('Upload Picture pressed');
+                                onPress={() =>
                                     router.push({
                                         pathname: '/dearly-departed/upload-file',
                                         params: {
+                                            ...params,
+                                            redirectTo: '/dearly-departed/family-tree-form',
+                                            frameId: params.frameId,
                                             worked,
                                             name,
                                             memory,
@@ -142,37 +126,9 @@ export default function DearlyDepartmentForm() {
                                             ancestorRelationship,
                                             dynamicFields: JSON.stringify(dynamicFields),
                                             selectedImage,
-                                        },
-                                    });
-                                }}
-                            /> */}
-
-                            <DearlyDepartmentFormComponent
-                                name="Upload Picture"
-                                iconName="upload"
-                                iconType="AntDesign"
-                                value={selectedImage}
-                                onPress={() => router.push({
-                                    pathname: '/dearly-departed/upload-file',
-                                    params: { 
-                                        ...params, frameId: params.frameId,
-                                        redirectTo: '/dearly-departed/dearly-department-form',
-                                        worked,
-                                        name,
-                                        memory,
-                                        health,
-                                        hobbies,
-                                        dob,
-                                        dod,
-                                        noteableContribution,
-                                        movie,
-                                        food,
-                                        relationship,
-                                        ancestorRelationship,
-                                        dynamicFields: JSON.stringify(dynamicFields),
-                                        selectedImage,
-                                    }
-                                })}
+                                        }
+                                    })
+                                }
                             />
 
                             <DropdownComponent
@@ -180,7 +136,6 @@ export default function DearlyDepartmentForm() {
                                 onSelect={(value: string) => setRelationship(value)}
                             />
 
-                            {/* Conditionally render Relationship with Ancestors field */}
                             {relationship === 'Ancestors' && (
                                 <DearlyDepartmentFormComponent
                                     name="Relationship with Ancestors"
@@ -234,6 +189,7 @@ export default function DearlyDepartmentForm() {
                                 value={selectedFoodImage}
                                 onPress={() => router.push('/dearly-departed/select-food')}
                             />
+
                             {dynamicFields.map((field, index) => (
                                 <View key={field.id}>
                                     <DearlyDepartmentFormComponent
@@ -256,7 +212,8 @@ export default function DearlyDepartmentForm() {
                                     <AntDesign name='plus' size={14} color="#858383" />
                                 </View>
                             </TouchableOpacity>
-                            <MainButton title={"Add Ancestor"} onPress={handleSave} />
+
+                            <MainButton title={"Add Family Member"} onPress={handleSave} />
                         </View>
                     </ScrollView>
                 </View>

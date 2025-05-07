@@ -34,6 +34,37 @@ export default function SignIn() {
 
     const router = useRouter();
 
+      const [email, setEmail] = useState("");
+      const [password, setPassword] = useState("");
+
+      const loginUser = async () => {
+        try {
+            const response = await fetch("http://192.168.18.164:3000/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+            });
+    
+            const data = await response.json();
+            console.log("data ", data)
+    
+            if (response.ok) {
+                router.push('/dearly-departed/main-screen');
+              } else {
+                // Show an error message to the user
+                alert(data.message || "Login failed. Please check your credentials.");
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+            alert("An error occurred during login. Please try again.");
+        }
+    };
+    
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <ScrollView contentContainerStyle={styles.scrollViewContainer}
@@ -60,13 +91,13 @@ export default function SignIn() {
                             </LinearGradient>
                         </View>
 
-                        <FloatingLabelInput placeholder="Email Address" iconName="envelope-o" iconType='FontAwesome' />
+                        <FloatingLabelInput placeholder="Email Address" value={email} onChangeText={setEmail} iconName="envelope-o" iconType='FontAwesome' />
                         <FloatingLabelInput
                             placeholder="Create Password"
                             iconName="lock-closed-outline"
                             eyeIcon={true}
-                            value={value}
-                            onChangeText={setValue}
+                            value={password}
+                            onChangeText={setPassword}
                             secureTextEntry={!isPasswordVisible}
                         />
                         {isPasswordTooShort && (
@@ -82,7 +113,7 @@ export default function SignIn() {
                     </View>
                 </View>
                 <View style={styles.endView}>
-                    <MainButton title="Login" />
+                    <MainButton onPress={loginUser} title="Login" />
                     <Text >Do you already have an account?
                         <TouchableOpacity
                             onPress={() => router.push('/sign-up')}

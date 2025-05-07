@@ -61,7 +61,7 @@ export default function AddFamilyTree() {
 
                 </View>
                 <View style={styles.endView}>
-                    <MainButton title={"Add Family Member"} onPress={() => router.push('/dearly-departed/dearly-department-form')} />
+                    <MainButton title={"Add Family Member"} onPress={() => router.push('/dearly-departed/family-tree-form')} />
 
                 </View>
             </ScrollView>
