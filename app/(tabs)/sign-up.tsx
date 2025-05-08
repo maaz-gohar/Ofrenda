@@ -15,7 +15,7 @@ import MainButton from "../../components/auth/button";
 import { LinearGradient } from "expo-linear-gradient";
 import MainText from "../../components/auth/top-text";
 import { useRouter } from "expo-router";
-import { goBack } from "@/utils";
+import { API_URL } from "../../configs/config";
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
@@ -47,7 +47,7 @@ export default function SignUp(props: { segment: string }) {
         password,)
     try {
       const response = await fetch(
-        "http://192.168.18.164:3000/api/auth/register",
+        `${API_URL}/auth/register`,
         {
           method: "POST",
           headers: {

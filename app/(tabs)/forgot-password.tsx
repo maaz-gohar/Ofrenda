@@ -14,6 +14,7 @@ import MainButton from '../../components/auth/button';
 import { LinearGradient } from "expo-linear-gradient";
 import MainText from '../../components/auth/top-text';
 import { useRouter } from 'expo-router';
+import { API_URL } from "../../configs/config";
 
 export default function ForgotPassword() {
     const router = useRouter();
@@ -22,7 +23,7 @@ const [email, setEmail] = useState("");
 
       const forgetPassword = async () => {
         try {
-            const response = await fetch("http://192.168.18.164:3000/api/auth/forgot-password", {
+            const response = await fetch(`${API_URL}/auth/forgot-password`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -36,9 +37,11 @@ const [email, setEmail] = useState("");
             console.log("data ", data)
     
             if (response.ok) {
-                router.push('/verify-otp');
+                router.push({
+                  pathname: '/verify-otp',
+                  params: { email },
+                });
               } else {
-                // Show an error message to the user
                 alert(data.message || "Invalid Email");
             }
         } catch (error) {
