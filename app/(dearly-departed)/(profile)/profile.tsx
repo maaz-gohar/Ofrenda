@@ -14,15 +14,20 @@ import {
 } from "react-native";
 import { MaterialIcons, Ionicons, Octicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import FloatingLabelInput from "../../components/auth/input";
-import MainButton from "../../components/auth/button";
-import MainText from "../../components/auth/top-text";
-import InfoComponent from "../../components/auth/info-component";
-import TabBar from "../../components/auth/tab-bar";
+// import FloatingLabelInput from "../../components/auth/input";
+// import MainButton from "../../components/auth/button";
+// import MainText from "../../components/auth/top-text";
+// import InfoComponent from "../../components/auth/info-component";
+// import TabBar from "../../components/auth/tab-bar";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
-import Wrapper from "../../components/auth/wrapper";
+// import Wrapper from "../../components/auth/wrapper";
 import { useForm } from "react-hook-form";
+import FloatingLabelInput from "@/components/auth/input";
+import MainButton from "@/components/auth/button";
+import MainText from "@/components/auth/top-text";
+import InfoComponent from "@/components/auth/info-component";
+import TabBar from "@/components/auth/tab-bar";
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
@@ -92,7 +97,7 @@ export default function Profile() {
             source={
               profileImage
                 ? { uri: profileImage }
-                : require("../../assets/images/profile1.jpg")
+                : require("../../../assets/images/profile1.jpg")
             }
             style={styles.img}
           />
@@ -126,22 +131,21 @@ export default function Profile() {
               iconPosition="left"
               iconName="person-outline"
             />
-           <FloatingLabelInput
-            name="email"
-            control={control}
-            rules={{
-              required: "Email is required",
-              pattern: {
-                value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                message: "Invalid email format",
-              },
-            }}
-            placeholder="Email Address"
-            iconPosition="left"
-            
-            iconName="envelope-o"
-            iconType="FontAwesome"
-          />
+            <FloatingLabelInput
+              name="email"
+              control={control}
+              rules={{
+                required: "Email is required",
+                pattern: {
+                  value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                  message: "Invalid email format",
+                },
+              }}
+              placeholder="Email Address"
+              iconPosition="left"
+              iconName="envelope-o"
+              iconType="FontAwesome"
+            />
             <InfoComponent
               name="Birth"
               iconName={"calendar-outline"}
@@ -235,7 +239,7 @@ export default function Profile() {
         </View>
       </Modal>
 
-      <TabBar />
+      {/* <TabBar /> */}
     </KeyboardAvoidingView>
   );
 }
