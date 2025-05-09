@@ -17,6 +17,7 @@ export default function Search() {
             />
             <TextInput
                 placeholder='Search'
+                placeholderTextColor={"#858383"}
                 style={{ flex: 1 }}
             />
         </View>

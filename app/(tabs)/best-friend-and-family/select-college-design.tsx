@@ -1,248 +1,291 @@
-import React, { useState } from 'react';
+import React from "react";
 import {
-    StyleSheet,
-    View,
-    Text,
-    ScrollView,
-    TouchableOpacity,
-    KeyboardAvoidingView,
-    Platform,
-} from 'react-native';
-import { LinearGradient } from "expo-linear-gradient";
-import MainText from '../../../components/auth/top-text';
-import DatePickerComponent from '../../../components/dearly-departed/date-picker';
-import MainButton from '../../../components/auth/button';
-import DearlyDepartmentFormComponent from '../../../components/dearly-departed/dearly-department-form-component';
-import TabBar from '../../../components/auth/tab-bar';
-import { useRouter, useLocalSearchParams } from 'expo-router';
-import { AntDesign } from '@expo/vector-icons';
-import Wrapper from '../../../components/auth/wrapper';
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
+import { AntDesign } from "@expo/vector-icons";
+import { useLocalSearchParams, useRouter } from "expo-router";
+
+import MainText from "../../../components/auth/top-text";
+import MainButton from "../../../components/auth/button";
+import TabBar from "../../../components/auth/tab-bar";
+import Wrapper from "../../../components/auth/wrapper";
+import FloatingLabelInput from "../../../components/auth/input";
+import DatePickerComponent from "../../../components/dearly-departed/date-picker";
 
 const b1 = "rgba(94, 164, 253, 1)";
 const b2 = "rgba(143, 184, 236, 1)";
 
+type FormData = {
+  name: string;
+  profession: string;
+  food: string;
+  noteableContribution: string;
+  movie: string;
+  favFood: string;
+  health: string;
+  dob: string;
+  selectedImage: string;
+  facebook: string;
+  instagram: string;
+  twitter: string;
+  tiktok: string;
+  dynamicFields: Array<{ title: string; value: string }>;
+};
+
 export default function SelectCollegeDesign() {
-    const router = useRouter();
-    const params = useLocalSearchParams();
+  const router = useRouter();
+  const params = useLocalSearchParams();
 
-    // Initialize state directly from params
-    const [profession, setProfession] = useState(params.profession?.toString() || '');
-    const [name, setName] = useState(params.name?.toString() || '');
-    const [food, setFood] = useState(params.food ? JSON.parse(params.food.toString()) : []);
-    const [noteableContribution, setNoteableContribution] = useState(params.noteableContribution?.toString() || '');
-    const [movie, setMovie] = useState(params.movie?.toString() || '');
-    const [favFood, setFavFood] = useState(params.favFood?.toString() || '');
-    const [health, setHealth] = useState(params.health?.toString() || '');
-    const [dob, setDob] = useState(params.dob?.toString() || 'Enter DOB');
-    const [dynamicFields, setDynamicFields] = useState(params.dynamicFields ? JSON.parse(params.dynamicFields.toString()) : []);
-    const [selectedImage, setSelectedImage] = useState(params.selectedImage?.toString() || '');
-    const [facebook, setFacebook] = useState(params.facebook?.toString() || '');
-    const [instagram, setInstagram] = useState(params.instagram?.toString() || '');
-    const [twitter, setTwitter] = useState(params.twitter?.toString() || '');
-    const [tiktok, setTiktok] = useState(params.tiktok?.toString() || '');
+  const { control, handleSubmit, watch } = useForm<FormData>({
+    defaultValues: {
+      name: params.name?.toString() || "",
+      profession: params.profession?.toString() || "",
+      food: params.food?.toString() || "",
+      noteableContribution: params.noteableContribution?.toString() || "",
+      movie: params.movie?.toString() || "",
+      favFood: params.favFood?.toString() || "",
+      health: params.health?.toString() || "",
+      dob: params.dob?.toString() || "Enter DOB",
+      selectedImage: params.selectedImage?.toString() || "",
+      facebook: params.facebook?.toString() || "",
+      instagram: params.instagram?.toString() || "",
+      twitter: params.twitter?.toString() || "",
+      tiktok: params.tiktok?.toString() || "",
+      dynamicFields: params.dynamicFields
+        ? JSON.parse(params.dynamicFields.toString())
+        : [],
+    },
+  });
 
-    const handleSave = () => {
-        router.push({
-            pathname: '/best-friend-and-family/successful',
-            params: {
-                name,
-                profession,
-                dob,
-                noteableContribution,
-                movie,
-                favFood,
-                health,
-                food: JSON.stringify(food),
-                selectedImage,
-                dynamicFields: JSON.stringify(dynamicFields),
-                facebook,
-                instagram,
-                twitter,
-                tiktok,
-            }
-        });
-    };
+  const { fields, append, update } = useFieldArray({
+    control,
+    name: "dynamicFields",
+  });
 
-    const handleUploadImage = () => {
-        // Pass all current state as params when navigating to uploadFiles
-        router.push({
-            pathname: '/best-friend-and-family/upload-files',
-            params: {
-                name,
-                profession,
-                dob,
-                noteableContribution,
-                movie,
-                favFood,
-                health,
-                food: JSON.stringify(food),
-                selectedImage,
-                dynamicFields: JSON.stringify(dynamicFields),
-                facebook,
-                instagram,
-                twitter,
-                tiktok,
-            }
-        });
-    };
+  const selectedImage = watch("selectedImage");
 
-    const addAnotherField = () => {
-        setDynamicFields([...dynamicFields, { id: dynamicFields.length, title: '', value: '' }]);
-    };
+  const onSubmit = (data: FormData) => {
+    router.push({
+      pathname: "/best-friend-and-family/successful",
+      params: {
+        ...data,
+        dynamicFields: JSON.stringify(data.dynamicFields),
+      },
+    });
+  };
 
-    const handleFieldChange = (index: number, field: string, value: string) => {
-        const updatedFields = dynamicFields.map((item: { id: number; title: string; value: string }, idx: number) => {
-            if (idx === index) {
-                return { ...item, [field]: value };
-            }
-            return item;
-        });
-        setDynamicFields(updatedFields);
-    };
+  const handleUploadImage = () => {
+    const data = watch();
+    router.push({
+      pathname: "/best-friend-and-family/upload-files",
+      params: {
+        ...data,
+        dynamicFields: JSON.stringify(data.dynamicFields),
+      },
+    });
+  };
 
-    return (
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
-            <ScrollView
-                contentContainerStyle={styles.scrollViewContainer}
-                bounces={false}
-                keyboardShouldPersistTaps="handled"
-            >
-                <MainText
-                    title={'Best Friends and Family'}
-                    showIcon={true}
-                    setting={true}
-                    gradientColor={[b1, b2]}
-                />
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContainer}
+        keyboardShouldPersistTaps="handled"
+      >
+        <MainText
+          title={"Best Friends and Family"}
+          showIcon={true}
+          setting={true}
+          gradientColor={[b1, b2]}
+        />
+        <Wrapper>
+          <Text style={styles.title}>Select Collage Design</Text>
 
-                {/* <View style={styles.main}> */}
-                <Wrapper>
-                    <Text style={styles.title}>Select Collage Design</Text>
-                    <DearlyDepartmentFormComponent name="Enter Friend Name" value={name} setValue={setName} />
-                    <DearlyDepartmentFormComponent
-                        name="Upload Picture"
-                        iconName="upload"
-                        iconType="AntDesign"
-                        value={selectedImage}
-                        onPress={handleUploadImage} // Use handleUploadImage instead of inline function
-                    />
-                    <DatePickerComponent placeholder="Enter DOB" dob={dob} onDateChange={setDob} />
-                    <DearlyDepartmentFormComponent
-                        name="Favoraite Pastimes (Separated by ,)"
-                        value={food}
-                        setValue={setFood}
-                    />
-                    <DearlyDepartmentFormComponent
-                        name="Profession"
-                        value={profession}
-                        setValue={setProfession}
-                    />
-                    <DearlyDepartmentFormComponent
-                        name="Notable contributions"
-                        value={noteableContribution}
-                        setValue={setNoteableContribution}
-                    />
-                    <DearlyDepartmentFormComponent
-                        name="Favorite food, restaurants (Separated by ,)"
-                        value={favFood}
-                        setValue={setFavFood}
-                    />
-                    <DearlyDepartmentFormComponent
-                        name="Favorite movie, band, book, author "
-                        value={movie}
-                        setValue={setMovie}
-                    />
-                    <DearlyDepartmentFormComponent
-                        name="Favourite Bands"
-                        value={health}
-                        setValue={setHealth}
-                    />
-                    <DearlyDepartmentFormComponent name="Paste Facebook URL" iconName={'link'} value={facebook} setValue={setFacebook} />
-                    <DearlyDepartmentFormComponent name="Paste Instagram URL" iconName={'link'} value={instagram} setValue={setInstagram} />
-                    <DearlyDepartmentFormComponent name="Paste Twitter URL" iconName={'link'} value={twitter} setValue={setTwitter} />
-                    <DearlyDepartmentFormComponent name="Paste Tiktok URL" iconName={'link'} value={tiktok} setValue={setTiktok} />
+          <FloatingLabelInput
+            placeholder="name"
+            showLabel={false}
+            name="name"
+            label="Enter Friend Name"
+            control={control}
+          />
+          <FloatingLabelInput
+            name="selectedImage"
+            iconName="upload"
+            iconType="AntDesign"
+            control={control}
+            onPress={handleUploadImage}
+            placeholder="Upload Picture"
+            showLabel={false}
+          />
 
-                    {dynamicFields.map((field:any, index:any) => (
-                        <View key={field.id}>
-                            <DearlyDepartmentFormComponent
-                                name={`Title ${index + 1}`}
-                                value={field.title}
-                                setValue={(value: string) => handleFieldChange(index, 'title', value)}
-                                placeholder="Title"
-                                style={styles.titleField}
-                            />
-                            <DearlyDepartmentFormComponent
-                                name={`Value ${index + 1}`}
-                                value={field.value}
-                                setValue={(value:string) => handleFieldChange(index, 'value', value)}
-                            />
-                        </View>
-                    ))}
+          <Controller
+            name="dob"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <DatePickerComponent
+                placeholder="Enter DOB"
+                dob={value}
+                onDateChange={onChange}
+              />
+            )}
+          />
+          <FloatingLabelInput
+            showLabel={false}
+            placeholder="Favorite Pastimes"
+            name="food"
+            label="Favorite Pastimes (Separated by ,)"
+            control={control}
+          />
+          <FloatingLabelInput
+            placeholder="profession"
+            name="profession"
+            label="Profession"
+            control={control}
+          />
+          <FloatingLabelInput
+            placeholder="Noteable Contribution"
+            name="noteableContribution"
+            label="Notable Contributions"
+            control={control}
+          />
+          <FloatingLabelInput
+            showLabel={false}
+            placeholder="Favorite food"
+            name="favFood"
+            label="Favorite food, restaurants (Separated by ,)"
+            control={control}
+          />
+          <FloatingLabelInput
+            showLabel={false}
+            placeholder="Favorite movie"
+            name="movie"
+            label="Favorite movie, band, book, author"
+            control={control}
+          />
+          <FloatingLabelInput
+            showLabel={false}
+            placeholder="Favourite Bands"
+            name="health"
+            label="Favourite Bands"
+            control={control}
+          />
+          <FloatingLabelInput
+            showLabel={false}
+            placeholder="Enter Facebook URL"
+            name="facebook"
+            label="Paste Facebook URL"
+            iconName="link"
+            control={control}
+          />
+          <FloatingLabelInput
+            showLabel={false}
+            placeholder="Enter Instagram URL"
+            name="instagram"
+            label="Paste Instagram URL"
+            iconName="link"
+            control={control}
+          />
+          <FloatingLabelInput
+            showLabel={false}
+            placeholder="Enter Twitter URL"
+            name="twitter"
+            label="Paste Twitter URL"
+            iconName="link"
+            control={control}
+          />
+          <FloatingLabelInput
+            showLabel={false}
+            placeholder="Enter Tiktok URL"
+            name="tiktok"
+            label="Paste Tiktok URL"
+            iconName="link"
+            control={control}
+          />
 
-                    <TouchableOpacity onPress={addAnotherField} style={styles.addFieldButton}>
-                        <View style={styles.buttonContent}>
-                            <Text style={styles.addFieldText}>Add Another Field</Text>
-                            <AntDesign name='plus' size={14} color="#858383" />
-                        </View>
-                    </TouchableOpacity>
-                    <MainButton title={"Add BFF"} onPress={handleSave} gradientColor={[b1, b2]} shadowColor='rgba(94, 164, 253, 1)' />
-                {/* </View> */}
-                </Wrapper>
-            </ScrollView>
-            <TabBar />
-        </KeyboardAvoidingView>
-    );
+          {fields.map((field, index) => (
+            <View key={field.id}>
+              <FloatingLabelInput
+                name={`dynamicFields.${index}.title`}
+                label={`Title ${index + 1}`}
+                placeholder={`Enter Title ${index + 1}`}
+                control={control}
+                showLabel={false}
+              />
+              <FloatingLabelInput
+                name={`dynamicFields.${index}.value`}
+                label={`Value ${index + 1}`}
+                placeholder={`Enter Value ${index + 1}`}
+                control={control}
+                showLabel={false}
+              />
+            </View>
+          ))}
+
+          <TouchableOpacity
+            onPress={() => append({ title: "", value: "" })}
+            style={styles.addFieldButton}
+          >
+            <View style={styles.buttonContent}>
+              <Text style={styles.addFieldText}>Add Another Field</Text>
+              <AntDesign name="plus" size={14} color="#858383" />
+            </View>
+          </TouchableOpacity>
+
+          <MainButton
+            title="Add BFF"
+            onPress={handleSubmit(onSubmit)}
+            gradientColor={[b1, b2]}
+            shadowColor="rgba(94, 164, 253, 1)"
+          />
+        </Wrapper>
+      </ScrollView>
+      <TabBar />
+    </KeyboardAvoidingView>
+  );
 }
 
-// ... styles remain the same ...
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff"
-    },
-    scrollViewContainer: {
-        flexGrow: 1,
-        justifyContent: 'center',
-    },
-    main: {
-        paddingVertical: 20,
-        flex: 1,
-        backgroundColor: "#fff",
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
-        alignItems: "center",
-        paddingTop: 30,
-        marginTop: -35,
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: "700",
-        marginBottom: 10,
-    },
-    addFieldButton: {
-        marginTop: 20,
-        padding: 10,
-        borderRadius: 250,
-        width: "93%",
-        borderWidth: 1,
-        borderColor: "#b5b5b5",
-        height: 47,
-        justifyContent: "center",
-    },
-    buttonContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    addFieldText: {
-        color: "#9D9D9D",
-        fontWeight: "600",
-        marginRight: 5,
-    },
-    titleField: {
-        borderWidth: 0,
-        fontWeight: 'bold',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  scrollViewContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "700",
+    marginBottom: 10,
+  },
+  addFieldButton: {
+    marginTop: 20,
+    padding: 10,
+    borderRadius: 250,
+    width: "93%",
+    borderWidth: 1,
+    borderColor: "#b5b5b5",
+    height: 47,
+    justifyContent: "center",
+    alignSelf: "center",
+  },
+  buttonContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  addFieldText: {
+    color: "#9D9D9D",
+    fontWeight: "600",
+    marginRight: 5,
+  },
 });

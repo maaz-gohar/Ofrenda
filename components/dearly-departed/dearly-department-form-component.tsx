@@ -7,39 +7,50 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { Ionicons, FontAwesome, AntDesign, MaterialIcons } from '@expo/vector-icons';
-
+import { Controller, FieldValues } from 'react-hook-form';
 
 interface DearlyDepartmentFormProps {
-    name?: string;
+    control: any; // react-hook-form control prop
+    name: string;
     onPress?: () => void;
     iconType?: 'Ionicons' | 'FontAwesome' | 'MaterialIcons' | 'AntDesign';
     iconName?: keyof typeof Ionicons.glyphMap | keyof typeof FontAwesome.glyphMap | keyof typeof MaterialIcons.glyphMap | keyof typeof AntDesign.glyphMap;
-    value?: any;
-    setValue?: (value: string) => void;
     placeholder?: string;
+    rules?: any; // Validation rules for React Hook Form
 }
 
 const DearlyDepartmentFormComponent: React.FC<DearlyDepartmentFormProps> = ({
-    name = 'Enter hobbies',
+    control,
+    name,
     onPress = () => {},
     iconType = 'Ionicons',
     iconName = 'add' as keyof typeof Ionicons.glyphMap,
-    value = '',
-    setValue = (value: string) => {},
+    placeholder = 'Enter hobbies',
+    rules = {},
 }) => {
     const [error, setError] = useState<string | null>(null);
 
     return (
         <View style={styles.container}>
-            <TextInput
-                placeholder={name}
-                placeholderTextColor="#858383"
-                value={value}
-                onChangeText={setValue}
-                style={[styles.textInput, error && styles.errorInput]}
-                multiline
-                maxLength={1000} // Optional character limit
+            <Controller
+                control={control}
+                name={name}
+                rules={rules}
+                render={({ field: { onChange, value } }) => (
+                    <>
+                        <TextInput
+                            placeholder={placeholder}
+                            placeholderTextColor="#858383"
+                            value={value}
+                            onChangeText={onChange}
+                            style={[styles.textInput, error && styles.errorInput]}
+                            multiline
+                            maxLength={1000} // Optional character limit
+                        />
+                    </>
+                )}
             />
+
             {iconType === 'Ionicons' ? (
                 <TouchableOpacity onPress={onPress}>
                     <Ionicons name={iconName as keyof typeof Ionicons.glyphMap} size={20} color="#858383" style={styles.icon} />
@@ -106,4 +117,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default DearlyDepartmentFormComponent; 
+export default DearlyDepartmentFormComponent;

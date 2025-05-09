@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         position: 'relative',
         borderWidth: 1,
-        borderColor: '#F7F5FA',
+        borderColor: '#c2c2c2',
         borderRadius: 25,
         paddingHorizontal: 10,
         height: 55,
@@ -63,8 +63,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: "100%",
         flexDirection: "row",
-        // minWidth: 400
-        // paddingHorizontal: 10,
     },
     data: {
         flexDirection: "row",
@@ -74,12 +72,12 @@ const styles = StyleSheet.create({
     icon: {
         position: 'absolute',
         top: 8,
-        left: 10,
+        left: 4,
         color: '#FFC70B',
     },
     name: {
         // fontWeight: "500",
-        paddingLeft: 50,
+        paddingLeft: 33,
         paddingRight: 2,
         fontSize: 16,
         justifyContent: "center",

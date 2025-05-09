@@ -7,14 +7,13 @@ import {
     ScrollView,
     KeyboardAvoidingView,
     Platform,
-    Image,
-    TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    TextInput
 } from 'react-native';
-import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
-import { LinearGradient } from "expo-linear-gradient";
-import MainText from '../../../components/auth/top-text';
+import { FontAwesome } from '@expo/vector-icons';
+import { useForm, Controller } from 'react-hook-form';
 import { useRouter } from 'expo-router';
+import MainText from '../../../components/auth/top-text';
 import Search from '../../../components/bucket-list/search';
 import MainButton from '../../../components/auth/button';
 import TabBar from '../../../components/auth/tab-bar';
@@ -26,20 +25,35 @@ export default function NaturalDisaster() {
     const { height, width } = Dimensions.get("window");
     const router = useRouter();
 
+    const { control, handleSubmit, setValue, watch } = useForm({
+        defaultValues: {
+            question1: '',
+            question2: '',
+            checkboxOptions: [] as string[],
+            radioOption: null as string | null,
+        }
+    });
 
-    const [checkedItems, setCheckedItems] = useState([false, false, false, false]);
-    const [selectedRadio, setSelectedRadio] = useState<number | null>(null);
+    const checkboxOptions: string[] = ['Option 01', 'Option 02', 'Option 03', 'Option 04'];
+    const radioOptions = ['Option 01', 'Option 02'];
 
+    const selectedCheckboxes = watch('checkboxOptions');
+    const selectedRadio = watch('radioOption');
 
-    const toggleCheckbox = (index: number) => {
-        const newCheckedItems = [...checkedItems];
-        newCheckedItems[index] = !newCheckedItems[index];
-        setCheckedItems(newCheckedItems);
+    const toggleCheckbox = (option: string) => {
+        const newValue = selectedCheckboxes?.includes(option)
+            ? selectedCheckboxes.filter((item: string) => item !== option)
+            : [...(selectedCheckboxes || []), option];
+        setValue('checkboxOptions', newValue);
     };
 
+    const handleRadioSelect = (option: string) => {
+        setValue('radioOption', option);
+    };
 
-    const handleRadioSelect = (index: number) => {
-        setSelectedRadio(index);
+    const onSubmit = (data: any) => {
+        console.log(data);
+        router.push('/bucket-list/select-bucket-list-premium');
     };
 
     return (
@@ -52,44 +66,59 @@ export default function NaturalDisaster() {
                     setting={true}
                 />
                 <View style={styles.main}>
-
                     <Search />
+
                     <Text style={styles.question}>Question 01?</Text>
-
-                    <TextInput
-                        placeholder='Your Answer'
-                        placeholderTextColor={"rgba(0, 0, 0, 0.5)"}
-                        style={styles.input}
+                    <Controller
+                        control={control}
+                        name="question1"
+                        rules={{ required: true }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Your Answer"
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                value={value}
+                            />
+                        )}
                     />
-
                     <View style={styles.separator} />
+
                     <Text style={styles.question}>Question 02?</Text>
-
-                    <TextInput
-                        placeholder='Your Answer'
-                        placeholderTextColor={"rgba(0, 0, 0, 0.5)"}
-                        style={styles.input}
+                    <Controller
+                        control={control}
+                        name="question2"
+                        rules={{ required: true }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Your Answer"
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                value={value}
+                            />
+                        )}
                     />
-
                     <View style={styles.separator} />
 
                     <Text style={styles.question}>Question 03?</Text>
                     <View style={styles.checkboxContainer}>
                         <View style={styles.innerPlan}>
-                            {['Option 01', 'Option 02', 'Option 03', 'Option 04'].map((option, index) => (
+                            {checkboxOptions.map((option, index) => (
                                 <TouchableOpacity
                                     key={index}
                                     style={styles.checkboxRow}
-                                    onPress={() => toggleCheckbox(index)}
+                                    onPress={() => toggleCheckbox(option)}
                                 >
                                     <View style={styles.checkbox}>
-                                        {checkedItems[index] && (
+                                        {selectedCheckboxes?.includes(option) && (
                                             <FontAwesome name="check" size={10} color="black" />
                                         )}
                                     </View>
                                     <Text style={[
                                         styles.optionText,
-                                        checkedItems[index] && styles.boldText
+                                        selectedCheckboxes?.includes(option) && styles.boldText
                                     ]}>
                                         {option}
                                     </Text>
@@ -101,20 +130,18 @@ export default function NaturalDisaster() {
                     <Text style={styles.question}>Question 04?</Text>
                     <View style={styles.checkboxContainer}>
                         <View style={styles.innerPlan}>
-                            {['Option 01', 'Option 02'].map((option, index) => (
+                            {radioOptions.map((option, index) => (
                                 <TouchableOpacity
                                     key={index}
                                     style={styles.radioRow}
-                                    onPress={() => handleRadioSelect(index)}
+                                    onPress={() => handleRadioSelect(option)}
                                 >
                                     <View style={styles.radioOuter}>
-                                        {selectedRadio === index && (
-                                            <View style={styles.radioInner} />
-                                        )}
+                                        {selectedRadio === option && <View style={styles.radioInner} />}
                                     </View>
                                     <Text style={[
                                         styles.optionText,
-                                        selectedRadio === index && styles.boldText
+                                        selectedRadio === option && styles.boldText
                                     ]}>
                                         {option}
                                     </Text>
@@ -122,7 +149,8 @@ export default function NaturalDisaster() {
                             ))}
                         </View>
                     </View>
-                    <MainButton title='Submit' onPress={() => router.push('/bucket-list/select-bucket-list-premium')} gradientColor={[b1, b2]} shadowColor='#f8deff' />
+
+                    <MainButton title='Submit' onPress={handleSubmit(onSubmit)} gradientColor={[b1, b2]} shadowColor='#f8deff' />
                 </View>
             </ScrollView>
             <TabBar />
@@ -147,11 +175,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         justifyContent: "flex-start"
     },
-    input: {
-        height: 50,
-        fontSize: 16,
-        alignSelf: "flex-start"
-    },
     separator: {
         height: 1,
         backgroundColor: '#000',
@@ -163,6 +186,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         alignSelf: "flex-start",
         paddingBottom: 15
+    },
+    input: {
+        width: '100%',
+        borderRadius: 8,
+        padding: 10,
+        fontSize: 16,
     },
     checkboxContainer: {
         flexDirection: "column",

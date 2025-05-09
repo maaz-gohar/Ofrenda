@@ -8,7 +8,7 @@ const data = [
     { label: 'Pets', value: '3' },
 ];
 
-const DropdownComponent = ({ placeholder = 'Select item', onSelect }) => {
+const DropdownComponent = ({ placeholder = 'Select item', onSelect,selectedValue }) => {
     const [value, setValue] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
 
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 25,
         paddingHorizontal: 10,
-        width: '93%',
+        width: '100%',
         alignSelf: 'center',
     },
     placeholderStyle: {

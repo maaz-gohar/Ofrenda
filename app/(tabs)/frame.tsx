@@ -2,7 +2,15 @@ import React, { useState } from 'react';
 import { View, Image, StyleSheet, Alert, Text, Dimensions, TouchableOpacity, PanResponder, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-const slots16 = require('../../configs/frame16.json');
+// Define the type for the slot objects
+interface Slot {
+  top: number;
+  left: number;
+  width: number;
+  height: number;
+}
+
+const slots16: Slot[] = require('../../configs/frame16.json');
 const MexicanFrame = require('../../assets/images/frames/frame17.png');
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');

@@ -9,140 +9,132 @@ import {
   Platform,
   TouchableOpacity,
 } from "react-native";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import FloatingLabelInput from "../../components/auth/input";
 import MainButton from "../../components/auth/button";
 import { LinearGradient } from "expo-linear-gradient";
 import MainText from "../../components/auth/top-text";
 import { useRouter } from "expo-router";
 import { API_URL } from "../../configs/config";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 const b1 = "#FFC70BE5";
 const b2 = "#ffe9a1";
 
-export default function SignUp(props: { segment: string }) {
-  const [value, setValue] = useState("");
+type FormValues = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+};
+
+export default function SignUp() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isPasswordTooShort, setIsPasswordTooShort] = useState(false);
 
-  useEffect(() => {
-    if (value.length < 8) {
-      setIsPasswordTooShort(true);
-    } else {
-      setIsPasswordTooShort(false);
-    }
-  }, [value]);
-
+  const { control, handleSubmit, watch } = useForm<FormValues>();
   const router = useRouter();
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const registerUser = async () => {
-    console.log("data",  firstName,
-        lastName,
-        email,
-        password,)
+  const registerUser = async (firstName: string, lastName: string, email: string, password: string) => {
     try {
-      const response = await fetch(
-        `${API_URL}/auth/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            firstName,
-            lastName,
-            email,
-            password,
-          }),
-        }
-      );
+      const response = await fetch(`${API_URL}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ firstName, lastName, email, password }),
+      });
+
       console.log("response", response.status);
       const data = await response.json();
-      console.log(data); // Or handle success
+      console.log("Response Data:", data);
+      router.push("sign-in");
     } catch (error) {
       console.error("Registration error:", error);
     }
-    router.push('sign-in');
   };
 
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    console.log("Form Data:", data);
+    registerUser(data.firstName, data.lastName, data.email, data.password);
+  };
 
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <ScrollView
-        contentContainerStyle={styles.scrollViewContainer}
-        bounces={false}
-      >
+      <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}>
         <MainText title="Sign Up" showIcon={true} />
-        <View style={[styles.main]}>
+
+        <View style={styles.main}>
           <View>
-            <View style={styles.btns}>
-              <LinearGradient colors={[b1, b2]} style={styles.gradient}>
-                <Text style={styles.activeText}>Sign Up</Text>
-              </LinearGradient>
-              <View style={styles.inactive}>
-                <TouchableOpacity onPress={() => router.push("/sign-in")}>
-                  <Text style={styles.inactiveText}>Login</Text>
-                </TouchableOpacity>
-              </View>
+          <View style={styles.btns}>
+            <LinearGradient colors={[b1, b2]} style={styles.gradient}>
+              <Text style={styles.activeText}>Sign Up</Text>
+            </LinearGradient>
+            <View style={styles.inactive}>
+              <TouchableOpacity onPress={() => router.push("/sign-in")}>
+                <Text style={styles.inactiveText}>Login</Text>
+              </TouchableOpacity>
             </View>
-            <FloatingLabelInput
-              placeholder="First Name"
-              iconName="person-outline"
-              value={firstName}
-              onChangeText={setFirstName}
-            />
-            <FloatingLabelInput
-              placeholder="Last Name"
-              iconName="person-outline"
-              value={lastName}
-              onChangeText={setLastName}
-            />
-            <FloatingLabelInput
-              placeholder="Email Address"
-              iconName="envelope-o"
-              iconType="FontAwesome"
-              value={email}
-              onChangeText={setEmail}
-            />
-            <FloatingLabelInput
-              placeholder="Create Password"
-              iconName="lock-closed-outline"
-              eyeIcon={true}
-              value={password}
-              onChangeText={(text) => {
-                setPassword(text);
-                setValue(text); // Optional: keep your existing logic
-              }}
-              secureTextEntry={!isPasswordVisible}
-            />
-            {isPasswordTooShort && (
-              <View style={styles.passwordValidation}>
-                <Ionicons
-                  name="information-circle-outline"
-                  size={20}
-                  color="#FFC70B"
-                />
-                <Text style={styles.validationText}>
-                  Must be 8 characters long.
-                </Text>
-              </View>
-            )}
+          </View>
+
+          <FloatingLabelInput
+            name="firstName"
+            control={control}
+            rules={{ required: "First name is required" }}
+            placeholder="First Name"
+            iconPosition="left"
+            iconName="person-outline"
+          />
+
+          <FloatingLabelInput
+            name="lastName"
+            control={control}
+            rules={{ required: "Last name is required" }}
+            placeholder="Last Name"
+            iconPosition="left"
+            iconName="person-outline"
+          />
+
+          <FloatingLabelInput
+            name="email"
+            control={control}
+            rules={{
+              required: "Email is required",
+              pattern: {
+                value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                message: "Invalid email format",
+              },
+            }}
+            placeholder="Email Address"
+            iconPosition="left"
+            
+            iconName="envelope-o"
+            iconType="FontAwesome"
+          />
+
+          <FloatingLabelInput
+            name="password"
+            control={control}
+            rules={{
+              required: "Password is required",
+              minLength: { value: 8, message: "Minimum 8 characters required" },
+            }}
+            placeholder="Create Password"
+            iconPosition="left"
+            iconName="lock-closed-outline"
+            secureTextEntry={!isPasswordVisible}
+            eyeIcon={true}
+            onKeyPress={() => setIsPasswordVisible(!isPasswordVisible)}
+          />
           </View>
         </View>
+
         <View style={styles.endView}>
-          <MainButton title="Create Account" onPress={registerUser} />
+          <MainButton title="Create Account" onPress={handleSubmit(onSubmit)} />
           <Text style={styles.account}>
             Do you already have an account?
             <TouchableOpacity onPress={() => router.push("/sign-in")}>
-              <Text style={styles.signInText}>Sign in</Text>
+              <Text style={styles.signInText}> Sign in</Text>
             </TouchableOpacity>
           </Text>
         </View>
@@ -155,6 +147,7 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     flexGrow: 1,
     justifyContent: "space-between",
+    backgroundColor: "#fff",
   },
   main: {
     flex: 1,
@@ -192,7 +185,6 @@ const styles = StyleSheet.create({
   },
   activeText: {
     fontSize: 16,
-    // fontWeight: "bold",
     color: "#000",
   },
   inactiveText: {
@@ -217,13 +209,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   account: {
-    // marginTop: 10,
     fontSize: 14,
   },
   signInText: {
     textDecorationLine: "underline",
     fontWeight: "bold",
     marginLeft: 3,
-    marginBottom: -3,
   },
 });

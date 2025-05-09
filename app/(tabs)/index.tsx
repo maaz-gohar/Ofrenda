@@ -1,13 +1,9 @@
 import {
-  Image,
   StyleSheet,
-  Platform,
   View,
   Text,
-  KeyboardAvoidingView,
   Dimensions,
   ImageBackground,
-  ScrollView,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import MainButton from '../../components/auth/button';
@@ -18,15 +14,12 @@ export default function HomeScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        bounces={false}>
         <View style={[styles.main, { height, width }]}>
           <ImageBackground
             source={require('../../assets/images/auth/main_bg.jpg')}
             style={[styles.bg_main, {  width }]}
             resizeMode="stretch"
-          >
+            >
             <View style={styles.content}>
               <Text style={styles.text}>Create Your</Text>
               <Text style={styles.text}>Digital Memory Board</Text>
@@ -41,7 +34,6 @@ export default function HomeScreen() {
             </View>
           </ImageBackground>
         </View>
-      </ScrollView>
     </View>
   );
 }

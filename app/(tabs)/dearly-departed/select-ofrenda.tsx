@@ -90,7 +90,7 @@ export default function SelectOfrenda() {
                 <MainText title="Select Ofrenda" showIcon={true} setting={true} />
                 <View style={styles.main}>
                     <Text style={styles.headerText}>Choose a Frame</Text>
-                    <ScrollView contentContainerStyle={{ paddingHorizontal: 20 }} bounces={false} >
+                    <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ paddingHorizontal: 20 }} bounces={false} >
                         <View style={{ flexDirection: "row", alignItems: "center", paddingVertical: 10 }}>
                             <FrameComponent text="Ofrenda" isGradient={true} onPress={() => router.push('/dearly-departed/select-ofrenda')} />
                             <FrameComponent text="Elegant" onPress={() => router.push('/dearly-departed/elegant')} />

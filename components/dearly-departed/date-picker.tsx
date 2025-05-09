@@ -10,15 +10,20 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { MaterialIcons } from "@expo/vector-icons";
 
 interface DatePickerComponentProps {
-  placeholder: string;
-  dob: string;
+  placeholder?: string;
+  dob?: string;
   onDateChange: (date: string) => void;
+  name?: string;
+  control?: any;
 }
 
 const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
   placeholder,
   dob,
   onDateChange,
+  control
+
+  
 }) => {
     const [date, setDate] = useState(new Date()); // Initialize with the current date
     const [show, setShow] = useState(false);
@@ -85,7 +90,7 @@ const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    width: "93%",
+    width: "100%",
     alignSelf: "center",
   },
   button: {

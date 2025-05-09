@@ -18,8 +18,10 @@ interface AncestorsImageProps {
     frameId: number;
     remainingSubmissions: number;
     onFormNavigate: (frameId: number) => void;
-    hasSubmitted: boolean | { [key: number]: boolean };
-    setHasSubmitted: (frameId: number) => void;
+    hasSubmitted?: boolean | { [key: number]: boolean };
+    setHasSubmitted?: (frameId: number) => void;
+    uploadedImages?: string[];
+    onImageUpload?: (img: string) => void;
 }
 
 const AncestorsImage: React.FC<AncestorsImageProps> = ({
@@ -28,7 +30,8 @@ const AncestorsImage: React.FC<AncestorsImageProps> = ({
     remainingSubmissions,
     onFormNavigate,
     hasSubmitted,
-    setHasSubmitted
+    setHasSubmitted,
+    
 }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const router = useRouter();
@@ -121,7 +124,8 @@ const AncestorsImage: React.FC<AncestorsImageProps> = ({
 
             <Modal
                 animationType="fade"
-                transparent
+                transparent = {true}
+                statusBarTranslucent={true}
                 visible={modalVisible}
                 onRequestClose={closeModal}
             >
