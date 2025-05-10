@@ -74,7 +74,7 @@ export default function FamilyTreeForm() {
 
   const handleSave = (data: FormData) => {
     router.push({
-      pathname: "/dearly-departed/family-succesful",
+      pathname: "/(dearly-departed)/(home)/family-succesful",
       params: {
         ...data,
         dynamicFields: JSON.stringify(data.dynamicFields),
@@ -86,12 +86,12 @@ export default function FamilyTreeForm() {
 
   const handleImageUpload = () => {
     router.push({
-      pathname: "/dearly-departed/upload-file",
+      pathname: "/(dearly-departed)/(home)/upload-file",
       params: {
         ...watch(),
         dynamicFields: JSON.stringify(watch("dynamicFields")),
         frameId: params.frameId,
-        redirectTo: "/dearly-departed/dearly-department-form",
+        redirectTo: "/(dearly-departed)/(home)/dearly-department-form",
       },
     });
   };
@@ -231,7 +231,9 @@ export default function FamilyTreeForm() {
               placeholder="Upload Food Picture"
               iconName="plus"
               iconType="AntDesign"
-              onIconPress={() => router.push("/dearly-departed/select-food")}
+              onIconPress={() =>
+                router.push("/(dearly-departed)/(home)/select-food")
+              }
               showLabel={false}
             />
 

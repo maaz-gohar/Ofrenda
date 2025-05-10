@@ -59,16 +59,18 @@ export default function Elegant() {
             >
               <FrameComponent
                 text="Ofrenda"
-                onPress={() => router.push("/dearly-departed/select-ofrenda")}
+                onPress={() =>
+                  router.push("/(dearly-departed)/(home)/select-ofrenda")
+                }
               />
               <FrameComponent
                 text="Elegant"
                 isGradient={true}
-                onPress={() => router.push("/dearly-departed/elegant")}
+                onPress={() => router.push("/(dearly-departed)/(home)/elegant")}
               />
               <FrameComponent
                 text="Indian"
-                onPress={() => router.push("/dearly-departed/indian")}
+                onPress={() => router.push("/(dearly-departed)/(home)/indian")}
               />
               <FrameComponent text="Scandinavian" />
               <FrameComponent text="Chinese" />

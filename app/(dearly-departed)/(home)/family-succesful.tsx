@@ -53,7 +53,7 @@ export default function FamilySuccessful() {
     console.log("success", forwardParams);
 
     router.push({
-      pathname: "/dearly-departed/family-tree",
+      pathname: "/(dearly-departed)/(home)/family-tree",
       params: forwardParams,
     });
   };

@@ -36,6 +36,9 @@ export default function RootLayout() {
         <Stack.Screen name="index" />
         <Stack.Screen name="(auth)" />
         <Stack.Screen name="(dearly-departed)" />
+        <Stack.Screen name="(bucket-list)" />
+        <Stack.Screen name="(best-friend-and-family)" />
+
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="+not-found" />
       </Stack>

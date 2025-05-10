@@ -76,7 +76,7 @@ export default function DearlyDepartmentForm() {
 
   const handleSave = (data: FormData) => {
     router.push({
-      pathname: "/dearly-departed/select-ofrenda",
+      pathname: "/(dearly-departed)/(home)/select-ofrenda",
       params: {
         ...data,
         dynamicFields: JSON.stringify(data.dynamicFields),
@@ -88,12 +88,12 @@ export default function DearlyDepartmentForm() {
 
   const handleImageUpload = () => {
     router.push({
-      pathname: "/dearly-departed/upload-file",
+      pathname: "/(dearly-departed)/(home)/upload-file",
       params: {
         ...watch(),
         dynamicFields: JSON.stringify(watch("dynamicFields")),
         frameId: params.frameId,
-        redirectTo: "/dearly-departed/dearly-department-form",
+        redirectTo: "/(dearly-departed)/(home)/dearly-department-form",
       },
     });
   };
@@ -133,15 +133,17 @@ export default function DearlyDepartmentForm() {
               <FrameComponent
                 text="Ofrenda"
                 isGradient={true}
-                onPress={() => router.push("/dearly-departed/select-ofrenda")}
+                onPress={() =>
+                  router.push("/(dearly-departed)/(home)/select-ofrenda")
+                }
               />
               <FrameComponent
                 text="Elegant"
-                onPress={() => router.push("/dearly-departed/elegant")}
+                onPress={() => router.push("/(dearly-departed)/(home)/elegant")}
               />
               <FrameComponent
                 text="Indian"
-                onPress={() => router.push("/dearly-departed/indian")}
+                onPress={() => router.push("/(dearly-departed)/(home)/indian")}
               />
               <FrameComponent text="Scandinavian" />
               <FrameComponent text="Chinese" />
@@ -278,7 +280,9 @@ export default function DearlyDepartmentForm() {
               placeholder="Upload Food Picture"
               iconName="plus"
               iconType="AntDesign"
-              onIconPress={() => router.push("/dearly-departed/select-food")}
+              onIconPress={() =>
+                router.push("/(dearly-departed)/(home)/select-food")
+              }
               showLabel={false}
             />
 

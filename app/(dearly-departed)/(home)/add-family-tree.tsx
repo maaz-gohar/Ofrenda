@@ -47,7 +47,9 @@ export default function AddFamilyTree() {
             </LinearGradient>
             <View style={styles.inactive}>
               <TouchableOpacity
-                onPress={() => router.push("/dearly-departed/family-tree")}
+                onPress={() =>
+                  router.push("/(dearly-departed)/(home)/family-tree")
+                }
               >
                 <Text style={styles.inactiveText}>Maternal Family Tree</Text>
               </TouchableOpacity>
@@ -64,7 +66,9 @@ export default function AddFamilyTree() {
         <View style={styles.endView}>
           <MainButton
             title={"Add Family Member"}
-            onPress={() => router.push("/dearly-departed/family-tree-form")}
+            onPress={() =>
+              router.push("/(dearly-departed)/(home)/family-tree-form")
+            }
           />
         </View>
       </ScrollView>

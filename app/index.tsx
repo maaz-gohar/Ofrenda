@@ -31,9 +31,7 @@ export default function HomeScreen() {
               title={"Get Started"}
               // onPress={() => router.push("(auth)/sign-in")}
               // onPress={() => router.push("(tabs)/dearly-departed/main-screen")}
-              onPress={() =>
-                router.push("(dearly-departed)/(home)/main-screen")
-              }
+              onPress={() => router.push("(dearly-departed)/(home)")}
             />
           </View>
         </ImageBackground>

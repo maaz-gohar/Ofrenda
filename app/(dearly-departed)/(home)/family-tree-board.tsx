@@ -42,7 +42,7 @@ export default function FamilyTreeBoard() {
         <View style={styles.endView}>
           <MainButton
             title={"Add Relationship Tree"}
-            onPress={() => router.push("/dearly-departed/select-ofrenda")}
+            onPress={() => router.push("/(dearly-departed)/(home)/select-ofrenda")}
           />
         </View>
       </ScrollView>

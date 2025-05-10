@@ -102,7 +102,7 @@ export default function BffMainScreen() {
 
   const handleViewDetails = () => {
     router.push({
-      pathname: "/dearly-departed/display-data",
+      pathname: "/(dearly-departed)/(home)/display-data",
       params: {
         selectedImage: params.selectedImage,
         worked: params.worked,

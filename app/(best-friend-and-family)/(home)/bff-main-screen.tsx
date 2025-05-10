@@ -9,17 +9,19 @@ import {
 } from "@expo/vector-icons";
 
 import { LinearGradient } from "expo-linear-gradient";
-// import MainText from '../../../components/auth/top-text';
-import AncestorsComponent from "../../../components/dearly-departed/ancestors-component";
-import TabBar from "../../../components/auth/tab-bar";
+// import MainText from '../components/topText';
+// import AncestorsComponent from './components/ancestorsComponent';
+// import TabBar from "../../../components/auth/tab-bar";
 import { useRouter } from "expo-router";
-import MainText from "@/components/auth/top-text";
+import AncestorsComponent from "../../../components/dearly-departed/ancestors-component";
+import MainText from "../../../components/auth/top-text";
+import Wrapper from "../../../components/auth/wrapper";
 // import MainText from './components/topText';
 
-const b1 = "#FFC70BE5";
-const b2 = "#ffe9a1";
+const b1 = "rgba(94, 164, 253, 1)";
+const b2 = "rgba(143, 184, 236, 1)";
 
-export default function AncestorsMainScreen() {
+export default function BFFMainScreen() {
   // const { height, width } = Dimensions.get("window");
   const router = useRouter();
 
@@ -29,30 +31,27 @@ export default function AncestorsMainScreen() {
         contentContainerStyle={styles.scrollViewContainer}
         bounces={false}
       >
-        <MainText title={"Dearly Departed"} showIcon={true} setting={true} />
-        <View style={[styles.main]}>
+        <MainText
+          title={"Best Friends and Family"}
+          showIcon={true}
+          setting={true}
+          gradientColor={[b1, b2]}
+        />
+        {/* <View style={[styles.main]}> */}
+        <Wrapper>
           <AncestorsComponent
-            imagePath={require("../../../assets/images/ancestors1.png")}
-            text={"View Memory Boards"}
-            onPress={() =>
-              router.push("/(dearly-departed)/(home)/memory-boards")
-            }
+            imagePath={require("../../../assets/images/BestFriend/ViewCollege.png")}
+            text={"View Collage"}
+            onPress={() => router.push("/best-friend-and-family/select-frames")}
           />
+
           <AncestorsComponent
-            imagePath={require("../../../assets/images/ancestors2.png")}
-            text={"View Relationship Tree"}
-            onPress={() =>
-              router.push("/(dearly-departed)/(home)/add-family-tree")
-            }
-          />
-          <AncestorsComponent
-            imagePath={require("../../../assets/images/info.jpg")}
+            imagePath={require("../../../assets/images/bff.jpg")}
             text={"View Information"}
-            onPress={() =>
-              router.push("/(dearly-departed)/(home)/view-information")
-            }
+            onPress={() => router.push("/best-friend-and-family/information")}
           />
-        </View>
+        </Wrapper>
+        {/* </View> */}
       </ScrollView>
       {/* <TabBar /> */}
     </View>

@@ -53,7 +53,7 @@ export default function Successfully() {
     console.log("success", forwardParams);
 
     router.push({
-      pathname: "/dearly-departed/bff-main-screen",
+      pathname: "/(dearly-departed)/(home)/bff-main-screen",
       params: forwardParams,
     });
   };

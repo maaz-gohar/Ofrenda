@@ -134,7 +134,7 @@ export default function SelectOfrenda() {
     );
 
     router.push({
-      pathname: "/dearly-departed/dearly-department-form",
+      pathname: "/(dearly-departed)/(home)/dearly-department-form",
       params: {
         ...params,
         frameId: frameId.toString(),
@@ -176,15 +176,17 @@ export default function SelectOfrenda() {
               <FrameComponent
                 text="Ofrenda"
                 isGradient={true}
-                onPress={() => router.push("/dearly-departed/select-ofrenda")}
+                onPress={() =>
+                  router.push("/(dearly-departed)/(home)/select-ofrenda")
+                }
               />
               <FrameComponent
                 text="Elegant"
-                onPress={() => router.push("/dearly-departed/elegant")}
+                onPress={() => router.push("/(dearly-departed)/(home)/elegant")}
               />
               <FrameComponent
                 text="Indian"
-                onPress={() => router.push("/dearly-departed/indian")}
+                onPress={() => router.push("/(dearly-departed)/(home)/indian")}
               />
               <FrameComponent text="Scandinavian" />
               <FrameComponent text="Chinese" />

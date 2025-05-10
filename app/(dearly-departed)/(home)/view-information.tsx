@@ -21,7 +21,7 @@ export default function ViewInformation() {
   const router = useRouter();
 
   const handlePress = () => {
-    router.push("/dearly-departed/display-data");
+    router.push("/(dearly-departed)/(home)/display-data");
   };
 
   return (

@@ -12,7 +12,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 // import MainText from '../components/topText';
 // import AncestorsComponent from './components/ancestorsComponent';
-// import TabBar from '../../../components/auth/tab-bar';
+// import TabBar from "../../../components/auth/tab-bar";
 import { useRouter } from "expo-router";
 import AncestorsComponent from "../../../components/dearly-departed/ancestors-component";
 import MainText from "../../../components/auth/top-text";

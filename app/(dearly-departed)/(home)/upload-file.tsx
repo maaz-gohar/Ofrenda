@@ -70,10 +70,12 @@ export default function UploadFile() {
     console.log("Navigating with image:", selectedImage);
     console.log("RedirectTo is:", redirectTo);
 
-    if (redirectTo?.toString() === "/dearly-departed/family-tree-form") {
+    if (
+      redirectTo?.toString() === "/(dearly-departed)/(home)/family-tree-form"
+    ) {
       console.log("Redirecting to family-tree-form");
       router.push({
-        pathname: "/dearly-departed/family-tree-form",
+        pathname: "/(dearly-departed)/(home)/family-tree-form",
         params: {
           ...params,
           selectedImage: selectedImage,
@@ -82,7 +84,7 @@ export default function UploadFile() {
     } else {
       console.log("Redirecting to dearly-departed-form (default)");
       router.push({
-        pathname: "/dearly-departed/dearly-department-form",
+        pathname: "/(dearly-departed)/(home)/dearly-department-form",
         params: {
           ...params,
           selectedImage: selectedImage,

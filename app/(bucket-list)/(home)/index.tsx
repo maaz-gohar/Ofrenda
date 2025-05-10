@@ -8,14 +8,17 @@ import {
   TouchableOpacity,
   Animated,
 } from "react-native";
-import MainText from "../../../components/auth/top-text";
-import TabBar from "../../../components/auth/tab-bar";
+// import MainText from '../../../components/auth/top-text';
+// import TabBar from '../../../components/auth/tab-bar';
 import { LinearGradient } from "expo-linear-gradient";
-import Header from "../../../components/dearly-departed/header";
+// import Header from './components/header';
 import { useRouter } from "expo-router";
+import Header from "@/components/dearly-departed/header";
 
-const b1 = "#FFC70B";
-const b2 = "#ffe9a1";
+// import Header from '../../../components/dearly-departed/header';
+
+const b1 = "rgba(188, 97, 213, 0.95)";
+const b2 = "rgba(249, 244, 251, 0.95)";
 
 export default function MainScreen() {
   const router = useRouter();
@@ -46,18 +49,26 @@ export default function MainScreen() {
   return (
     <View style={styles.container}>
       {/* <ScrollView contentContainerStyle={styles.scrollViewContainer} bounces={false}> */}
+      {/* <Header
+                    title={"Home"}
+                    showIcon={true}
+                    setting={true}
+                    description={"Select One Free Option"}
+                    name={"Anna"}
+                /> */}
       <Header
         title={"Home"}
         showIcon={true}
         setting={true}
         description={"Select One Free Option"}
         name={"Anna"}
+        gradientColors={["rgba(188, 97, 213, 0.8)", "rgba(249, 244, 251, 1)"]}
       />
       <View style={styles.main}>
         <View>
           <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
             <ImageBackground
-              source={require("../../../assets/images/home.png")}
+              source={require("@/assets/images/home.png")}
               style={styles.backgroundImage}
               resizeMode="cover"
             >
@@ -132,7 +143,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1 / 1,
     justifyContent: "center",
     alignItems: "flex-end",
-    // marginTop: 10,
+    // marginTop: 30,
     marginLeft: 20,
   },
   overlay: {
@@ -164,6 +175,5 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     textAlign: "center",
     lineHeight: 20,
-    // margin: 10
   },
 });
